@@ -11,10 +11,26 @@
 part of 'routes.dart';
 
 /// generated route for
+/// [DashboardScreen]
+class Dashboard extends PageRouteInfo<void> {
+  const Dashboard({List<PageRouteInfo>? children})
+      : super(Dashboard.name, initialChildren: children);
+
+  static const String name = 'Dashboard';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const DashboardScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [HomeScreen]
 class Home extends PageRouteInfo<void> {
   const Home({List<PageRouteInfo>? children})
-    : super(Home.name, initialChildren: children);
+      : super(Home.name, initialChildren: children);
 
   static const String name = 'Home';
 
@@ -26,11 +42,10 @@ class Home extends PageRouteInfo<void> {
   );
 }
 
-/// generated route for
 /// [LogInScreen]
 class LogIn extends PageRouteInfo<void> {
   const LogIn({List<PageRouteInfo>? children})
-    : super(LogIn.name, initialChildren: children);
+      : super(LogIn.name, initialChildren: children);
 
   static const String name = 'LogIn';
 
@@ -46,7 +61,7 @@ class LogIn extends PageRouteInfo<void> {
 /// [OnboardingScreen]
 class Onboarding extends PageRouteInfo<void> {
   const Onboarding({List<PageRouteInfo>? children})
-    : super(Onboarding.name, initialChildren: children);
+      : super(Onboarding.name, initialChildren: children);
 
   static const String name = 'Onboarding';
 
@@ -62,7 +77,7 @@ class Onboarding extends PageRouteInfo<void> {
 /// [SignInScreen]
 class SignIn extends PageRouteInfo<void> {
   const SignIn({List<PageRouteInfo>? children})
-    : super(SignIn.name, initialChildren: children);
+      : super(SignIn.name, initialChildren: children);
 
   static const String name = 'SignIn';
 

@@ -30,7 +30,6 @@ class _LogInScreenState extends State<LogInScreen> {
               context: context,
               name: 'email',
               hint: 'Email',
-              backgroundColor: Colors.black87,
               borderRadius: 10,
             ),
             10.verticalBox,
@@ -38,11 +37,15 @@ class _LogInScreenState extends State<LogInScreen> {
               context: context,
               name: 'password',
               hint: 'Password',
-              backgroundColor: Colors.black87,
               borderRadius: 10,
             ),
             10.verticalBox,
-            AppButton(title: 'Log In', onClick: () {}),
+            AppButton(
+              title: 'Log In',
+              onClick: () => context.router.push(
+                Home(),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

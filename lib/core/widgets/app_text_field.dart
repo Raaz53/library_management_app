@@ -97,8 +97,9 @@ class AppTextField {
           readOnly: isDisabled,
           inputFormatters: formatters,
           decoration: InputDecoration(
-            fillColor:
-                isDisabled ? AppColors.lightGray : AppColors.buttonSecondary,
+            fillColor: isDisabled
+                ? AppColors.lightGray
+                : backgroundColor ?? AppColors.buttonSecondary,
             contentPadding:
                 const EdgeInsets.only(left: 20, top: 16, bottom: 16),
             filled: true,

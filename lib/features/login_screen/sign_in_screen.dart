@@ -1,4 +1,5 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:book_hive/core/routes/routes.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
 import 'package:book_hive/core/widgets/app_button_widget.dart';
 import 'package:book_hive/core/widgets/app_text_field.dart';
@@ -73,7 +74,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               20.verticalBox,
-              AppButton(title: 'Continue', onClick: () {}),
+              AppButton(
+                  title: 'Continue',
+                  onClick: () => context.router.push(Dashboard())),
             ],
           ),
         ),

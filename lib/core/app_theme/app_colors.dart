@@ -11,7 +11,7 @@ class AppColors {
   static const grey = Color(0xffD9D9D9);
   static const buttonSecondary = Color(0xffF0F2F5);
 
-  static const white = Color(0xffF5F5F5);
+  static const white = Color(0xffFFFFFF);
   static const lightGray = Color(0xffE0E0E0);
   static const lightWhite = Color(0xffFAFAFA);
   static const error = Color(0xffD32F2F);
