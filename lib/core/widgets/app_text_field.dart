@@ -8,44 +8,44 @@ import '../utilities/app_styles.dart';
 class AppTextField {
   AppTextField._();
 
-  static Widget textField({
-    required BuildContext context,
-    String? Function(String)? validator,
-    required String name,
-    TextStyle? style,
-    bool? autocorrect,
-    TextEditingController? textEditingController,
-    String? hint,
-    Color? backgroundColor = AppColors.white,
-    Function(String?)? onTextChanged,
-    Function(String?)? onFieldSubmitted,
-    Function()? onTap,
-    TextInputType keyboardType = TextInputType.text,
-    TextInputAction textInputAction = TextInputAction.done,
-    TextCapitalization textCapitalization = TextCapitalization.sentences,
-    Function? onObscureTapped,
-    bool isPasswordField = false,
-    bool isObscured = false,
-    bool disablesEmojis = true,
-    bool readOnly = false,
-    int? maxLines = 1,
-    int maxLength = 255,
-    double verticalPadding = 5,
-    bool isDisabled = false,
-    bool isRequired = false,
-    List<TextInputFormatter>? inputFormatters,
-    String? headerTitle,
-    Widget? suffixIcon,
-    Widget? prefixIcon,
-    FocusNode? focusNode,
-    TextStyle? headerStyle,
-    TextStyle? hintStyle,
-    double borderRadius = 50.0,
-    Color? textColor,
-    bool hasError = false,
-    String? initialValue,
-    bool isTextFieldOnly = true,
-  }) {
+  static Widget textField(
+      {required BuildContext context,
+      String? Function(String)? validator,
+      required String name,
+      TextStyle? style,
+      bool? autocorrect,
+      TextEditingController? textEditingController,
+      String? hint,
+      Color? backgroundColor = AppColors.white,
+      Function(String?)? onTextChanged,
+      Function(String?)? onFieldSubmitted,
+      Function()? onTap,
+      TextInputType keyboardType = TextInputType.text,
+      TextInputAction textInputAction = TextInputAction.done,
+      TextCapitalization textCapitalization = TextCapitalization.sentences,
+      Function? onObscureTapped,
+      bool isPasswordField = false,
+      bool isObscured = false,
+      bool disablesEmojis = true,
+      bool readOnly = false,
+      int? maxLines = 1,
+      int maxLength = 255,
+      double verticalPadding = 5,
+      bool isDisabled = false,
+      bool isRequired = false,
+      List<TextInputFormatter>? inputFormatters,
+      String? headerTitle,
+      Widget? suffixIcon,
+      Widget? prefixIcon,
+      FocusNode? focusNode,
+      TextStyle? headerStyle,
+      TextStyle? hintStyle,
+      double borderRadius = 50.0,
+      Color? textColor,
+      bool hasError = false,
+      String? initialValue,
+      bool isTextFieldOnly = true,
+      book}) {
     final formatters = <TextInputFormatter>[];
     if (disablesEmojis) {
       formatters.add(FilteringTextInputFormatter.deny(RegExp('''
@@ -115,6 +115,96 @@ class AppTextField {
             focusedBorder: AppStyles.outlinedInputBorder(
                 hasValidationError: hasError, borderRadius: borderRadius),
           ),
+        ),
+      ],
+    );
+  }
+
+  static Widget dropdownField<T>({
+    required BuildContext context,
+    required String name,
+    required List<T> items,
+    String? Function(T?)? validator,
+    Function(T?)? onChanged,
+    T? initialValue,
+    bool isDisabled = false,
+    Widget? suffixIcon,
+    Widget? prefixIcon,
+    String? hint,
+    TextStyle? hintStyle,
+    Color? backgroundColor = AppColors.white,
+    double borderRadius = 50.0,
+    bool hasError = false,
+    TextStyle? textStyle,
+    bool disablesEmojis = true,
+    List<TextInputFormatter>? inputFormatters,
+    bool isTextFieldOnly = true,
+    String? headerTitle,
+    TextStyle? headerStyle,
+    bool isRequired = false,
+    Color? dropdownColor,
+  }) {
+    final formatters = <TextInputFormatter>[];
+    if (disablesEmojis) {
+      formatters.add(FilteringTextInputFormatter.deny(RegExp('''
+(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])''')));
+    }
+    inputFormatters?.forEach(formatters.add);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (!isTextFieldOnly)
+          Padding(
+            padding: EdgeInsets.only(bottom: 5),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    headerTitle ?? '',
+                    style: headerStyle,
+                  ),
+                ),
+                isRequired
+                    ? Text(
+                        '*',
+                        style: TextStyle(color: AppColors.error),
+                      )
+                    : SizedBox.shrink(),
+              ],
+            ),
+          ),
+        DropdownButtonFormField<T>(
+          value: initialValue,
+          onChanged: isDisabled ? null : onChanged,
+          validator: validator,
+          style: textStyle,
+          dropdownColor: dropdownColor ?? Colors.black,
+          decoration: InputDecoration(
+            fillColor: isDisabled ? Colors.grey.shade300 : backgroundColor,
+            filled: true,
+            contentPadding:
+                const EdgeInsets.only(left: 20, top: 16, bottom: 16),
+            suffixIcon: suffixIcon,
+            prefixIcon: prefixIcon,
+            hintText: hint,
+            hintStyle: hintStyle,
+            alignLabelWithHint: true,
+            border: AppStyles.outlinedInputBorder(
+                hasValidationError: hasError, borderRadius: borderRadius),
+            enabledBorder: AppStyles.outlinedInputBorder(
+                hasValidationError: hasError, borderRadius: borderRadius),
+            focusedBorder: AppStyles.outlinedInputBorder(
+                hasValidationError: hasError, borderRadius: borderRadius),
+          ),
+          items: items
+              .map(
+                (item) => DropdownMenuItem<T>(
+                  value: item,
+                  child: Text(item.toString()), // Customize if needed
+                ),
+              )
+              .toList(),
         ),
       ],
     );
