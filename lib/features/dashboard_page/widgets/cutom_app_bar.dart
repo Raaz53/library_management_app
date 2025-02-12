@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/resources/assets.dart';
+import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,11 +18,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.lightBlack,
       title: Text(
         title ?? '',
-        style: TextStyle(
-          fontSize: 36,
-          fontWeight: FontWeight.w800,
-          color: AppColors.white,
-        ),
+        style: AppTextStyles.headlineLargeMonserat
+            .copyWith(fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
       actions: [
