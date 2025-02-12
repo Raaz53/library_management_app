@@ -25,9 +25,9 @@ class _CategoryCheckboxListState extends State<CategoryCheckboxList> {
             NeverScrollableScrollPhysics(), // Disable scrolling inside list
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, // 3 checkboxes per row
-          mainAxisSpacing: 5, // Minimal spacing between rows
-          crossAxisSpacing: 5, // Minimal spacing between columns
-          childAspectRatio: 3, // Adjust ratio to prevent text wrapping
+          mainAxisSpacing: 3, // Minimal spacing between rows
+          crossAxisSpacing: 2, // Minimal spacing between columns
+          childAspectRatio: 3.5, // Adjust ratio to prevent text wrapping
         ),
         itemCount: widget.categories.length,
         itemBuilder: (context, index) {

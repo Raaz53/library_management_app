@@ -1,5 +1,6 @@
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/resources/assets.dart';
+import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
 import 'package:book_hive/core/widgets/app_text_field.dart';
 import 'package:book_hive/features/add_book_screen/widgets/add_book_image_widget.dart';
@@ -36,7 +37,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               borderRadius: 10,
               name: 'bookName',
               hint: 'Book Title',
-              backgroundColor: AppColors.black.withOpacity(0.3),
+              backgroundColor: AppColors.black.withValues(alpha: 0.3),
             ),
             10.verticalBox,
             AppTextField.textField(
@@ -85,17 +86,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               ],
             ),
             CategoryCheckboxList(
-              categories: [
-                'Fiction',
-                'Science',
-                'History',
-                'Technology',
-                'Art',
-                'Music',
-                'Health',
-                'Business',
-                'Sports'
-              ],
+              categories: Constants.bookCategories,
               onSelectionChanged: (selected) {
                 print('Selected categories: $selected');
               },

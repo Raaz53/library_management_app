@@ -43,7 +43,7 @@ class _LogInScreenState extends State<LogInScreen> {
             AppButton(
               title: 'Log In',
               onClick: () => context.router.push(
-                Home(),
+                Dashboard(),
               ),
             ),
             Row(
