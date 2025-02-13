@@ -1,3 +1,4 @@
+import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -64,7 +65,10 @@ class AppTextField {
                 Expanded(
                   child: Text(
                     headerTitle ?? '',
-                    style: headerStyle,
+                    style: headerStyle ??
+                        AppTextStyles.bodyMediumMonserat.copyWith(
+                          color: AppColors.black,
+                        ),
                   ),
                 ),
                 isRequired

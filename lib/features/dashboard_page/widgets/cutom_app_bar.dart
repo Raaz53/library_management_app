@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/resources/assets.dart';
+import 'package:book_hive/core/routes/routes.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +37,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
               onTap: () {
-                log(DateTime.now().toIso8601String());
+                context.router
+                    .pushAndPopUntil(LogIn(), predicate: (route) => false);
               },
               child: Text('Log out'),
             ),
