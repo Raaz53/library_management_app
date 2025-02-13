@@ -45,12 +45,12 @@ class AppTextStyles {
   );
   static TextStyle bodyMediumMonserat = GoogleFonts.montserrat(
     fontSize: 16,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.normal,
     color: AppColors.white,
   );
   static TextStyle bodyMediumPoppins = GoogleFonts.poppins(
     fontSize: 16,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.normal,
     color: AppColors.white,
   );
   static TextStyle bodySmallMonserat = GoogleFonts.montserrat(

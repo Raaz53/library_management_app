@@ -1,11 +1,21 @@
+import 'package:book_hive/core/routes/routes.dart';
 import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart';
 
-import 'injection.config.dart';
+import 'bloc_module.dart';
 
-final GetIt getIt = GetIt.instance;
+class Injector {
+  Injector._();
+  static final GetIt instance = GetIt.instance;
+  static Future<void> init() async {
+    instance.registerLazySingleton<AppRoute>(() => AppRoute());
+    BlocModule.init();
+  }
 
-@injectableInit
-Future<void> configureInjection() async {
-  getIt.init();
+  static void reset() {
+    instance.reset();
+  }
+
+  static void resetLazySingleton() {
+    instance.resetLazySingleton();
+  }
 }
