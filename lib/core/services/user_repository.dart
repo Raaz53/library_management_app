@@ -15,4 +15,17 @@ class UserRepository {
     }
     return null;
   }
+
+  Future<UserModel?> getUser(String uid) async {
+    try {
+      final collection = _firestore.collection('users');
+      final doc = await collection.doc(uid).get();
+      if (doc.exists) {
+        return UserModel.fromJson(doc.data() as Map<String, dynamic>);
+      }
+    } catch (e) {
+      return null;
+    }
+    return null;
+  }
 }

@@ -1,12 +1,19 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/routes/routes.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
+import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:book_hive/core/widgets/app_button_widget.dart';
 import 'package:book_hive/core/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+
+import 'cubit/user_signin_cubit/user_signin_cubit.dart';
 
 final _formKey = GlobalKey<FormBuilderState>();
 
@@ -19,6 +26,14 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  late UserSignInCubit _userSignInCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _userSignInCubit = Injector.instance<UserSignInCubit>();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,15 +82,46 @@ class _LogInScreenState extends State<LogInScreen> {
                 validator: FormBuilderValidators.compose([]),
               ).py(5),
               10.verticalBox,
-              AppButton(
-                title: 'Log In',
-                onClick: () {
-                  if (_formKey.currentState!.saveAndValidate()) {
-                    context.router.push(
-                      Dashboard(),
-                    );
-                  }
+              BlocListener<UserSignInCubit, UserSignInState>(
+                bloc: _userSignInCubit,
+                listener: (context, state) {
+                  state.maybeWhen(
+                    error: (message) {
+                      Navigator.pop(context);
+                      log('Error is being called');
+                      Utilities.showCustomSnackbar(
+                          message: message, context: context);
+                    },
+                    loading: () {
+                      Utilities.showCustomDialog(
+                        context: context,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    },
+                    loginSuccess: (_) {
+                      Navigator.pop(context);
+                      context.router.push(Dashboard());
+                    },
+                    orElse: () {},
+                  );
                 },
+                child: AppButton(
+                  title: 'Log In',
+                  onClick: () {
+                    if (_formKey.currentState!.saveAndValidate()) {
+                      final email = _formKey
+                          .currentState!.fields['email']!.value
+                          .toString();
+                      final password = _formKey
+                          .currentState!.fields['password']!.value
+                          .toString();
+                      _userSignInCubit.loginUser(
+                          email: email, password: password);
+                    }
+                  },
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

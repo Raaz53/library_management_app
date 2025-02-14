@@ -21,7 +21,27 @@ class UserSignInCubit extends Cubit<UserSignInState> {
       if (data == null) {
         emit(UserSignInState.error(error: 'Error creating user'));
       } else {
-        emit(UserSignInState.success(message: ''));
+        emit(UserSignInState.registerSuccess(message: ''));
+      }
+    } catch (e) {
+      emit(UserSignInState.error(
+        error: e.toString(),
+      ));
+    }
+  }
+
+  Future<void> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    emit(UserSignInState.loading());
+    try {
+      final data =
+          await AuthService.signInWithEmailAndPassword(email, password);
+      if (data == null) {
+        emit(UserSignInState.error(error: 'Error signing in'));
+      } else {
+        emit(UserSignInState.loginSuccess(message: ''));
       }
     } catch (e) {
       emit(UserSignInState.error(

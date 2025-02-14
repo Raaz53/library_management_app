@@ -6,7 +6,9 @@ import 'app_text_styles.dart';
 
 class Utilities {
   Utilities._();
+
   static OverlayEntry? _currentOverlay;
+
   static void showCustomSnackbar({
     required BuildContext context,
     required String message,
@@ -42,6 +44,24 @@ class Utilities {
           ),
         ),
       ),
+    );
+  }
+
+  static void showCustomDialog({
+    required BuildContext context,
+    required Widget child,
+    bool barrierDismissible = false, // Default: Prevent dismissing
+  }) {
+    showDialog(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: child, // Custom widget passed here
+        );
+      },
     );
   }
 }

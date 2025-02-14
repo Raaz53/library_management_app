@@ -4,7 +4,9 @@ import 'package:book_hive/core/utilities/ui_extension.dart';
 import 'package:flutter/material.dart';
 
 class ProfileRewardWidget extends StatelessWidget {
-  const ProfileRewardWidget({super.key});
+  const ProfileRewardWidget({super.key, this.userName, this.rewardPoints});
+  final String? userName;
+  final double? rewardPoints;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class ProfileRewardWidget extends StatelessWidget {
           children: [
             90.horizontalBox,
             Text(
-              'John Doe',
+              userName ?? 'John Doe',
               style: AppTextStyles.bodyMediumPoppins,
               textAlign: TextAlign.center,
             ),
@@ -40,7 +42,7 @@ class ProfileRewardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '100.0',
+                      rewardPoints?.toString() ?? '0',
                       style: AppTextStyles.bodyExtraSmallInter,
                     ),
                     Text(
