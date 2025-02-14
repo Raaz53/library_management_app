@@ -137,42 +137,33 @@ class _SignInScreenState extends State<SignInScreen> {
                     bloc: _userSignInCubit,
                     listener: (context, state) {
                       state.maybeWhen(
-                          orElse: () {},
-                          loading: () {
-                            showDialog(
-                              context: context,
-                              barrierDismissible:
-                                  false, // Prevent user from dismissing the dialog
-                              builder: (context) {
-                                return Dialog(
-                                  backgroundColor: Colors
-                                      .transparent, // Transparent background
-                                  elevation: 0,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const CircularProgressIndicator
-                                            .adaptive(),
-                                        const SizedBox(height: 16),
-                                        Text(
-                                          "Please wait...",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ],
-                                    ),
+                        orElse: () {},
+                        loading: () {
+                          Utilities.showCustomDialog(
+                            context: context,
+                            child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const CircularProgressIndicator.adaptive(),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    "Please wait...",
+                                    style: TextStyle(color: Colors.white),
                                   ),
-                                );
-                              },
-                            );
-                          },
-                          success: (_) {
-                            context.router.push(Dashboard());
-                          },
-                          error: (message) {
-                            Utilities.showCustomSnackbar(
-                                context: context, message: message);
-                          });
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        registerSuccess: (_) {
+                          context.router.push(Dashboard());
+                        },
+                        error: (message) {
+                          Utilities.showCustomSnackbar(
+                              context: context, message: message);
+                        },
+                      );
                     },
                     child: AppButton(
                       title: 'Continue',

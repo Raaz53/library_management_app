@@ -21,10 +21,6 @@ class ChangeSettingWidget extends StatelessWidget {
           Divider(
             color: Colors.grey,
           ),
-          contentWidget(title: 'Change phone number', onPressed: () {}),
-          Divider(
-            color: Colors.grey,
-          ),
           contentWidget(
               title: 'Delete account', onPressed: () {}, isDelete: true),
         ],

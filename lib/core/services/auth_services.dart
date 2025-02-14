@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book_hive/core/models/user_model/user_model.dart';
 import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,16 +32,46 @@ class AuthService {
 
       return CustomUserModel(user: userCredential.user, uid: uid);
     } catch (e) {
-      print(e);
+      log('Error creating user: ${e.toString()}');
       return null;
     }
+  }
+
+  static Future<User?> signInWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      final UserCredential userCredential =
+          await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return userCredential.user;
+    } catch (e) {
+      log('Error signing in: ${e.toString()}');
+      return null;
+    }
+  }
+
+  static getCurrentUserId() {
+    return _auth.currentUser!.uid;
   }
 
   static Future<void> signOut() async {
     try {
       await _auth.signOut();
     } catch (e) {
-      print(e);
+      log('Error signing out: ${e.toString()}');
+    }
+  }
+
+  static getUserDetails(String uid) async {
+    try {
+      final user = await _userRepo.getUser(uid);
+      return user;
+    } catch (e) {
+      log('Error getting user details: ${e.toString()}');
+      return null;
     }
   }
 }
