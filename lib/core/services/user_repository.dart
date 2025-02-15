@@ -8,8 +8,24 @@ class UserRepository {
     try {
       final collection = _firestore.collection('users');
       final updatedUser = userModel.copyWith(id: uid);
-      print('the user id is created $uid');
       await collection.doc(uid).set(updatedUser.toJson());
+    } catch (e) {
+      return e.toString();
+    }
+    return null;
+  }
+
+  Future<String?> bookLendedHistory(
+      String? uid, BookLendedHistory? lendedBook) async {
+    if (uid == null) {
+      return 'User id is null';
+    }
+    try {
+      final collection = _firestore
+          .collection('users')
+          .doc(uid)
+          .collection('bookLendedHistory');
+      await collection.add(lendedBook!.toJson());
     } catch (e) {
       return e.toString();
     }

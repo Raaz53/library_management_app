@@ -26,8 +26,8 @@ mixin _$UserModel {
   String? get bio => throw _privateConstructorUsedError;
   double? get rewardPoints => throw _privateConstructorUsedError;
   List<String>? get favourites => throw _privateConstructorUsedError;
-  List<BookLendedHistory>? get booksLendedHistory =>
-      throw _privateConstructorUsedError;
+  String? get profilePicture => throw _privateConstructorUsedError;
+  String? get role => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,7 +51,8 @@ abstract class $UserModelCopyWith<$Res> {
       String? bio,
       double? rewardPoints,
       List<String>? favourites,
-      List<BookLendedHistory>? booksLendedHistory});
+      String? profilePicture,
+      String? role});
 }
 
 /// @nodoc
@@ -75,7 +76,8 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? bio = freezed,
     Object? rewardPoints = freezed,
     Object? favourites = freezed,
-    Object? booksLendedHistory = freezed,
+    Object? profilePicture = freezed,
+    Object? role = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -102,10 +104,14 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.favourites
           : favourites // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      booksLendedHistory: freezed == booksLendedHistory
-          ? _value.booksLendedHistory
-          : booksLendedHistory // ignore: cast_nullable_to_non_nullable
-              as List<BookLendedHistory>?,
+      profilePicture: freezed == profilePicture
+          ? _value.profilePicture
+          : profilePicture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      role: freezed == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -125,7 +131,8 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? bio,
       double? rewardPoints,
       List<String>? favourites,
-      List<BookLendedHistory>? booksLendedHistory});
+      String? profilePicture,
+      String? role});
 }
 
 /// @nodoc
@@ -147,7 +154,8 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? bio = freezed,
     Object? rewardPoints = freezed,
     Object? favourites = freezed,
-    Object? booksLendedHistory = freezed,
+    Object? profilePicture = freezed,
+    Object? role = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
@@ -174,10 +182,14 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value._favourites
           : favourites // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      booksLendedHistory: freezed == booksLendedHistory
-          ? _value._booksLendedHistory
-          : booksLendedHistory // ignore: cast_nullable_to_non_nullable
-              as List<BookLendedHistory>?,
+      profilePicture: freezed == profilePicture
+          ? _value.profilePicture
+          : profilePicture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      role: freezed == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -192,9 +204,9 @@ class _$UserModelImpl implements _UserModel {
       this.bio,
       this.rewardPoints,
       final List<String>? favourites,
-      final List<BookLendedHistory>? booksLendedHistory})
-      : _favourites = favourites,
-        _booksLendedHistory = booksLendedHistory;
+      this.profilePicture,
+      this.role})
+      : _favourites = favourites;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -219,20 +231,14 @@ class _$UserModelImpl implements _UserModel {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<BookLendedHistory>? _booksLendedHistory;
   @override
-  List<BookLendedHistory>? get booksLendedHistory {
-    final value = _booksLendedHistory;
-    if (value == null) return null;
-    if (_booksLendedHistory is EqualUnmodifiableListView)
-      return _booksLendedHistory;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
+  final String? profilePicture;
+  @override
+  final String? role;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, email: $email, bio: $bio, rewardPoints: $rewardPoints, favourites: $favourites, booksLendedHistory: $booksLendedHistory)';
+    return 'UserModel(id: $id, name: $name, email: $email, bio: $bio, rewardPoints: $rewardPoints, favourites: $favourites, profilePicture: $profilePicture, role: $role)';
   }
 
   @override
@@ -248,8 +254,9 @@ class _$UserModelImpl implements _UserModel {
                 other.rewardPoints == rewardPoints) &&
             const DeepCollectionEquality()
                 .equals(other._favourites, _favourites) &&
-            const DeepCollectionEquality()
-                .equals(other._booksLendedHistory, _booksLendedHistory));
+            (identical(other.profilePicture, profilePicture) ||
+                other.profilePicture == profilePicture) &&
+            (identical(other.role, role) || other.role == role));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -262,7 +269,8 @@ class _$UserModelImpl implements _UserModel {
       bio,
       rewardPoints,
       const DeepCollectionEquality().hash(_favourites),
-      const DeepCollectionEquality().hash(_booksLendedHistory));
+      profilePicture,
+      role);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -288,7 +296,8 @@ abstract class _UserModel implements UserModel {
       final String? bio,
       final double? rewardPoints,
       final List<String>? favourites,
-      final List<BookLendedHistory>? booksLendedHistory}) = _$UserModelImpl;
+      final String? profilePicture,
+      final String? role}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -306,7 +315,9 @@ abstract class _UserModel implements UserModel {
   @override
   List<String>? get favourites;
   @override
-  List<BookLendedHistory>? get booksLendedHistory;
+  String? get profilePicture;
+  @override
+  String? get role;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

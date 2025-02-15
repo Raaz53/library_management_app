@@ -64,4 +64,9 @@ class Utilities {
       },
     );
   }
+
+  static void removePopupMenu() {
+    _currentOverlay?.remove();
+    _currentOverlay = null;
+  }
 }
