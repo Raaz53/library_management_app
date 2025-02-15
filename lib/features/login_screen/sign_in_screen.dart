@@ -25,6 +25,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   late UserSignInCubit _userSignInCubit;
+  bool _isObscured = true;
 
   @override
   void initState() {
@@ -85,6 +86,16 @@ class _SignInScreenState extends State<SignInScreen> {
                     context: context,
                     name: 'password',
                     headerTitle: 'Password',
+                    isObscured: _isObscured,
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isObscured = !_isObscured;
+                          });
+                        },
+                        icon: Icon(_isObscured
+                            ? Icons.visibility
+                            : Icons.visibility_off)),
                     textCapitalization: TextCapitalization.none,
                     isTextFieldOnly: false,
                     hint: 'Enter your password',
@@ -181,6 +192,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             name: _formKey.currentState!.value['full_name'],
                             email: _formKey.currentState!.value['email'],
                             bio: _formKey.currentState!.value['bio'],
+                            role: 'user',
                           );
                           String password =
                               _formKey.currentState!.value['password'];

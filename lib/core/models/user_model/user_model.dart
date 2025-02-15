@@ -13,7 +13,8 @@ class UserModel with _$UserModel {
     String? bio,
     double? rewardPoints,
     List<String>? favourites,
-    List<BookLendedHistory>? booksLendedHistory,
+    String? profilePicture,
+    String? role,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

@@ -1,5 +1,7 @@
+import 'package:book_hive/core/resources/assets.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../core/app_theme/app_colors.dart';
 
@@ -18,28 +20,20 @@ class _AddBookImageWidgetState extends State<AddBookImageWidget> {
       width: 146,
       height: 210,
       child: widget.imageData != null
-          ? Image.asset(widget.imageData!)
-          : Stack(
-              alignment: Alignment.center,
-              children: [
-                DottedBorder(
-                  borderType: BorderType.RRect,
-                  radius: Radius.circular(8),
-                  dashPattern: [4, 4],
-                  strokeWidth: 1,
-                  color: Colors.white24,
-                  child: Container(
-                    width: 146,
-                    height: 210,
-                    color: AppColors.transparent,
-                  ),
-                ),
-                Icon(
-                  Icons.add_circle,
-                  size: 50,
-                  color: Colors.white24,
-                ),
-              ],
+          ? CachedNetworkImage(
+              imageUrl: widget.imageData!,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Center(
+                child: CircularProgressIndicator(),
+              ),
+              errorWidget: (context, url, error) => Icon(
+                Icons.error,
+                color: AppColors.white,
+              ),
+            )
+          : Image.asset(
+              ImageAssets.harryPotter,
+              fit: BoxFit.cover,
             ),
     );
   }

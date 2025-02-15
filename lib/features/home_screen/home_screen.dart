@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     prefixIcon: Icon(Icons.search),
                     name: 'search',
                     hint: 'What would you like to read?',
-                    backgroundColor: Colors.black26.withOpacity(0.2),
+                    backgroundColor: Colors.black26.withValues(alpha: 0.2),
                     borderRadius: 16,
                   ),
                   20.verticalBox,
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min, // Ensures dynamic height
                 children: [
-                  NewBookGridView(), // This must have shrinkWrap: true inside
+                  NewBookGridView(),
                 ],
               ),
             ),

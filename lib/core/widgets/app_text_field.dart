@@ -11,6 +11,7 @@ class AppTextField {
 
   static Widget textField(
       {required BuildContext context,
+      Key? key,
       String? Function(String)? validator,
       required String name,
       TextStyle? style,
@@ -65,10 +66,7 @@ class AppTextField {
                 Expanded(
                   child: Text(
                     headerTitle ?? '',
-                    style: headerStyle ??
-                        AppTextStyles.bodyMediumMonserat.copyWith(
-                          color: AppColors.black,
-                        ),
+                    style: headerStyle ?? AppTextStyles.bodyMediumMonserat,
                   ),
                 ),
                 isRequired
@@ -81,6 +79,7 @@ class AppTextField {
             ),
           ),
         FormBuilderTextField(
+          key: key,
           name: name,
           initialValue: initialValue,
           controller: textEditingController,
@@ -147,6 +146,7 @@ class AppTextField {
     TextStyle? headerStyle,
     bool isRequired = false,
     Color? dropdownColor,
+    Widget? child,
   }) {
     final formatters = <TextInputFormatter>[];
     if (disablesEmojis) {
@@ -166,7 +166,7 @@ class AppTextField {
                 Expanded(
                   child: Text(
                     headerTitle ?? '',
-                    style: headerStyle,
+                    style: headerStyle ?? AppTextStyles.bodySmallMonserat,
                   ),
                 ),
                 isRequired
@@ -178,8 +178,9 @@ class AppTextField {
               ],
             ),
           ),
-        DropdownButtonFormField<T>(
-          value: initialValue,
+        FormBuilderDropdown<T>(
+          name: name,
+          initialValue: initialValue,
           onChanged: isDisabled ? null : onChanged,
           validator: validator,
           style: textStyle,
@@ -205,7 +206,7 @@ class AppTextField {
               .map(
                 (item) => DropdownMenuItem<T>(
                   value: item,
-                  child: Text(item.toString()), // Customize if needed
+                  child: child ?? Text(item.toString()), // Customize if needed
                 ),
               )
               .toList(),
