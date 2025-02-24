@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/routes/routes.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
@@ -59,6 +60,8 @@ class _LogInScreenState extends State<LogInScreen> {
               AppTextField.textField(
                 context: context,
                 name: 'email',
+                headerStyle: AppTextStyles.bodyMediumMonserat
+                    .copyWith(color: AppColors.black),
                 headerTitle: 'Email',
                 isTextFieldOnly: false,
                 hint: 'Enter your email',
@@ -75,6 +78,8 @@ class _LogInScreenState extends State<LogInScreen> {
               AppTextField.textField(
                 context: context,
                 name: 'password',
+                headerStyle: AppTextStyles.bodyMediumMonserat
+                    .copyWith(color: AppColors.black),
                 headerTitle: 'Password',
                 isTextFieldOnly: false,
                 hint: 'Enter your password',

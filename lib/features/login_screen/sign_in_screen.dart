@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/models/user_model/user_model.dart';
 import 'package:book_hive/core/routes/routes.dart';
@@ -57,6 +58,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   AppTextField.textField(
                     context: context,
                     headerTitle: 'Full Name',
+                    headerStyle: AppTextStyles.bodyMediumMonserat
+                        .copyWith(color: AppColors.black),
                     isTextFieldOnly: false,
                     name: 'full_name',
                     hint: 'Enter your name',
@@ -69,6 +72,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   AppTextField.textField(
                     context: context,
                     name: 'email',
+                    headerStyle: AppTextStyles.bodyMediumMonserat
+                        .copyWith(color: AppColors.black),
                     headerTitle: 'Email',
                     isTextFieldOnly: false,
                     textCapitalization: TextCapitalization.none,
@@ -85,6 +90,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   AppTextField.textField(
                     context: context,
                     name: 'password',
+                    headerStyle: AppTextStyles.bodyMediumMonserat
+                        .copyWith(color: AppColors.black),
                     headerTitle: 'Password',
                     isObscured: _isObscured,
                     suffixIcon: IconButton(
@@ -115,6 +122,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     context: context,
                     name: 'bio',
                     headerTitle: 'Bio',
+                    headerStyle: AppTextStyles.bodyMediumMonserat
+                        .copyWith(color: AppColors.black),
                     isTextFieldOnly: false,
                     hint: 'Say something about yourself',
                     borderRadius: 10,

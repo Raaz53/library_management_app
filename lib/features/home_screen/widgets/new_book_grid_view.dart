@@ -1,10 +1,13 @@
+import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/resources/assets.dart';
 
 class NewBookGridView extends StatelessWidget {
-  const NewBookGridView({super.key});
+  const NewBookGridView({super.key, this.books});
+  final List<FireBookModel>? books;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +27,9 @@ class NewBookGridView extends StatelessWidget {
                 mainAxisSpacing: 20,
                 childAspectRatio: 0.7,
               ),
-              itemCount: 6,
+              itemCount: books?.length ?? 6,
               itemBuilder: (context, index) {
+                final FireBookModel book = books![index];
                 return Container(
                   width: MediaQuery.sizeOf(context).width * 0.7,
                   decoration: BoxDecoration(
@@ -39,10 +43,15 @@ class NewBookGridView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Image.asset(
-                    ImageAssets.harryPotter,
-                    fit: BoxFit.fitHeight,
-                  ),
+                  child: book.bookImage != null
+                      ? CachedNetworkImage(
+                          imageUrl: book.bookImage!,
+                          fit: BoxFit.fitHeight,
+                        )
+                      : Image.asset(
+                          ImageAssets.harryPotter,
+                          fit: BoxFit.fitHeight,
+                        ),
                 );
               })
         ],

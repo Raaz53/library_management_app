@@ -24,7 +24,9 @@ class FireBookModel with _$FireBookModel {
     double? rating,
     int? ratingCount,
     String? publishedDate,
+    String? authors,
     List<String>? categories,
+    int? quantity,
   }) = _FireBookModel;
 
   factory FireBookModel.fromJson(Map<String, dynamic> json) =>

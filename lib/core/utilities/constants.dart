@@ -47,3 +47,14 @@ class Constants {
     "Children's Books",
   ];
 }
+
+class LibraryBookStatus {
+  static const String available = 'available';
+  static const String unavailable = 'unavailable';
+}
+
+class StudentBookStatus {
+  static const String borrowed = 'borrowed';
+  static const String overDue = 'over_due';
+  static const String returned = 'returned';
+}
