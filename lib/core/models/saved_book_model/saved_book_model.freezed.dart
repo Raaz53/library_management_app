@@ -179,7 +179,9 @@ mixin _$FireBookModel {
   double? get rating => throw _privateConstructorUsedError;
   int? get ratingCount => throw _privateConstructorUsedError;
   String? get publishedDate => throw _privateConstructorUsedError;
+  String? get authors => throw _privateConstructorUsedError;
   List<String>? get categories => throw _privateConstructorUsedError;
+  int? get quantity => throw _privateConstructorUsedError;
 
   /// Serializes this FireBookModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -206,7 +208,9 @@ abstract class $FireBookModelCopyWith<$Res> {
       double? rating,
       int? ratingCount,
       String? publishedDate,
-      List<String>? categories});
+      String? authors,
+      List<String>? categories,
+      int? quantity});
 }
 
 /// @nodoc
@@ -232,7 +236,9 @@ class _$FireBookModelCopyWithImpl<$Res, $Val extends FireBookModel>
     Object? rating = freezed,
     Object? ratingCount = freezed,
     Object? publishedDate = freezed,
+    Object? authors = freezed,
     Object? categories = freezed,
+    Object? quantity = freezed,
   }) {
     return _then(_value.copyWith(
       bookId: freezed == bookId
@@ -267,10 +273,18 @@ class _$FireBookModelCopyWithImpl<$Res, $Val extends FireBookModel>
           ? _value.publishedDate
           : publishedDate // ignore: cast_nullable_to_non_nullable
               as String?,
+      authors: freezed == authors
+          ? _value.authors
+          : authors // ignore: cast_nullable_to_non_nullable
+              as String?,
       categories: freezed == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      quantity: freezed == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -292,7 +306,9 @@ abstract class _$$FireBookModelImplCopyWith<$Res>
       double? rating,
       int? ratingCount,
       String? publishedDate,
-      List<String>? categories});
+      String? authors,
+      List<String>? categories,
+      int? quantity});
 }
 
 /// @nodoc
@@ -316,7 +332,9 @@ class __$$FireBookModelImplCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? ratingCount = freezed,
     Object? publishedDate = freezed,
+    Object? authors = freezed,
     Object? categories = freezed,
+    Object? quantity = freezed,
   }) {
     return _then(_$FireBookModelImpl(
       bookId: freezed == bookId
@@ -351,10 +369,18 @@ class __$$FireBookModelImplCopyWithImpl<$Res>
           ? _value.publishedDate
           : publishedDate // ignore: cast_nullable_to_non_nullable
               as String?,
+      authors: freezed == authors
+          ? _value.authors
+          : authors // ignore: cast_nullable_to_non_nullable
+              as String?,
       categories: freezed == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      quantity: freezed == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -371,7 +397,9 @@ class _$FireBookModelImpl implements _FireBookModel {
       this.rating,
       this.ratingCount,
       this.publishedDate,
-      final List<String>? categories})
+      this.authors,
+      final List<String>? categories,
+      this.quantity})
       : _categories = categories;
 
   factory _$FireBookModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -393,6 +421,8 @@ class _$FireBookModelImpl implements _FireBookModel {
   final int? ratingCount;
   @override
   final String? publishedDate;
+  @override
+  final String? authors;
   final List<String>? _categories;
   @override
   List<String>? get categories {
@@ -404,8 +434,11 @@ class _$FireBookModelImpl implements _FireBookModel {
   }
 
   @override
+  final int? quantity;
+
+  @override
   String toString() {
-    return 'FireBookModel(bookId: $bookId, googleId: $googleId, bookName: $bookName, bookImage: $bookImage, bookDescription: $bookDescription, rating: $rating, ratingCount: $ratingCount, publishedDate: $publishedDate, categories: $categories)';
+    return 'FireBookModel(bookId: $bookId, googleId: $googleId, bookName: $bookName, bookImage: $bookImage, bookDescription: $bookDescription, rating: $rating, ratingCount: $ratingCount, publishedDate: $publishedDate, authors: $authors, categories: $categories, quantity: $quantity)';
   }
 
   @override
@@ -427,8 +460,11 @@ class _$FireBookModelImpl implements _FireBookModel {
                 other.ratingCount == ratingCount) &&
             (identical(other.publishedDate, publishedDate) ||
                 other.publishedDate == publishedDate) &&
+            (identical(other.authors, authors) || other.authors == authors) &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                .equals(other._categories, _categories) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -443,7 +479,9 @@ class _$FireBookModelImpl implements _FireBookModel {
       rating,
       ratingCount,
       publishedDate,
-      const DeepCollectionEquality().hash(_categories));
+      authors,
+      const DeepCollectionEquality().hash(_categories),
+      quantity);
 
   /// Create a copy of FireBookModel
   /// with the given fields replaced by the non-null parameter values.
@@ -471,7 +509,9 @@ abstract class _FireBookModel implements FireBookModel {
       final double? rating,
       final int? ratingCount,
       final String? publishedDate,
-      final List<String>? categories}) = _$FireBookModelImpl;
+      final String? authors,
+      final List<String>? categories,
+      final int? quantity}) = _$FireBookModelImpl;
 
   factory _FireBookModel.fromJson(Map<String, dynamic> json) =
       _$FireBookModelImpl.fromJson;
@@ -493,7 +533,11 @@ abstract class _FireBookModel implements FireBookModel {
   @override
   String? get publishedDate;
   @override
+  String? get authors;
+  @override
   List<String>? get categories;
+  @override
+  int? get quantity;
 
   /// Create a copy of FireBookModel
   /// with the given fields replaced by the non-null parameter values.

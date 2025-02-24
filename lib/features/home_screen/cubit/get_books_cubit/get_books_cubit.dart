@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:book_hive/core/services/book_services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:book_hive/core/models/google_book_model/google_book_model.dart';

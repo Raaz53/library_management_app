@@ -27,9 +27,11 @@ _$FireBookModelImpl _$$FireBookModelImplFromJson(Map<String, dynamic> json) =>
       rating: (json['rating'] as num?)?.toDouble(),
       ratingCount: (json['ratingCount'] as num?)?.toInt(),
       publishedDate: json['publishedDate'] as String?,
+      authors: json['authors'] as String?,
       categories: (json['categories'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      quantity: (json['quantity'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$FireBookModelImplToJson(_$FireBookModelImpl instance) =>
@@ -42,7 +44,9 @@ Map<String, dynamic> _$$FireBookModelImplToJson(_$FireBookModelImpl instance) =>
       'rating': instance.rating,
       'ratingCount': instance.ratingCount,
       'publishedDate': instance.publishedDate,
+      'authors': instance.authors,
       'categories': instance.categories,
+      'quantity': instance.quantity,
     };
 
 _$ReviewModelImpl _$$ReviewModelImplFromJson(Map<String, dynamic> json) =>
