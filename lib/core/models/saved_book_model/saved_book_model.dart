@@ -25,6 +25,7 @@ class FireBookModel with _$FireBookModel {
     int? ratingCount,
     String? publishedDate,
     String? authors,
+    int? pageCount,
     List<String>? categories,
     int? quantity,
   }) = _FireBookModel;

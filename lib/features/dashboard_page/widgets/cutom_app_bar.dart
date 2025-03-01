@@ -12,8 +12,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     this.title,
+    this.leading,
   });
   final String? title;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: AppTextStyles.headlineLargeMonserat
             .copyWith(fontWeight: FontWeight.bold),
       ),
+      leading: leading,
       centerTitle: true,
       actions: [
         PopupMenuButton(

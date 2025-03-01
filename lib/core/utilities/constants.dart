@@ -53,6 +53,11 @@ class LibraryBookStatus {
   static const String unavailable = 'unavailable';
 }
 
+class UserRole {
+  static const String admin = 'admin';
+  static const String user = 'user';
+}
+
 class StudentBookStatus {
   static const String borrowed = 'borrowed';
   static const String overDue = 'over_due';

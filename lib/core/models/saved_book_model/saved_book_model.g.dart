@@ -28,6 +28,7 @@ _$FireBookModelImpl _$$FireBookModelImplFromJson(Map<String, dynamic> json) =>
       ratingCount: (json['ratingCount'] as num?)?.toInt(),
       publishedDate: json['publishedDate'] as String?,
       authors: json['authors'] as String?,
+      pageCount: (json['pageCount'] as num?)?.toInt(),
       categories: (json['categories'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -45,6 +46,7 @@ Map<String, dynamic> _$$FireBookModelImplToJson(_$FireBookModelImpl instance) =>
       'ratingCount': instance.ratingCount,
       'publishedDate': instance.publishedDate,
       'authors': instance.authors,
+      'pageCount': instance.pageCount,
       'categories': instance.categories,
       'quantity': instance.quantity,
     };

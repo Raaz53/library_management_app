@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:book_hive/core/app_theme/app_colors.dart';
@@ -39,6 +40,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
   late String? _imageData;
   late int _quantity;
   late String? _googleId;
+  late int? _pageCount;
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -51,6 +54,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     _imageData = null;
     _quantity = 1;
     _googleId = '';
+    _pageCount = 0;
   }
 
   _addQuantity() async {
@@ -77,13 +81,16 @@ class _AddBookScreenState extends State<AddBookScreen> {
         bookImage: _imageData,
         quantity: _quantity,
         googleId: _googleId,
+        rating: 0,
+        ratingCount: 0,
+        pageCount: _pageCount,
         authors: _formKey.currentState!.value['book_authors'],
         publishedDate: _formKey.currentState!.value['published_date'],
       );
 
       log('here the book name is ${fireBookModel.bookName}');
 
-      // await _addBookCubit.addBook(fireBookModel);
+      await _addBookCubit.addBook(fireBookModel);
       setState(
         () {
           _imageData = null;
@@ -94,6 +101,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
         },
       );
     }
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -143,7 +156,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
                       setState(() {
                         _isSearching = true;
                       });
-                      _searchQuery = value;
+                      if (_debounce?.isActive ?? false) _debounce?.cancel();
+                      _debounce =
+                          Timer.periodic(Duration(milliseconds: 500), (_) {
+                        _searchQuery = value;
+                      });
                       _getBooksCubit.getBooks(_searchQuery);
                     } else {
                       setState(() {
@@ -220,6 +237,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                                   '',
                                         },
                                       );
+                                      _pageCount =
+                                          book.volumeInfo?.pageCount ?? 0;
                                       _googleId = book.id;
                                       _imageData = book
                                           .volumeInfo?.imageLinks?.thumbnail;
@@ -287,7 +306,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 10.verticalBox,
                 CategoryCheckboxList(
                   categories: Constants.bookCategories,
-                  
                   onSelectionChanged: (selected) {
                     _selectedCategories = selected;
                   },

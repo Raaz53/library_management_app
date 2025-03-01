@@ -4,6 +4,7 @@ import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/models/user_model/user_model.dart';
 import 'package:book_hive/core/routes/routes.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
+import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
 import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:book_hive/core/widgets/app_button_widget.dart';
@@ -201,7 +202,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             name: _formKey.currentState!.value['full_name'],
                             email: _formKey.currentState!.value['email'],
                             bio: _formKey.currentState!.value['bio'],
-                            role: 'user',
+                            role: UserRole.user,
                           );
                           String password =
                               _formKey.currentState!.value['password'];

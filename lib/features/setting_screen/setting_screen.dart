@@ -34,7 +34,7 @@ class _SettingScreenState extends State<SettingScreen> {
           orElse: SizedBox.shrink,
           loading: () => Center(child: CircularProgressIndicator.adaptive()),
           error: (message) => Center(
-            child: Text('Error fetching user data',
+            child: Text('Error fetching user data $message',
                 style: AppTextStyles.bodyExtraSmallInter),
           ),
           success: (userData) {
