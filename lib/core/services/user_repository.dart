@@ -48,4 +48,39 @@ class UserRepository {
     }
     return null;
   }
+
+  Future<void> updateFavoriteBook({
+    String? bookId,
+    String? uid,
+    required bool isFavorite,
+  }) async {
+    try {
+      final collection = _firestore.collection('users').doc(uid);
+
+      await _firestore.runTransaction((transaction) async {
+        final snapshot = await transaction.get(collection);
+
+        if (!snapshot.exists) {
+          throw Exception("User document not found");
+        }
+
+        List<String> favorites =
+            List<String>.from(snapshot.data()?['favourites'] ?? []);
+
+        if (isFavorite) {
+          if (!favorites.contains(bookId)) {
+            favorites.add(bookId!);
+          }
+        } else {
+          favorites.remove(bookId);
+        }
+
+        transaction.update(collection, {'favourites': favorites});
+      });
+
+      log('Favorites updated successfully');
+    } catch (e) {
+      log('Error updating favorites: $e');
+    }
+  }
 }

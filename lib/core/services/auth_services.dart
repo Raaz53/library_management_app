@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:book_hive/core/models/user_model/user_model.dart';
-import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'user_repository.dart';
@@ -72,6 +71,17 @@ class AuthService {
     } catch (e) {
       log('Error getting user details: ${e.toString()}');
       return null;
+    }
+  }
+
+  static updateFavoriteList(String bookId, bool isFavorite) async {
+    try {
+      final user = _auth.currentUser;
+      await _userRepo.updateFavoriteBook(
+          bookId: bookId, uid: user?.uid, isFavorite: isFavorite);
+      return 'success';
+    } catch (e) {
+      log('here the update has failed');
     }
   }
 }
