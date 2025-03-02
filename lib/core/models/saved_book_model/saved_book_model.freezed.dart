@@ -180,6 +180,7 @@ mixin _$FireBookModel {
   int? get ratingCount => throw _privateConstructorUsedError;
   String? get publishedDate => throw _privateConstructorUsedError;
   String? get authors => throw _privateConstructorUsedError;
+  int? get pageCount => throw _privateConstructorUsedError;
   List<String>? get categories => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
 
@@ -209,6 +210,7 @@ abstract class $FireBookModelCopyWith<$Res> {
       int? ratingCount,
       String? publishedDate,
       String? authors,
+      int? pageCount,
       List<String>? categories,
       int? quantity});
 }
@@ -237,6 +239,7 @@ class _$FireBookModelCopyWithImpl<$Res, $Val extends FireBookModel>
     Object? ratingCount = freezed,
     Object? publishedDate = freezed,
     Object? authors = freezed,
+    Object? pageCount = freezed,
     Object? categories = freezed,
     Object? quantity = freezed,
   }) {
@@ -277,6 +280,10 @@ class _$FireBookModelCopyWithImpl<$Res, $Val extends FireBookModel>
           ? _value.authors
           : authors // ignore: cast_nullable_to_non_nullable
               as String?,
+      pageCount: freezed == pageCount
+          ? _value.pageCount
+          : pageCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       categories: freezed == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -307,6 +314,7 @@ abstract class _$$FireBookModelImplCopyWith<$Res>
       int? ratingCount,
       String? publishedDate,
       String? authors,
+      int? pageCount,
       List<String>? categories,
       int? quantity});
 }
@@ -333,6 +341,7 @@ class __$$FireBookModelImplCopyWithImpl<$Res>
     Object? ratingCount = freezed,
     Object? publishedDate = freezed,
     Object? authors = freezed,
+    Object? pageCount = freezed,
     Object? categories = freezed,
     Object? quantity = freezed,
   }) {
@@ -373,6 +382,10 @@ class __$$FireBookModelImplCopyWithImpl<$Res>
           ? _value.authors
           : authors // ignore: cast_nullable_to_non_nullable
               as String?,
+      pageCount: freezed == pageCount
+          ? _value.pageCount
+          : pageCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       categories: freezed == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -398,6 +411,7 @@ class _$FireBookModelImpl implements _FireBookModel {
       this.ratingCount,
       this.publishedDate,
       this.authors,
+      this.pageCount,
       final List<String>? categories,
       this.quantity})
       : _categories = categories;
@@ -423,6 +437,8 @@ class _$FireBookModelImpl implements _FireBookModel {
   final String? publishedDate;
   @override
   final String? authors;
+  @override
+  final int? pageCount;
   final List<String>? _categories;
   @override
   List<String>? get categories {
@@ -438,7 +454,7 @@ class _$FireBookModelImpl implements _FireBookModel {
 
   @override
   String toString() {
-    return 'FireBookModel(bookId: $bookId, googleId: $googleId, bookName: $bookName, bookImage: $bookImage, bookDescription: $bookDescription, rating: $rating, ratingCount: $ratingCount, publishedDate: $publishedDate, authors: $authors, categories: $categories, quantity: $quantity)';
+    return 'FireBookModel(bookId: $bookId, googleId: $googleId, bookName: $bookName, bookImage: $bookImage, bookDescription: $bookDescription, rating: $rating, ratingCount: $ratingCount, publishedDate: $publishedDate, authors: $authors, pageCount: $pageCount, categories: $categories, quantity: $quantity)';
   }
 
   @override
@@ -461,6 +477,8 @@ class _$FireBookModelImpl implements _FireBookModel {
             (identical(other.publishedDate, publishedDate) ||
                 other.publishedDate == publishedDate) &&
             (identical(other.authors, authors) || other.authors == authors) &&
+            (identical(other.pageCount, pageCount) ||
+                other.pageCount == pageCount) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
             (identical(other.quantity, quantity) ||
@@ -480,6 +498,7 @@ class _$FireBookModelImpl implements _FireBookModel {
       ratingCount,
       publishedDate,
       authors,
+      pageCount,
       const DeepCollectionEquality().hash(_categories),
       quantity);
 
@@ -510,6 +529,7 @@ abstract class _FireBookModel implements FireBookModel {
       final int? ratingCount,
       final String? publishedDate,
       final String? authors,
+      final int? pageCount,
       final List<String>? categories,
       final int? quantity}) = _$FireBookModelImpl;
 
@@ -534,6 +554,8 @@ abstract class _FireBookModel implements FireBookModel {
   String? get publishedDate;
   @override
   String? get authors;
+  @override
+  int? get pageCount;
   @override
   List<String>? get categories;
   @override

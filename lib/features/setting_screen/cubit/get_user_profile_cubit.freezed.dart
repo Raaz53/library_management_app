@@ -20,24 +20,24 @@ mixin _$GetUserProfileState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserModel user) success,
-    required TResult Function(String error) error,
+    required TResult Function(UserModel? user) success,
+    required TResult Function(String? error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserModel user)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(UserModel? user)? success,
+    TResult? Function(String? error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserModel user)? success,
-    TResult Function(String error)? error,
+    TResult Function(UserModel? user)? success,
+    TResult Function(String? error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -132,8 +132,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserModel user) success,
-    required TResult Function(String error) error,
+    required TResult Function(UserModel? user) success,
+    required TResult Function(String? error) error,
   }) {
     return initial();
   }
@@ -143,8 +143,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserModel user)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(UserModel? user)? success,
+    TResult? Function(String? error)? error,
   }) {
     return initial?.call();
   }
@@ -154,8 +154,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserModel user)? success,
-    TResult Function(String error)? error,
+    TResult Function(UserModel? user)? success,
+    TResult Function(String? error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -249,8 +249,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserModel user) success,
-    required TResult Function(String error) error,
+    required TResult Function(UserModel? user) success,
+    required TResult Function(String? error) error,
   }) {
     return loading();
   }
@@ -260,8 +260,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserModel user)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(UserModel? user)? success,
+    TResult? Function(String? error)? error,
   }) {
     return loading?.call();
   }
@@ -271,8 +271,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserModel user)? success,
-    TResult Function(String error)? error,
+    TResult Function(UserModel? user)? success,
+    TResult Function(String? error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -329,9 +329,9 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({UserModel user});
+  $Res call({UserModel? user});
 
-  $UserModelCopyWith<$Res> get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -347,13 +347,13 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? user = freezed,
   }) {
     return _then(_$SuccessImpl(
-      null == user
+      freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+              as UserModel?,
     ));
   }
 
@@ -361,8 +361,12 @@ class __$$SuccessImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res> get user {
-    return $UserModelCopyWith<$Res>(_value.user, (value) {
+  $UserModelCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserModelCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value));
     });
   }
@@ -374,7 +378,7 @@ class _$SuccessImpl implements _Success {
   const _$SuccessImpl(this.user);
 
   @override
-  final UserModel user;
+  final UserModel? user;
 
   @override
   String toString() {
@@ -405,8 +409,8 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserModel user) success,
-    required TResult Function(String error) error,
+    required TResult Function(UserModel? user) success,
+    required TResult Function(String? error) error,
   }) {
     return success(user);
   }
@@ -416,8 +420,8 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserModel user)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(UserModel? user)? success,
+    TResult? Function(String? error)? error,
   }) {
     return success?.call(user);
   }
@@ -427,8 +431,8 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserModel user)? success,
-    TResult Function(String error)? error,
+    TResult Function(UserModel? user)? success,
+    TResult Function(String? error)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -476,9 +480,9 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements GetUserProfileState {
-  const factory _Success(final UserModel user) = _$SuccessImpl;
+  const factory _Success(final UserModel? user) = _$SuccessImpl;
 
-  UserModel get user;
+  UserModel? get user;
 
   /// Create a copy of GetUserProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -493,7 +497,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String error});
+  $Res call({String? error});
 }
 
 /// @nodoc
@@ -509,13 +513,13 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = null,
+    Object? error = freezed,
   }) {
     return _then(_$ErrorImpl(
-      null == error
+      freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -526,7 +530,7 @@ class _$ErrorImpl implements _Error {
   const _$ErrorImpl(this.error);
 
   @override
-  final String error;
+  final String? error;
 
   @override
   String toString() {
@@ -557,8 +561,8 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserModel user) success,
-    required TResult Function(String error) error,
+    required TResult Function(UserModel? user) success,
+    required TResult Function(String? error) error,
   }) {
     return error(this.error);
   }
@@ -568,8 +572,8 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserModel user)? success,
-    TResult? Function(String error)? error,
+    TResult? Function(UserModel? user)? success,
+    TResult? Function(String? error)? error,
   }) {
     return error?.call(this.error);
   }
@@ -579,8 +583,8 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserModel user)? success,
-    TResult Function(String error)? error,
+    TResult Function(UserModel? user)? success,
+    TResult Function(String? error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -628,9 +632,9 @@ class _$ErrorImpl implements _Error {
 }
 
 abstract class _Error implements GetUserProfileState {
-  const factory _Error(final String error) = _$ErrorImpl;
+  const factory _Error(final String? error) = _$ErrorImpl;
 
-  String get error;
+  String? get error;
 
   /// Create a copy of GetUserProfileState
   /// with the given fields replaced by the non-null parameter values.

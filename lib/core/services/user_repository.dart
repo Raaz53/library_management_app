@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book_hive/core/models/user_model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -8,7 +10,9 @@ class UserRepository {
     try {
       final collection = _firestore.collection('users');
       final updatedUser = userModel.copyWith(id: uid);
-      await collection.doc(uid).set(updatedUser.toJson());
+      await collection.doc(uid).set(updatedUser.toJson()).whenComplete(() {
+        log('here the account is created');
+      });
     } catch (e) {
       return e.toString();
     }

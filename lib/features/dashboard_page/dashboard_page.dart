@@ -1,12 +1,17 @@
 import 'package:auto_route/annotations.dart';
 import 'package:book_hive/core/app_theme/app_colors.dart';
+import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/resources/assets.dart';
+import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/features/add_book_screen/add_book_screen.dart';
 import 'package:book_hive/features/book_list_screen/book_list_screen.dart';
 import 'package:book_hive/features/dashboard_page/widgets/cutom_app_bar.dart';
+import 'package:book_hive/features/favorite_screen/favorite_screen.dart';
 import 'package:book_hive/features/home_screen/home_screen.dart';
+import 'package:book_hive/features/setting_screen/cubit/get_user_profile_cubit.dart';
 import 'package:book_hive/features/setting_screen/setting_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 @RoutePage(name: 'Dashboard')
@@ -19,18 +24,19 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
+  late GetUserProfileCubit _getUserProfileCubit;
 
-  final List<Widget> _pages = [
-    HomeScreen(),
-    BookListScreen(),
-    AddBookScreen(),
-    SettingScreen(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _getUserProfileCubit = Injector.instance<GetUserProfileCubit>();
+    _getUserProfileCubit.getUserProfile();
+  }
 
   final List<String> _tabTitles = [
     'Book Hive',
     'Book List',
-    'Add New Book',
+    globalUserRole == UserRole.admin ? 'Add New Book' : 'Favorite Books',
     'Settings',
   ];
 
@@ -47,9 +53,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
           title: _tabTitles[_currentIndex],
         ),
         backgroundColor: AppColors.lightBlack,
-        body: IndexedStack(
-          index: _currentIndex,
-          children: _pages,
+        body: BlocConsumer<GetUserProfileCubit, GetUserProfileState>(
+          bloc: _getUserProfileCubit,
+          listener: (context, state) {
+            state.maybeWhen(
+                orElse: () {},
+                success: (userData) {
+                  setState(() {});
+                });
+          },
+          builder: (context, state) {
+            return state.maybeWhen(
+                orElse: () => SizedBox.shrink(),
+                loading: () => Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                success: (userData) {
+                  return IndexedStack(
+                    index: _currentIndex,
+                    children: [
+                      HomeScreen(),
+                      BookListScreen(),
+                      globalUserRole == UserRole.admin
+                          ? AddBookScreen()
+                          : FavoriteScreen(),
+                      SettingScreen(
+                        userModel: userData,
+                      ),
+                    ],
+                  );
+                },
+                error: (message) => Center(
+                      child: Text('Error fetching data'),
+                    ));
+          },
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
@@ -74,8 +111,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             _buildNavBarItem(
               2,
-              SvgAssets.addSelected,
-              SvgAssets.addUnselected,
+              globalUserRole == UserRole.admin
+                  ? SvgAssets.addSelected
+                  : SvgAssets.favoriteSelected,
+              globalUserRole == UserRole.admin
+                  ? SvgAssets.addUnselected
+                  : SvgAssets.favoriteUnselected,
             ),
             _buildNavBarItem(
               3,

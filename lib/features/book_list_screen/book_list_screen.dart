@@ -1,8 +1,13 @@
 import 'package:book_hive/core/app_theme/app_colors.dart';
+import 'package:book_hive/core/injection/injection.dart';
+import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:book_hive/core/utilities/constants.dart';
+import 'package:book_hive/features/home_screen/cubit/get_firebase_books_cubit/get_firebase_books_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/widgets/app_text_field.dart';
+import 'widgets/category_result_tab.dart';
 
 class BookListScreen extends StatefulWidget {
   const BookListScreen({super.key});
@@ -14,14 +19,19 @@ class BookListScreen extends StatefulWidget {
 class _BookListScreenState extends State<BookListScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  late GetFirebaseBooksCubit _getFirebaseBooksCubit;
 
   final List<String> _categories = ['All'];
+  late List<FireBookModel> booksData;
 
   @override
   void initState() {
     super.initState();
+    _getFirebaseBooksCubit = Injector.instance<GetFirebaseBooksCubit>();
+    _getFirebaseBooksCubit.getFirebaseBooks();
     _categories.addAll(Constants.bookCategories);
     _tabController = TabController(length: _categories.length, vsync: this);
+    booksData = [];
   }
 
   @override
@@ -55,17 +65,29 @@ class _BookListScreenState extends State<BookListScreen>
                         ))
                     .toList()),
             Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: _categories
-                    .map((category) => Center(
-                          child: Text(
-                            category,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ))
-                    .toList(),
-              ),
+              child: BlocConsumer<GetFirebaseBooksCubit, GetFirebaseBooksState>(
+                  listener: (context, state) {
+                    booksData = state.maybeWhen(
+                        orElse: () => [], success: (books) => books ?? []);
+                  },
+                  bloc: _getFirebaseBooksCubit,
+                  builder: (context, state) {
+                    return state.maybeWhen(
+                        orElse: () => SizedBox.shrink(),
+                        success: (books) {
+                          return TabBarView(
+                            controller: _tabController,
+                            children: _categories
+                                .map(
+                                  (category) => CategoryResultTab(
+                                    category: category,
+                                    bookModels: booksData,
+                                  ),
+                                )
+                                .toList(),
+                          );
+                        });
+                  }),
             ),
           ],
         ),

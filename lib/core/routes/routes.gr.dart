@@ -11,6 +11,48 @@
 part of 'routes.dart';
 
 /// generated route for
+/// [BookDetailsScreen]
+class BookDetails extends PageRouteInfo<BookDetailsArgs> {
+  BookDetails({
+    Key? key,
+    FireBookModel? fireBookModel,
+    List<PageRouteInfo>? children,
+  }) : super(
+         BookDetails.name,
+         args: BookDetailsArgs(key: key, fireBookModel: fireBookModel),
+         initialChildren: children,
+       );
+
+  static const String name = 'BookDetails';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<BookDetailsArgs>(
+        orElse: () => const BookDetailsArgs(),
+      );
+      return BookDetailsScreen(
+        key: args.key,
+        fireBookModel: args.fireBookModel,
+      );
+    },
+  );
+}
+
+class BookDetailsArgs {
+  const BookDetailsArgs({this.key, this.fireBookModel});
+
+  final Key? key;
+
+  final FireBookModel? fireBookModel;
+
+  @override
+  String toString() {
+    return 'BookDetailsArgs{key: $key, fireBookModel: $fireBookModel}';
+  }
+}
+
+/// generated route for
 /// [DashboardScreen]
 class Dashboard extends PageRouteInfo<void> {
   const Dashboard({List<PageRouteInfo>? children})
