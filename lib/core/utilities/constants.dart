@@ -58,6 +58,8 @@ class UserRole {
   static const String user = 'user';
 }
 
+String globalUserRole = UserRole.user;
+
 class StudentBookStatus {
   static const String borrowed = 'borrowed';
   static const String overDue = 'over_due';

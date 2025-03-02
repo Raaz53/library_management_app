@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:auto_route/annotations.dart';
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/injection/injection.dart';
+import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
-import 'package:book_hive/core/widgets/app_text_field.dart';
 import 'package:book_hive/features/home_screen/widgets/author_list_view.dart';
 import 'package:book_hive/features/home_screen/widgets/new_book_grid_view.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: LayoutBuilder(builder: (context, constraints) {
+      log('here the user role is $globalUserRole');
+
       return SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Column(
