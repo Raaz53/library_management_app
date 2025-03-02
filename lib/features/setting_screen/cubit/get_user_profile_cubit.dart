@@ -17,6 +17,7 @@ class GetUserProfileCubit extends Cubit<GetUserProfileState> {
       final UserModel? userData = await AuthService.getUserDetails(uid);
 
       globalUserRole = userData?.role ?? UserRole.user;
+      userFavoriteBooks = userData?.favourites ?? [];
       emit(GetUserProfileState.success(userData));
     } catch (e) {
       emit(GetUserProfileState.error(e.toString()));
