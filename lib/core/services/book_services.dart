@@ -69,4 +69,23 @@ class BookService {
       log('Error fetching books from Firebase: $e');
     }
   }
+
+  static getFavoriteBooks(List<String>? favoriteBooksId) async {
+    try {
+      final data = await _bookDatabase.getFavoriteBooks(favoriteBooksId);
+      return data;
+    } catch (e) {
+      log('the error is thrown during getting favorite books: $e');
+    }
+  }
+
+  static getBookStatusDetails(String? bookId) async {
+    try {
+      final data = await _bookDatabase.getBookDetailsStatus(bookId);
+      log('here the data is ${data?.length}');
+      return data;
+    } catch (e) {
+      log('the error is thrown during getting book status details: $e');
+    }
+  }
 }

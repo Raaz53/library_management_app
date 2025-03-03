@@ -55,12 +55,14 @@ _$ReviewModelImpl _$$ReviewModelImplFromJson(Map<String, dynamic> json) =>
     _$ReviewModelImpl(
       studentId: json['studentId'] as String?,
       reviewString: json['reviewString'] as String?,
+      rating: (json['rating'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$ReviewModelImplToJson(_$ReviewModelImpl instance) =>
     <String, dynamic>{
       'studentId': instance.studentId,
       'reviewString': instance.reviewString,
+      'rating': instance.rating,
     };
 
 _$BookStatusDetailImpl _$$BookStatusDetailImplFromJson(

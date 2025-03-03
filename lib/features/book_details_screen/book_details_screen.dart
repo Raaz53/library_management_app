@@ -9,6 +9,7 @@ import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
 import 'package:book_hive/core/widgets/app_button_widget.dart';
+import 'package:book_hive/features/book_details_screen/cubit/get_book_status_details_cubit/get_book_status_details_cubit.dart';
 import 'package:book_hive/features/dashboard_page/widgets/cutom_app_bar.dart';
 import 'package:book_hive/features/favorite_screen/cubit/update_favorite_books/update_favorite_books_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -26,16 +27,22 @@ class BookDetailsScreen extends StatefulWidget {
 
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
   late bool _isFavorite;
+  late GetBookStatusDetailsCubit _getBookStatusDetailsCubit;
   late UpdateFavoriteBooksCubit _updateFavoriteBooksCubit;
+  late bool _isAvailable;
 
   @override
   void initState() {
     super.initState();
     _updateFavoriteBooksCubit = Injector.instance<UpdateFavoriteBooksCubit>();
+    _getBookStatusDetailsCubit = Injector.instance<GetBookStatusDetailsCubit>();
+    _getBookStatusDetailsCubit
+        .getBookStatusDetails(widget.fireBookModel?.bookId);
 
     // Initialize favorite state correctly
     _isFavorite =
         userFavoriteBooks?.contains(widget.fireBookModel?.bookId) ?? false;
+    _isAvailable = true;
   }
 
   void _toggleFavorite() {
@@ -92,120 +99,154 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
         builder: (context, state) {
           return state.maybeWhen(
             loading: () => Center(child: CircularProgressIndicator()),
-            orElse: () => Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    20.verticalBox,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+            orElse: () => BlocBuilder<GetBookStatusDetailsCubit,
+                GetBookStatusDetailsState>(
+              bloc: _getBookStatusDetailsCubit,
+              builder: (context, state) {
+                final availableBook = state.maybeWhen(orElse: () {
+                  _isAvailable = false;
+                  return null;
+                }, success: (bookStatusDetails) {
+                  return bookStatusDetails?.firstWhere(
+                    (book) {
+                      if (book.bookStatus == LibraryBookStatus.available) {
+                        _isAvailable = true;
+                        return book.bookStatus == LibraryBookStatus.available;
+                      } else {
+                        _isAvailable = false;
+                        return false;
+                      }
+                    },
+                  );
+                }, error: (_) {
+                  _isAvailable = false;
+                  return null;
+                });
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Container(
-                          height: 300,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.black.withOpacity(0.7),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: widget.fireBookModel?.bookImage != null
-                                ? CachedNetworkImage(
-                                    imageUrl: widget.fireBookModel!.bookImage!,
-                                    fit: BoxFit.fitHeight,
-                                  )
-                                : Image.asset(
-                                    ImageAssets.harryPotter,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        20.verticalBox,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: _toggleFavorite,
-                                  child: Icon(
-                                    Icons.favorite,
-                                    color: _isFavorite
-                                        ? AppColors.red
-                                        : AppColors.buttonSecondary,
-                                  ),
-                                ),
-                                5.horizontalBox,
-                                Text(
-                                  'Favorite',
-                                  style: AppTextStyles.bodyMediumMonserat
-                                      .copyWith(fontWeight: FontWeight.w800),
-                                ),
-                              ],
+                            Container(
+                              height: 300,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.black.withOpacity(0.7),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: widget.fireBookModel?.bookImage != null
+                                    ? CachedNetworkImage(
+                                        imageUrl:
+                                            widget.fireBookModel!.bookImage!,
+                                        fit: BoxFit.fitHeight,
+                                      )
+                                    : Image.asset(
+                                        ImageAssets.harryPotter,
+                                        fit: BoxFit.fitHeight,
+                                      ),
+                              ),
                             ),
-                            30.verticalBox,
-                            Row(
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(
-                                  Icons.star,
-                                  color: AppColors.buttonSecondary,
-                                ),
-                                5.horizontalBox,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
+                                    GestureDetector(
+                                      onTap: _toggleFavorite,
+                                      child: Icon(
+                                        Icons.favorite,
+                                        color: _isFavorite
+                                            ? AppColors.red
+                                            : AppColors.buttonSecondary,
+                                      ),
+                                    ),
+                                    5.horizontalBox,
                                     Text(
-                                      widget.fireBookModel?.rating == null
-                                          ? '0'
-                                          : widget.fireBookModel?.rating
-                                                  .toString() ??
-                                              '0',
+                                      'Favorite',
                                       style: AppTextStyles.bodyMediumMonserat
                                           .copyWith(
                                               fontWeight: FontWeight.w800),
-                                    ),
-                                    Text(
-                                      'Rating',
-                                      style: AppTextStyles.bodyExtraSmallInter
-                                          .copyWith(
-                                              color: AppColors.white
-                                                  .withValues(alpha: 0.5)),
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                            30.verticalBox,
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.import_contacts,
-                                  color: AppColors.buttonSecondary,
-                                ),
-                                5.horizontalBox,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                30.verticalBox,
+                                Row(
                                   children: [
-                                    Text(
-                                      '238',
-                                      style: AppTextStyles.bodyMediumMonserat
-                                          .copyWith(
-                                              fontWeight: FontWeight.w800),
+                                    Icon(
+                                      Icons.star,
+                                      color: AppColors.buttonSecondary,
                                     ),
-                                    Text(
-                                      'Pages',
-                                      style: AppTextStyles.bodyExtraSmallInter
-                                          .copyWith(
-                                              color: AppColors.white
-                                                  .withValues(alpha: 0.5)),
+                                    5.horizontalBox,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          widget.fireBookModel?.rating == null
+                                              ? '0'
+                                              : widget.fireBookModel?.rating
+                                                      .toString() ??
+                                                  '0',
+                                          style: AppTextStyles
+                                              .bodyMediumMonserat
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w800),
+                                        ),
+                                        Text(
+                                          'Rating',
+                                          style: AppTextStyles
+                                              .bodyExtraSmallInter
+                                              .copyWith(
+                                                  color: AppColors.white
+                                                      .withValues(alpha: 0.5)),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                30.verticalBox,
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.import_contacts,
+                                      color: AppColors.buttonSecondary,
+                                    ),
+                                    5.horizontalBox,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '238',
+                                          style: AppTextStyles
+                                              .bodyMediumMonserat
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w800),
+                                        ),
+                                        Text(
+                                          'Pages',
+                                          style: AppTextStyles
+                                              .bodyExtraSmallInter
+                                              .copyWith(
+                                                  color: AppColors.white
+                                                      .withValues(alpha: 0.5)),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -213,40 +254,49 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             ),
                           ],
                         ),
+                        20.verticalBox,
+                        Text(
+                          'By ${widget.fireBookModel?.authors ?? 'John Doe'}',
+                          style: AppTextStyles.bodyMediumMonserat,
+                        ),
+                        10.verticalBox,
+                        Text(
+                          widget.fireBookModel?.bookName ??
+                              'Harry Potter and the Philosopher\'s Stone',
+                          style: AppTextStyles.headlineMediumMonserat.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        30.verticalBox,
+                        Text(
+                          widget.fireBookModel?.bookDescription ??
+                              'No description available.',
+                          style: AppTextStyles.bodyExtraSmallInter.copyWith(
+                            color: AppColors.white.withOpacity(0.5),
+                          ),
+                        ),
+                        20.verticalBox,
+                        if (globalUserRole == UserRole.user)
+                          AbsorbPointer(
+                            absorbing: !_isAvailable,
+                            child: AppButton(
+                              title: 'Borrow',
+                              textColor: AppColors.black,
+                              onClick: () {
+                                log('here the book information is ${availableBook?.bookStatus} & ${availableBook?.bookNumber}');
+                              },
+                              backgroundColor: _isAvailable
+                                  ? AppColors.buttonSecondary
+                                  : AppColors.buttonSecondary
+                                      .withValues(alpha: 0.2),
+                            ),
+                          ),
+                        20.verticalBox,
                       ],
                     ),
-                    20.verticalBox,
-                    Text(
-                      'By ${widget.fireBookModel?.authors ?? 'John Doe'}',
-                      style: AppTextStyles.bodyMediumMonserat,
-                    ),
-                    10.verticalBox,
-                    Text(
-                      widget.fireBookModel?.bookName ??
-                          'Harry Potter and the Philosopher\'s Stone',
-                      style: AppTextStyles.headlineMediumMonserat.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    30.verticalBox,
-                    Text(
-                      widget.fireBookModel?.bookDescription ??
-                          'No description available.',
-                      style: AppTextStyles.bodyExtraSmallInter.copyWith(
-                        color: AppColors.white.withOpacity(0.5),
-                      ),
-                    ),
-                    20.verticalBox,
-                    AppButton(
-                      title: 'Borrow',
-                      textColor: AppColors.black,
-                      onClick: () {},
-                      backgroundColor: AppColors.buttonSecondary,
-                    ),
-                    20.verticalBox,
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
           );
         },

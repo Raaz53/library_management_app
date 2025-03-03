@@ -577,6 +577,7 @@ ReviewModel _$ReviewModelFromJson(Map<String, dynamic> json) {
 mixin _$ReviewModel {
   String? get studentId => throw _privateConstructorUsedError;
   String? get reviewString => throw _privateConstructorUsedError;
+  double? get rating => throw _privateConstructorUsedError;
 
   /// Serializes this ReviewModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -594,7 +595,7 @@ abstract class $ReviewModelCopyWith<$Res> {
           ReviewModel value, $Res Function(ReviewModel) then) =
       _$ReviewModelCopyWithImpl<$Res, ReviewModel>;
   @useResult
-  $Res call({String? studentId, String? reviewString});
+  $Res call({String? studentId, String? reviewString, double? rating});
 }
 
 /// @nodoc
@@ -614,6 +615,7 @@ class _$ReviewModelCopyWithImpl<$Res, $Val extends ReviewModel>
   $Res call({
     Object? studentId = freezed,
     Object? reviewString = freezed,
+    Object? rating = freezed,
   }) {
     return _then(_value.copyWith(
       studentId: freezed == studentId
@@ -624,6 +626,10 @@ class _$ReviewModelCopyWithImpl<$Res, $Val extends ReviewModel>
           ? _value.reviewString
           : reviewString // ignore: cast_nullable_to_non_nullable
               as String?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -636,7 +642,7 @@ abstract class _$$ReviewModelImplCopyWith<$Res>
       __$$ReviewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? studentId, String? reviewString});
+  $Res call({String? studentId, String? reviewString, double? rating});
 }
 
 /// @nodoc
@@ -654,6 +660,7 @@ class __$$ReviewModelImplCopyWithImpl<$Res>
   $Res call({
     Object? studentId = freezed,
     Object? reviewString = freezed,
+    Object? rating = freezed,
   }) {
     return _then(_$ReviewModelImpl(
       studentId: freezed == studentId
@@ -664,6 +671,10 @@ class __$$ReviewModelImplCopyWithImpl<$Res>
           ? _value.reviewString
           : reviewString // ignore: cast_nullable_to_non_nullable
               as String?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -671,7 +682,7 @@ class __$$ReviewModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ReviewModelImpl implements _ReviewModel {
-  _$ReviewModelImpl({this.studentId, this.reviewString});
+  _$ReviewModelImpl({this.studentId, this.reviewString, this.rating});
 
   factory _$ReviewModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ReviewModelImplFromJson(json);
@@ -680,10 +691,12 @@ class _$ReviewModelImpl implements _ReviewModel {
   final String? studentId;
   @override
   final String? reviewString;
+  @override
+  final double? rating;
 
   @override
   String toString() {
-    return 'ReviewModel(studentId: $studentId, reviewString: $reviewString)';
+    return 'ReviewModel(studentId: $studentId, reviewString: $reviewString, rating: $rating)';
   }
 
   @override
@@ -694,12 +707,13 @@ class _$ReviewModelImpl implements _ReviewModel {
             (identical(other.studentId, studentId) ||
                 other.studentId == studentId) &&
             (identical(other.reviewString, reviewString) ||
-                other.reviewString == reviewString));
+                other.reviewString == reviewString) &&
+            (identical(other.rating, rating) || other.rating == rating));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, studentId, reviewString);
+  int get hashCode => Object.hash(runtimeType, studentId, reviewString, rating);
 
   /// Create a copy of ReviewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -718,8 +732,10 @@ class _$ReviewModelImpl implements _ReviewModel {
 }
 
 abstract class _ReviewModel implements ReviewModel {
-  factory _ReviewModel({final String? studentId, final String? reviewString}) =
-      _$ReviewModelImpl;
+  factory _ReviewModel(
+      {final String? studentId,
+      final String? reviewString,
+      final double? rating}) = _$ReviewModelImpl;
 
   factory _ReviewModel.fromJson(Map<String, dynamic> json) =
       _$ReviewModelImpl.fromJson;
@@ -728,6 +744,8 @@ abstract class _ReviewModel implements ReviewModel {
   String? get studentId;
   @override
   String? get reviewString;
+  @override
+  double? get rating;
 
   /// Create a copy of ReviewModel
   /// with the given fields replaced by the non-null parameter values.

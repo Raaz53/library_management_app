@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -77,5 +79,53 @@ class BookDatabase {
       print('Error getting books: $e');
     }
     return null;
+  }
+
+  Future<List<FireBookModel>?> getFavoriteBooks(List<String>? favorites) async {
+    if (favorites == null || favorites.isEmpty) return [];
+
+    try {
+      final collection = FirebaseFirestore.instance
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList');
+
+      List<FireBookModel> favoriteBooks = [];
+
+      for (String bookId in favorites) {
+        final docSnapshot = await collection.doc(bookId).get();
+        if (docSnapshot.exists) {
+          favoriteBooks.add(FireBookModel.fromJson(docSnapshot.data()!));
+        }
+      }
+
+      return favoriteBooks;
+    } catch (e) {
+      log("Error fetching favorite books: $e");
+      return null;
+    }
+  }
+
+  Future<List<BookStatusDetail>?> getBookDetailsStatus(String? bookId) async {
+    if (bookId == null) return null;
+    try {
+      final collection = _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookId)
+          .collection('bookStatusDetail');
+
+      final docSnapshot = await collection.get();
+
+      List<BookStatusDetail> bookStatus = docSnapshot.docs
+          .map((doc) => BookStatusDetail.fromJson(doc.data()))
+          .toList();
+
+      return bookStatus;
+    } catch (e) {
+      log("Error fetching books status: $e");
+      return null;
+    }
   }
 }

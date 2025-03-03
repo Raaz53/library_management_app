@@ -39,6 +39,7 @@ class ReviewModel with _$ReviewModel {
   factory ReviewModel({
     String? studentId,
     String? reviewString,
+    double? rating,
   }) = _ReviewModel;
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) =>

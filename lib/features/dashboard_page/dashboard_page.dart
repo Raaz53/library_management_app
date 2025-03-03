@@ -4,7 +4,9 @@ import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/resources/assets.dart';
 import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/features/add_book_screen/add_book_screen.dart';
+import 'package:book_hive/features/book_lend/book_lend_screen.dart';
 import 'package:book_hive/features/book_list_screen/book_list_screen.dart';
+import 'package:book_hive/features/book_request_screen/book_request_screen.dart';
 import 'package:book_hive/features/dashboard_page/widgets/cutom_app_bar.dart';
 import 'package:book_hive/features/favorite_screen/favorite_screen.dart';
 import 'package:book_hive/features/home_screen/home_screen.dart';
@@ -37,6 +39,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     'Book Hive',
     'Book List',
     globalUserRole == UserRole.admin ? 'Add New Book' : 'Favorite Books',
+    globalUserRole == UserRole.admin ? 'Book Request' : 'Book Lend',
     'Settings',
   ];
 
@@ -76,7 +79,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       BookListScreen(),
                       globalUserRole == UserRole.admin
                           ? AddBookScreen()
-                          : FavoriteScreen(),
+                          : FavoriteScreen(
+                              favoriteBookId: userData?.favourites,
+                            ),
+                      globalUserRole == UserRole.admin
+                          ? BookRequestScreen()
+                          : BookLendScreen(),
                       SettingScreen(
                         userModel: userData,
                       ),
@@ -120,6 +128,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             _buildNavBarItem(
               3,
+              SvgAssets.librarySelected,
+              SvgAssets.libraryUnselected,
+            ),
+            _buildNavBarItem(
+              4,
               SvgAssets.profileSelected,
               SvgAssets.profileUnselected,
             ),

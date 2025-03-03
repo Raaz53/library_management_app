@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/resources/assets.dart';
 import 'package:book_hive/core/routes/routes.dart';
+import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
 import 'package:book_hive/core/widgets/app_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +25,20 @@ class OnboardingScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset(SvgAssets.onBoarding),
-                    50.verticalBox,
-                    Text('Explore'),
-                    20.verticalBox,
-                    Text('Discover new'),
-                    Text('reads'),
+                    10.verticalBox,
+                    Text(
+                      'Explore',
+                      style: AppTextStyles.headlineLargeMonserat.copyWith(
+                          fontSize: 50,
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w900),
+                    ),
+                    10.verticalBox,
+                    Text(
+                      'Discover new reads',
+                      style: AppTextStyles.headlineSmallPoppins
+                          .copyWith(color: AppColors.black, letterSpacing: 5),
+                    ),
                   ],
                 ),
               ),
