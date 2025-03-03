@@ -82,10 +82,45 @@ class BookService {
   static getBookStatusDetails(String? bookId) async {
     try {
       final data = await _bookDatabase.getBookDetailsStatus(bookId);
-      log('here the data is ${data?.length}');
       return data;
     } catch (e) {
       log('the error is thrown during getting book status details: $e');
+    }
+  }
+
+  static getBookLendLog(String? bookLendId) async {
+    try {
+      final data = await _bookDatabase.getLendBook(bookLendId);
+      return data;
+    } catch (e) {
+      log('the error is thrown in getting bookLend log');
+    }
+  }
+
+  static getLendBookHistory(List<String>? bookLendIds) async {
+    try {
+      final data = await _bookDatabase.getLendBookHistory(bookLendIds);
+      return data;
+    } catch (e) {
+      log('error thrown in getting book lend history');
+    }
+  }
+
+  static getSingleFireBook(String? bookId) async {
+    try {
+      final data = await _bookDatabase.getSingleFireBook(bookId);
+      return data;
+    } catch (e) {
+      log('error thrown in getting single book');
+    }
+  }
+
+  static getBookLogPending() async {
+    try {
+      final data = await _bookDatabase.getPendingBookRequests();
+      return data;
+    } catch (e) {
+      log('error thrown in getting books log');
     }
   }
 }

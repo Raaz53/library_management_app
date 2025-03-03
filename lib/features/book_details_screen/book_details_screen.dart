@@ -4,11 +4,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
+import 'package:book_hive/core/models/user_model/user_model.dart';
 import 'package:book_hive/core/resources/assets.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
+import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:book_hive/core/widgets/app_button_widget.dart';
+import 'package:book_hive/features/book_details_screen/cubit/borrow_book_cubit/borrow_book_cubit.dart';
 import 'package:book_hive/features/book_details_screen/cubit/get_book_status_details_cubit/get_book_status_details_cubit.dart';
 import 'package:book_hive/features/dashboard_page/widgets/cutom_app_bar.dart';
 import 'package:book_hive/features/favorite_screen/cubit/update_favorite_books/update_favorite_books_cubit.dart';
@@ -18,8 +21,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage(name: 'BookDetails')
 class BookDetailsScreen extends StatefulWidget {
-  const BookDetailsScreen({super.key, this.fireBookModel});
+  const BookDetailsScreen({super.key, this.fireBookModel, this.lendedBooksLog});
   final FireBookModel? fireBookModel;
+  final List<String>? lendedBooksLog;
 
   @override
   State<BookDetailsScreen> createState() => _BookDetailsScreenState();
@@ -29,13 +33,16 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   late bool _isFavorite;
   late GetBookStatusDetailsCubit _getBookStatusDetailsCubit;
   late UpdateFavoriteBooksCubit _updateFavoriteBooksCubit;
+  late BorrowBookCubit _borrowBookCubit;
   late bool _isAvailable;
+  String displayText = 'Borrow';
 
   @override
   void initState() {
     super.initState();
     _updateFavoriteBooksCubit = Injector.instance<UpdateFavoriteBooksCubit>();
     _getBookStatusDetailsCubit = Injector.instance<GetBookStatusDetailsCubit>();
+    _borrowBookCubit = Injector.instance<BorrowBookCubit>();
     _getBookStatusDetailsCubit
         .getBookStatusDetails(widget.fireBookModel?.bookId);
 
@@ -232,7 +239,9 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '238',
+                                          widget.fireBookModel?.pageCount
+                                                  .toString() ??
+                                              '238',
                                           style: AppTextStyles
                                               .bodyMediumMonserat
                                               .copyWith(
@@ -277,18 +286,71 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         ),
                         20.verticalBox,
                         if (globalUserRole == UserRole.user)
-                          AbsorbPointer(
-                            absorbing: !_isAvailable,
-                            child: AppButton(
-                              title: 'Borrow',
-                              textColor: AppColors.black,
-                              onClick: () {
-                                log('here the book information is ${availableBook?.bookStatus} & ${availableBook?.bookNumber}');
+                          BlocListener<BorrowBookCubit, BorrowBookState>(
+                            bloc: _borrowBookCubit,
+                            listener: (context, state) {
+                              state.maybeWhen(
+                                orElse: () {},
+                                success: () {
+                                  displayText = StudentBookStatus.pending;
+                                },
+                              );
+                            },
+                            child:
+                                BlocListener<BorrowBookCubit, BorrowBookState>(
+                              bloc: _borrowBookCubit,
+                              listener: (context, state) {
+                                state.maybeWhen(
+                                  orElse: () {},
+                                  loading: () {
+                                    Utilities.showCustomDialog(
+                                      context: context,
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                                  },
+                                  success: () {
+                                    _getBookStatusDetailsCubit
+                                        .getBookStatusDetails(
+                                            widget.fireBookModel?.bookId);
+                                    context.router.maybePop();
+                                  },
+                                  error: (message) =>
+                                      Utilities.showCustomDialog(
+                                    context: context,
+                                    child: Center(
+                                      child: IconButton(
+                                          onPressed: () =>
+                                              context.router.maybePop(),
+                                          icon: Icon(Icons.close)),
+                                    ),
+                                  ),
+                                );
                               },
-                              backgroundColor: _isAvailable
-                                  ? AppColors.buttonSecondary
-                                  : AppColors.buttonSecondary
-                                      .withValues(alpha: 0.2),
+                              child: AbsorbPointer(
+                                absorbing: !_isAvailable,
+                                child: AppButton(
+                                  title: displayText,
+                                  textColor: AppColors.black,
+                                  onClick: () {
+                                    BookLendedHistory bookLendHistory =
+                                        BookLendedHistory(
+                                      bookId: widget.fireBookModel?.bookId,
+                                      bookNumber:
+                                          availableBook?.bookNumber.toString(),
+                                      bookIssueStatus:
+                                          StudentBookStatus.pending,
+                                    );
+                                    _borrowBookCubit
+                                        .requestBookBorrow(bookLendHistory);
+                                  },
+                                  backgroundColor: _isAvailable
+                                      ? AppColors.buttonSecondary
+                                      : AppColors.buttonSecondary
+                                          .withValues(alpha: 0.2),
+                                ),
+                              ),
                             ),
                           ),
                         20.verticalBox,

@@ -1,6 +1,7 @@
 import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:book_hive/features/favorite_screen/cubit/get_user_favorite_cubit/get_user_favorite_cubit.dart';
+import 'package:book_hive/features/setting_screen/cubit/get_user_profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,14 +41,20 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     child: CircularProgressIndicator(),
                   ),
               success: (favoriteBooks) {
-                return ListView.builder(
-                  itemCount: favoriteBooks?.length,
-                  itemBuilder: (context, index) {
-                    final singleFireBook = favoriteBooks?[index];
-                    return SingleFavoriteWidget(
-                      fireBookModel: singleFireBook,
-                    );
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    await Injector.instance<GetUserProfileCubit>()
+                        .getUserProfile();
                   },
+                  child: ListView.builder(
+                    itemCount: favoriteBooks?.length,
+                    itemBuilder: (context, index) {
+                      final singleFireBook = favoriteBooks?[index];
+                      return SingleFavoriteWidget(
+                        fireBookModel: singleFireBook,
+                      );
+                    },
+                  ),
                 );
               },
               error: (message) => Center(

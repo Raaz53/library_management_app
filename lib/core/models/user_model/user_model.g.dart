@@ -16,6 +16,9 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       favourites: (json['favourites'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      borrowedBookList: (json['borrowedBookList'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       profilePicture: json['profilePicture'] as String?,
       role: json['role'] as String?,
     );
@@ -28,6 +31,7 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'bio': instance.bio,
       'rewardPoints': instance.rewardPoints,
       'favourites': instance.favourites,
+      'borrowedBookList': instance.borrowedBookList,
       'profilePicture': instance.profilePicture,
       'role': instance.role,
     };
@@ -35,7 +39,10 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
 _$BookLendedHistoryImpl _$$BookLendedHistoryImplFromJson(
         Map<String, dynamic> json) =>
     _$BookLendedHistoryImpl(
+      bookLendId: json['bookLendId'] as String?,
       bookId: json['bookId'] as String?,
+      studentId: json['studentId'] as String?,
+      lenderId: json['lenderId'] as String?,
       bookNumber: json['bookNumber'] as String?,
       bookIssuedDate: json['bookIssuedDate'] == null
           ? null
@@ -52,7 +59,10 @@ _$BookLendedHistoryImpl _$$BookLendedHistoryImplFromJson(
 Map<String, dynamic> _$$BookLendedHistoryImplToJson(
         _$BookLendedHistoryImpl instance) =>
     <String, dynamic>{
+      'bookLendId': instance.bookLendId,
       'bookId': instance.bookId,
+      'studentId': instance.studentId,
+      'lenderId': instance.lenderId,
       'bookNumber': instance.bookNumber,
       'bookIssuedDate': instance.bookIssuedDate?.toIso8601String(),
       'bookDueDate': instance.bookDueDate?.toIso8601String(),

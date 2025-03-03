@@ -1,6 +1,5 @@
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/injection/injection.dart';
-import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/features/home_screen/cubit/get_firebase_books_cubit/get_firebase_books_cubit.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,6 @@ class _BookListScreenState extends State<BookListScreen>
   late GetFirebaseBooksCubit _getFirebaseBooksCubit;
 
   final List<String> _categories = ['All'];
-  late List<FireBookModel> booksData;
 
   @override
   void initState() {
@@ -31,7 +29,6 @@ class _BookListScreenState extends State<BookListScreen>
     _getFirebaseBooksCubit.getFirebaseBooks();
     _categories.addAll(Constants.bookCategories);
     _tabController = TabController(length: _categories.length, vsync: this);
-    booksData = [];
   }
 
   @override
@@ -65,11 +62,7 @@ class _BookListScreenState extends State<BookListScreen>
                         ))
                     .toList()),
             Expanded(
-              child: BlocConsumer<GetFirebaseBooksCubit, GetFirebaseBooksState>(
-                  listener: (context, state) {
-                    booksData = state.maybeWhen(
-                        orElse: () => [], success: (books) => books ?? []);
-                  },
+              child: BlocBuilder<GetFirebaseBooksCubit, GetFirebaseBooksState>(
                   bloc: _getFirebaseBooksCubit,
                   builder: (context, state) {
                     return state.maybeWhen(
@@ -79,9 +72,14 @@ class _BookListScreenState extends State<BookListScreen>
                             controller: _tabController,
                             children: _categories
                                 .map(
-                                  (category) => CategoryResultTab(
-                                    category: category,
-                                    bookModels: booksData,
+                                  (category) => RefreshIndicator(
+                                    onRefresh: () async =>
+                                        _getFirebaseBooksCubit
+                                            .getFirebaseBooks(),
+                                    child: CategoryResultTab(
+                                      category: category,
+                                      bookModels: books,
+                                    ),
                                   ),
                                 )
                                 .toList(),

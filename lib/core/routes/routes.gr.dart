@@ -16,10 +16,15 @@ class BookDetails extends PageRouteInfo<BookDetailsArgs> {
   BookDetails({
     Key? key,
     FireBookModel? fireBookModel,
+    List<String>? lendedBooksLog,
     List<PageRouteInfo>? children,
   }) : super(
          BookDetails.name,
-         args: BookDetailsArgs(key: key, fireBookModel: fireBookModel),
+         args: BookDetailsArgs(
+           key: key,
+           fireBookModel: fireBookModel,
+           lendedBooksLog: lendedBooksLog,
+         ),
          initialChildren: children,
        );
 
@@ -34,21 +39,24 @@ class BookDetails extends PageRouteInfo<BookDetailsArgs> {
       return BookDetailsScreen(
         key: args.key,
         fireBookModel: args.fireBookModel,
+        lendedBooksLog: args.lendedBooksLog,
       );
     },
   );
 }
 
 class BookDetailsArgs {
-  const BookDetailsArgs({this.key, this.fireBookModel});
+  const BookDetailsArgs({this.key, this.fireBookModel, this.lendedBooksLog});
 
   final Key? key;
 
   final FireBookModel? fireBookModel;
 
+  final List<String>? lendedBooksLog;
+
   @override
   String toString() {
-    return 'BookDetailsArgs{key: $key, fireBookModel: $fireBookModel}';
+    return 'BookDetailsArgs{key: $key, fireBookModel: $fireBookModel, lendedBooksLog: $lendedBooksLog}';
   }
 }
 

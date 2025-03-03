@@ -84,4 +84,14 @@ class AuthService {
       log('here the update has failed');
     }
   }
+
+  static requestBookLend(BookLendedHistory? bookLendedHistory) async {
+    try {
+      final user = _auth.currentUser;
+      await _userRepo.requestBookLendHistory(user?.uid, bookLendedHistory);
+      return 'success';
+    } catch (e) {
+      log('here the request book is throwing error');
+    }
+  }
 }

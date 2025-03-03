@@ -4,7 +4,7 @@ import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/resources/assets.dart';
 import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/features/add_book_screen/add_book_screen.dart';
-import 'package:book_hive/features/book_lend/book_lend_screen.dart';
+import 'package:book_hive/features/book_lend_screen/book_lend_screen.dart';
 import 'package:book_hive/features/book_list_screen/book_list_screen.dart';
 import 'package:book_hive/features/book_request_screen/book_request_screen.dart';
 import 'package:book_hive/features/dashboard_page/widgets/cutom_app_bar.dart';
@@ -84,7 +84,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                       globalUserRole == UserRole.admin
                           ? BookRequestScreen()
-                          : BookLendScreen(),
+                          : BookLendScreen(
+                              bookLendIds: userData?.borrowedBookList,
+                            ),
                       SettingScreen(
                         userModel: userData,
                       ),
