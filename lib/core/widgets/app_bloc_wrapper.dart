@@ -1,5 +1,7 @@
 import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/features/add_book_screen/cubit/add_book_cubit/add_book_cubit.dart';
+import 'package:book_hive/features/book_details_screen/cubit/get_book_status_details_cubit/get_book_status_details_cubit.dart';
+import 'package:book_hive/features/favorite_screen/cubit/get_user_favorite_cubit/get_user_favorite_cubit.dart';
 import 'package:book_hive/features/favorite_screen/cubit/update_favorite_books/update_favorite_books_cubit.dart';
 import 'package:book_hive/features/home_screen/cubit/get_books_cubit/get_books_cubit.dart';
 import 'package:book_hive/features/home_screen/cubit/get_firebase_books_cubit/get_firebase_books_cubit.dart';
@@ -30,6 +32,12 @@ class AppBlocWrapper extends StatelessWidget {
         ),
         BlocProvider<UpdateFavoriteBooksCubit>.value(
           value: Injector.instance<UpdateFavoriteBooksCubit>(),
+        ),
+        BlocProvider<GetUserFavoriteCubit>.value(
+          value: Injector.instance<GetUserFavoriteCubit>(),
+        ),
+        BlocProvider<GetBookStatusDetailsCubit>.value(
+          value: Injector.instance<GetBookStatusDetailsCubit>(),
         ),
         BlocProvider<AddBookCubit>.value(
           value: Injector.instance<AddBookCubit>(),

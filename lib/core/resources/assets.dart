@@ -19,4 +19,6 @@ class SvgAssets {
   static const profileSelected = '$assets/profile_selected.svg';
   static const favoriteSelected = '$assets/favorite_selected.svg';
   static const favoriteUnselected = '$assets/favorite_unselected.svg';
+  static const librarySelected = '$assets/book_lend_selected.svg';
+  static const libraryUnselected = '$assets/book_lend_unselected.svg';
 }
