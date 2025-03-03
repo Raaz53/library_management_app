@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_firebase_books_cubit.dart';
+part of 'book_log_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,32 +15,29 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$GetFirebaseBooksState {
+mixin _$BookLogState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(FireBookModel? singleBook) singleBook,
-    required TResult Function(List<FireBookModel>? books) success,
-    required TResult Function(String? error) error,
+    required TResult Function(String? studentBookStatus) success,
+    required TResult Function(String? message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(FireBookModel? singleBook)? singleBook,
-    TResult? Function(List<FireBookModel>? books)? success,
-    TResult? Function(String? error)? error,
+    TResult? Function(String? studentBookStatus)? success,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(FireBookModel? singleBook)? singleBook,
-    TResult Function(List<FireBookModel>? books)? success,
-    TResult Function(String? error)? error,
+    TResult Function(String? studentBookStatus)? success,
+    TResult Function(String? message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,7 +45,6 @@ mixin _$GetFirebaseBooksState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_SingleBook value) singleBook,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) =>
@@ -57,7 +53,6 @@ mixin _$GetFirebaseBooksState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_SingleBook value)? singleBook,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) =>
@@ -66,7 +61,6 @@ mixin _$GetFirebaseBooksState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_SingleBook value)? singleBook,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -75,24 +69,23 @@ mixin _$GetFirebaseBooksState {
 }
 
 /// @nodoc
-abstract class $GetFirebaseBooksStateCopyWith<$Res> {
-  factory $GetFirebaseBooksStateCopyWith(GetFirebaseBooksState value,
-          $Res Function(GetFirebaseBooksState) then) =
-      _$GetFirebaseBooksStateCopyWithImpl<$Res, GetFirebaseBooksState>;
+abstract class $BookLogStateCopyWith<$Res> {
+  factory $BookLogStateCopyWith(
+          BookLogState value, $Res Function(BookLogState) then) =
+      _$BookLogStateCopyWithImpl<$Res, BookLogState>;
 }
 
 /// @nodoc
-class _$GetFirebaseBooksStateCopyWithImpl<$Res,
-        $Val extends GetFirebaseBooksState>
-    implements $GetFirebaseBooksStateCopyWith<$Res> {
-  _$GetFirebaseBooksStateCopyWithImpl(this._value, this._then);
+class _$BookLogStateCopyWithImpl<$Res, $Val extends BookLogState>
+    implements $BookLogStateCopyWith<$Res> {
+  _$BookLogStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GetFirebaseBooksState
+  /// Create a copy of BookLogState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -105,13 +98,13 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$GetFirebaseBooksStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$BookLogStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetFirebaseBooksState
+  /// Create a copy of BookLogState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -122,7 +115,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'GetFirebaseBooksState.initial()';
+    return 'BookLogState.initial()';
   }
 
   @override
@@ -139,9 +132,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(FireBookModel? singleBook) singleBook,
-    required TResult Function(List<FireBookModel>? books) success,
-    required TResult Function(String? error) error,
+    required TResult Function(String? studentBookStatus) success,
+    required TResult Function(String? message) error,
   }) {
     return initial();
   }
@@ -151,9 +143,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(FireBookModel? singleBook)? singleBook,
-    TResult? Function(List<FireBookModel>? books)? success,
-    TResult? Function(String? error)? error,
+    TResult? Function(String? studentBookStatus)? success,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -163,9 +154,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(FireBookModel? singleBook)? singleBook,
-    TResult Function(List<FireBookModel>? books)? success,
-    TResult Function(String? error)? error,
+    TResult Function(String? studentBookStatus)? success,
+    TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -179,7 +169,6 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_SingleBook value) singleBook,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
@@ -191,7 +180,6 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_SingleBook value)? singleBook,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
@@ -203,7 +191,6 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_SingleBook value)? singleBook,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -215,7 +202,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements GetFirebaseBooksState {
+abstract class _Initial implements BookLogState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -228,13 +215,13 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$GetFirebaseBooksStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$BookLogStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetFirebaseBooksState
+  /// Create a copy of BookLogState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -245,7 +232,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'GetFirebaseBooksState.loading()';
+    return 'BookLogState.loading()';
   }
 
   @override
@@ -262,9 +249,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(FireBookModel? singleBook) singleBook,
-    required TResult Function(List<FireBookModel>? books) success,
-    required TResult Function(String? error) error,
+    required TResult Function(String? studentBookStatus) success,
+    required TResult Function(String? message) error,
   }) {
     return loading();
   }
@@ -274,9 +260,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(FireBookModel? singleBook)? singleBook,
-    TResult? Function(List<FireBookModel>? books)? success,
-    TResult? Function(String? error)? error,
+    TResult? Function(String? studentBookStatus)? success,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -286,9 +271,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(FireBookModel? singleBook)? singleBook,
-    TResult Function(List<FireBookModel>? books)? success,
-    TResult Function(String? error)? error,
+    TResult Function(String? studentBookStatus)? success,
+    TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -302,7 +286,6 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_SingleBook value) singleBook,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
@@ -314,7 +297,6 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_SingleBook value)? singleBook,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
@@ -326,7 +308,6 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_SingleBook value)? singleBook,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -338,183 +319,8 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements GetFirebaseBooksState {
+abstract class _Loading implements BookLogState {
   const factory _Loading() = _$LoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$SingleBookImplCopyWith<$Res> {
-  factory _$$SingleBookImplCopyWith(
-          _$SingleBookImpl value, $Res Function(_$SingleBookImpl) then) =
-      __$$SingleBookImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({FireBookModel? singleBook});
-
-  $FireBookModelCopyWith<$Res>? get singleBook;
-}
-
-/// @nodoc
-class __$$SingleBookImplCopyWithImpl<$Res>
-    extends _$GetFirebaseBooksStateCopyWithImpl<$Res, _$SingleBookImpl>
-    implements _$$SingleBookImplCopyWith<$Res> {
-  __$$SingleBookImplCopyWithImpl(
-      _$SingleBookImpl _value, $Res Function(_$SingleBookImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of GetFirebaseBooksState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? singleBook = freezed,
-  }) {
-    return _then(_$SingleBookImpl(
-      freezed == singleBook
-          ? _value.singleBook
-          : singleBook // ignore: cast_nullable_to_non_nullable
-              as FireBookModel?,
-    ));
-  }
-
-  /// Create a copy of GetFirebaseBooksState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $FireBookModelCopyWith<$Res>? get singleBook {
-    if (_value.singleBook == null) {
-      return null;
-    }
-
-    return $FireBookModelCopyWith<$Res>(_value.singleBook!, (value) {
-      return _then(_value.copyWith(singleBook: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$SingleBookImpl implements _SingleBook {
-  const _$SingleBookImpl(this.singleBook);
-
-  @override
-  final FireBookModel? singleBook;
-
-  @override
-  String toString() {
-    return 'GetFirebaseBooksState.singleBook(singleBook: $singleBook)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SingleBookImpl &&
-            (identical(other.singleBook, singleBook) ||
-                other.singleBook == singleBook));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, singleBook);
-
-  /// Create a copy of GetFirebaseBooksState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SingleBookImplCopyWith<_$SingleBookImpl> get copyWith =>
-      __$$SingleBookImplCopyWithImpl<_$SingleBookImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(FireBookModel? singleBook) singleBook,
-    required TResult Function(List<FireBookModel>? books) success,
-    required TResult Function(String? error) error,
-  }) {
-    return singleBook(this.singleBook);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(FireBookModel? singleBook)? singleBook,
-    TResult? Function(List<FireBookModel>? books)? success,
-    TResult? Function(String? error)? error,
-  }) {
-    return singleBook?.call(this.singleBook);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(FireBookModel? singleBook)? singleBook,
-    TResult Function(List<FireBookModel>? books)? success,
-    TResult Function(String? error)? error,
-    required TResult orElse(),
-  }) {
-    if (singleBook != null) {
-      return singleBook(this.singleBook);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_SingleBook value) singleBook,
-    required TResult Function(_Success value) success,
-    required TResult Function(_Error value) error,
-  }) {
-    return singleBook(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_SingleBook value)? singleBook,
-    TResult? Function(_Success value)? success,
-    TResult? Function(_Error value)? error,
-  }) {
-    return singleBook?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_SingleBook value)? singleBook,
-    TResult Function(_Success value)? success,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (singleBook != null) {
-      return singleBook(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SingleBook implements GetFirebaseBooksState {
-  const factory _SingleBook(final FireBookModel? singleBook) = _$SingleBookImpl;
-
-  FireBookModel? get singleBook;
-
-  /// Create a copy of GetFirebaseBooksState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SingleBookImplCopyWith<_$SingleBookImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -523,29 +329,29 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<FireBookModel>? books});
+  $Res call({String? studentBookStatus});
 }
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$GetFirebaseBooksStateCopyWithImpl<$Res, _$SuccessImpl>
+    extends _$BookLogStateCopyWithImpl<$Res, _$SuccessImpl>
     implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetFirebaseBooksState
+  /// Create a copy of BookLogState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? books = freezed,
+    Object? studentBookStatus = freezed,
   }) {
     return _then(_$SuccessImpl(
-      freezed == books
-          ? _value._books
-          : books // ignore: cast_nullable_to_non_nullable
-              as List<FireBookModel>?,
+      freezed == studentBookStatus
+          ? _value.studentBookStatus
+          : studentBookStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -553,21 +359,14 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(final List<FireBookModel>? books) : _books = books;
+  const _$SuccessImpl(this.studentBookStatus);
 
-  final List<FireBookModel>? _books;
   @override
-  List<FireBookModel>? get books {
-    final value = _books;
-    if (value == null) return null;
-    if (_books is EqualUnmodifiableListView) return _books;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
+  final String? studentBookStatus;
 
   @override
   String toString() {
-    return 'GetFirebaseBooksState.success(books: $books)';
+    return 'BookLogState.success(studentBookStatus: $studentBookStatus)';
   }
 
   @override
@@ -575,14 +374,14 @@ class _$SuccessImpl implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
-            const DeepCollectionEquality().equals(other._books, _books));
+            (identical(other.studentBookStatus, studentBookStatus) ||
+                other.studentBookStatus == studentBookStatus));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_books));
+  int get hashCode => Object.hash(runtimeType, studentBookStatus);
 
-  /// Create a copy of GetFirebaseBooksState
+  /// Create a copy of BookLogState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -595,11 +394,10 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(FireBookModel? singleBook) singleBook,
-    required TResult Function(List<FireBookModel>? books) success,
-    required TResult Function(String? error) error,
+    required TResult Function(String? studentBookStatus) success,
+    required TResult Function(String? message) error,
   }) {
-    return success(books);
+    return success(studentBookStatus);
   }
 
   @override
@@ -607,11 +405,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(FireBookModel? singleBook)? singleBook,
-    TResult? Function(List<FireBookModel>? books)? success,
-    TResult? Function(String? error)? error,
+    TResult? Function(String? studentBookStatus)? success,
+    TResult? Function(String? message)? error,
   }) {
-    return success?.call(books);
+    return success?.call(studentBookStatus);
   }
 
   @override
@@ -619,13 +416,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(FireBookModel? singleBook)? singleBook,
-    TResult Function(List<FireBookModel>? books)? success,
-    TResult Function(String? error)? error,
+    TResult Function(String? studentBookStatus)? success,
+    TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(books);
+      return success(studentBookStatus);
     }
     return orElse();
   }
@@ -635,7 +431,6 @@ class _$SuccessImpl implements _Success {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_SingleBook value) singleBook,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
@@ -647,7 +442,6 @@ class _$SuccessImpl implements _Success {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_SingleBook value)? singleBook,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
@@ -659,7 +453,6 @@ class _$SuccessImpl implements _Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_SingleBook value)? singleBook,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -671,12 +464,12 @@ class _$SuccessImpl implements _Success {
   }
 }
 
-abstract class _Success implements GetFirebaseBooksState {
-  const factory _Success(final List<FireBookModel>? books) = _$SuccessImpl;
+abstract class _Success implements BookLogState {
+  const factory _Success(final String? studentBookStatus) = _$SuccessImpl;
 
-  List<FireBookModel>? get books;
+  String? get studentBookStatus;
 
-  /// Create a copy of GetFirebaseBooksState
+  /// Create a copy of BookLogState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
@@ -689,28 +482,28 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String? error});
+  $Res call({String? message});
 }
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$GetFirebaseBooksStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$BookLogStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetFirebaseBooksState
+  /// Create a copy of BookLogState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
+    Object? message = freezed,
   }) {
     return _then(_$ErrorImpl(
-      freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
+      freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -719,14 +512,14 @@ class __$$ErrorImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ErrorImpl implements _Error {
-  const _$ErrorImpl(this.error);
+  const _$ErrorImpl(this.message);
 
   @override
-  final String? error;
+  final String? message;
 
   @override
   String toString() {
-    return 'GetFirebaseBooksState.error(error: $error)';
+    return 'BookLogState.error(message: $message)';
   }
 
   @override
@@ -734,13 +527,13 @@ class _$ErrorImpl implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of GetFirebaseBooksState
+  /// Create a copy of BookLogState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -753,11 +546,10 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(FireBookModel? singleBook) singleBook,
-    required TResult Function(List<FireBookModel>? books) success,
-    required TResult Function(String? error) error,
+    required TResult Function(String? studentBookStatus) success,
+    required TResult Function(String? message) error,
   }) {
-    return error(this.error);
+    return error(message);
   }
 
   @override
@@ -765,11 +557,10 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(FireBookModel? singleBook)? singleBook,
-    TResult? Function(List<FireBookModel>? books)? success,
-    TResult? Function(String? error)? error,
+    TResult? Function(String? studentBookStatus)? success,
+    TResult? Function(String? message)? error,
   }) {
-    return error?.call(this.error);
+    return error?.call(message);
   }
 
   @override
@@ -777,13 +568,12 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(FireBookModel? singleBook)? singleBook,
-    TResult Function(List<FireBookModel>? books)? success,
-    TResult Function(String? error)? error,
+    TResult Function(String? studentBookStatus)? success,
+    TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error);
+      return error(message);
     }
     return orElse();
   }
@@ -793,7 +583,6 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_SingleBook value) singleBook,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
   }) {
@@ -805,7 +594,6 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_SingleBook value)? singleBook,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
   }) {
@@ -817,7 +605,6 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_SingleBook value)? singleBook,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
     required TResult orElse(),
@@ -829,12 +616,12 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements GetFirebaseBooksState {
-  const factory _Error(final String? error) = _$ErrorImpl;
+abstract class _Error implements BookLogState {
+  const factory _Error(final String? message) = _$ErrorImpl;
 
-  String? get error;
+  String? get message;
 
-  /// Create a copy of GetFirebaseBooksState
+  /// Create a copy of BookLogState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>

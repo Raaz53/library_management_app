@@ -13,6 +13,7 @@ class UserModel with _$UserModel {
     String? bio,
     double? rewardPoints,
     List<String>? favourites,
+    List<String>? borrowedBookList,
     String? profilePicture,
     String? role,
   }) = _UserModel;
@@ -24,7 +25,10 @@ class UserModel with _$UserModel {
 @freezed
 class BookLendedHistory with _$BookLendedHistory {
   factory BookLendedHistory({
+    String? bookLendId,
     String? bookId,
+    String? studentId,
+    String? lenderId,
     String? bookNumber,
     DateTime? bookIssuedDate,
     DateTime? bookDueDate,

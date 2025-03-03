@@ -26,6 +26,7 @@ mixin _$UserModel {
   String? get bio => throw _privateConstructorUsedError;
   double? get rewardPoints => throw _privateConstructorUsedError;
   List<String>? get favourites => throw _privateConstructorUsedError;
+  List<String>? get borrowedBookList => throw _privateConstructorUsedError;
   String? get profilePicture => throw _privateConstructorUsedError;
   String? get role => throw _privateConstructorUsedError;
 
@@ -51,6 +52,7 @@ abstract class $UserModelCopyWith<$Res> {
       String? bio,
       double? rewardPoints,
       List<String>? favourites,
+      List<String>? borrowedBookList,
       String? profilePicture,
       String? role});
 }
@@ -76,6 +78,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? bio = freezed,
     Object? rewardPoints = freezed,
     Object? favourites = freezed,
+    Object? borrowedBookList = freezed,
     Object? profilePicture = freezed,
     Object? role = freezed,
   }) {
@@ -104,6 +107,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.favourites
           : favourites // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      borrowedBookList: freezed == borrowedBookList
+          ? _value.borrowedBookList
+          : borrowedBookList // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       profilePicture: freezed == profilePicture
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
@@ -131,6 +138,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? bio,
       double? rewardPoints,
       List<String>? favourites,
+      List<String>? borrowedBookList,
       String? profilePicture,
       String? role});
 }
@@ -154,6 +162,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? bio = freezed,
     Object? rewardPoints = freezed,
     Object? favourites = freezed,
+    Object? borrowedBookList = freezed,
     Object? profilePicture = freezed,
     Object? role = freezed,
   }) {
@@ -182,6 +191,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value._favourites
           : favourites // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      borrowedBookList: freezed == borrowedBookList
+          ? _value._borrowedBookList
+          : borrowedBookList // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       profilePicture: freezed == profilePicture
           ? _value.profilePicture
           : profilePicture // ignore: cast_nullable_to_non_nullable
@@ -204,9 +217,11 @@ class _$UserModelImpl implements _UserModel {
       this.bio,
       this.rewardPoints,
       final List<String>? favourites,
+      final List<String>? borrowedBookList,
       this.profilePicture,
       this.role})
-      : _favourites = favourites;
+      : _favourites = favourites,
+        _borrowedBookList = borrowedBookList;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -231,6 +246,17 @@ class _$UserModelImpl implements _UserModel {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<String>? _borrowedBookList;
+  @override
+  List<String>? get borrowedBookList {
+    final value = _borrowedBookList;
+    if (value == null) return null;
+    if (_borrowedBookList is EqualUnmodifiableListView)
+      return _borrowedBookList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? profilePicture;
   @override
@@ -238,7 +264,7 @@ class _$UserModelImpl implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, email: $email, bio: $bio, rewardPoints: $rewardPoints, favourites: $favourites, profilePicture: $profilePicture, role: $role)';
+    return 'UserModel(id: $id, name: $name, email: $email, bio: $bio, rewardPoints: $rewardPoints, favourites: $favourites, borrowedBookList: $borrowedBookList, profilePicture: $profilePicture, role: $role)';
   }
 
   @override
@@ -254,6 +280,8 @@ class _$UserModelImpl implements _UserModel {
                 other.rewardPoints == rewardPoints) &&
             const DeepCollectionEquality()
                 .equals(other._favourites, _favourites) &&
+            const DeepCollectionEquality()
+                .equals(other._borrowedBookList, _borrowedBookList) &&
             (identical(other.profilePicture, profilePicture) ||
                 other.profilePicture == profilePicture) &&
             (identical(other.role, role) || other.role == role));
@@ -269,6 +297,7 @@ class _$UserModelImpl implements _UserModel {
       bio,
       rewardPoints,
       const DeepCollectionEquality().hash(_favourites),
+      const DeepCollectionEquality().hash(_borrowedBookList),
       profilePicture,
       role);
 
@@ -296,6 +325,7 @@ abstract class _UserModel implements UserModel {
       final String? bio,
       final double? rewardPoints,
       final List<String>? favourites,
+      final List<String>? borrowedBookList,
       final String? profilePicture,
       final String? role}) = _$UserModelImpl;
 
@@ -315,6 +345,8 @@ abstract class _UserModel implements UserModel {
   @override
   List<String>? get favourites;
   @override
+  List<String>? get borrowedBookList;
+  @override
   String? get profilePicture;
   @override
   String? get role;
@@ -333,7 +365,10 @@ BookLendedHistory _$BookLendedHistoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$BookLendedHistory {
+  String? get bookLendId => throw _privateConstructorUsedError;
   String? get bookId => throw _privateConstructorUsedError;
+  String? get studentId => throw _privateConstructorUsedError;
+  String? get lenderId => throw _privateConstructorUsedError;
   String? get bookNumber => throw _privateConstructorUsedError;
   DateTime? get bookIssuedDate => throw _privateConstructorUsedError;
   DateTime? get bookDueDate => throw _privateConstructorUsedError;
@@ -357,7 +392,10 @@ abstract class $BookLendedHistoryCopyWith<$Res> {
       _$BookLendedHistoryCopyWithImpl<$Res, BookLendedHistory>;
   @useResult
   $Res call(
-      {String? bookId,
+      {String? bookLendId,
+      String? bookId,
+      String? studentId,
+      String? lenderId,
       String? bookNumber,
       DateTime? bookIssuedDate,
       DateTime? bookDueDate,
@@ -380,7 +418,10 @@ class _$BookLendedHistoryCopyWithImpl<$Res, $Val extends BookLendedHistory>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? bookLendId = freezed,
     Object? bookId = freezed,
+    Object? studentId = freezed,
+    Object? lenderId = freezed,
     Object? bookNumber = freezed,
     Object? bookIssuedDate = freezed,
     Object? bookDueDate = freezed,
@@ -388,9 +429,21 @@ class _$BookLendedHistoryCopyWithImpl<$Res, $Val extends BookLendedHistory>
     Object? bookIssueStatus = freezed,
   }) {
     return _then(_value.copyWith(
+      bookLendId: freezed == bookLendId
+          ? _value.bookLendId
+          : bookLendId // ignore: cast_nullable_to_non_nullable
+              as String?,
       bookId: freezed == bookId
           ? _value.bookId
           : bookId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      studentId: freezed == studentId
+          ? _value.studentId
+          : studentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lenderId: freezed == lenderId
+          ? _value.lenderId
+          : lenderId // ignore: cast_nullable_to_non_nullable
               as String?,
       bookNumber: freezed == bookNumber
           ? _value.bookNumber
@@ -425,7 +478,10 @@ abstract class _$$BookLendedHistoryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? bookId,
+      {String? bookLendId,
+      String? bookId,
+      String? studentId,
+      String? lenderId,
       String? bookNumber,
       DateTime? bookIssuedDate,
       DateTime? bookDueDate,
@@ -446,7 +502,10 @@ class __$$BookLendedHistoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? bookLendId = freezed,
     Object? bookId = freezed,
+    Object? studentId = freezed,
+    Object? lenderId = freezed,
     Object? bookNumber = freezed,
     Object? bookIssuedDate = freezed,
     Object? bookDueDate = freezed,
@@ -454,9 +513,21 @@ class __$$BookLendedHistoryImplCopyWithImpl<$Res>
     Object? bookIssueStatus = freezed,
   }) {
     return _then(_$BookLendedHistoryImpl(
+      bookLendId: freezed == bookLendId
+          ? _value.bookLendId
+          : bookLendId // ignore: cast_nullable_to_non_nullable
+              as String?,
       bookId: freezed == bookId
           ? _value.bookId
           : bookId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      studentId: freezed == studentId
+          ? _value.studentId
+          : studentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lenderId: freezed == lenderId
+          ? _value.lenderId
+          : lenderId // ignore: cast_nullable_to_non_nullable
               as String?,
       bookNumber: freezed == bookNumber
           ? _value.bookNumber
@@ -486,7 +557,10 @@ class __$$BookLendedHistoryImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BookLendedHistoryImpl implements _BookLendedHistory {
   _$BookLendedHistoryImpl(
-      {this.bookId,
+      {this.bookLendId,
+      this.bookId,
+      this.studentId,
+      this.lenderId,
       this.bookNumber,
       this.bookIssuedDate,
       this.bookDueDate,
@@ -497,7 +571,13 @@ class _$BookLendedHistoryImpl implements _BookLendedHistory {
       _$$BookLendedHistoryImplFromJson(json);
 
   @override
+  final String? bookLendId;
+  @override
   final String? bookId;
+  @override
+  final String? studentId;
+  @override
+  final String? lenderId;
   @override
   final String? bookNumber;
   @override
@@ -511,7 +591,7 @@ class _$BookLendedHistoryImpl implements _BookLendedHistory {
 
   @override
   String toString() {
-    return 'BookLendedHistory(bookId: $bookId, bookNumber: $bookNumber, bookIssuedDate: $bookIssuedDate, bookDueDate: $bookDueDate, bookReturnedDate: $bookReturnedDate, bookIssueStatus: $bookIssueStatus)';
+    return 'BookLendedHistory(bookLendId: $bookLendId, bookId: $bookId, studentId: $studentId, lenderId: $lenderId, bookNumber: $bookNumber, bookIssuedDate: $bookIssuedDate, bookDueDate: $bookDueDate, bookReturnedDate: $bookReturnedDate, bookIssueStatus: $bookIssueStatus)';
   }
 
   @override
@@ -519,7 +599,13 @@ class _$BookLendedHistoryImpl implements _BookLendedHistory {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BookLendedHistoryImpl &&
+            (identical(other.bookLendId, bookLendId) ||
+                other.bookLendId == bookLendId) &&
             (identical(other.bookId, bookId) || other.bookId == bookId) &&
+            (identical(other.studentId, studentId) ||
+                other.studentId == studentId) &&
+            (identical(other.lenderId, lenderId) ||
+                other.lenderId == lenderId) &&
             (identical(other.bookNumber, bookNumber) ||
                 other.bookNumber == bookNumber) &&
             (identical(other.bookIssuedDate, bookIssuedDate) ||
@@ -534,8 +620,17 @@ class _$BookLendedHistoryImpl implements _BookLendedHistory {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, bookId, bookNumber,
-      bookIssuedDate, bookDueDate, bookReturnedDate, bookIssueStatus);
+  int get hashCode => Object.hash(
+      runtimeType,
+      bookLendId,
+      bookId,
+      studentId,
+      lenderId,
+      bookNumber,
+      bookIssuedDate,
+      bookDueDate,
+      bookReturnedDate,
+      bookIssueStatus);
 
   /// Create a copy of BookLendedHistory
   /// with the given fields replaced by the non-null parameter values.
@@ -556,7 +651,10 @@ class _$BookLendedHistoryImpl implements _BookLendedHistory {
 
 abstract class _BookLendedHistory implements BookLendedHistory {
   factory _BookLendedHistory(
-      {final String? bookId,
+      {final String? bookLendId,
+      final String? bookId,
+      final String? studentId,
+      final String? lenderId,
       final String? bookNumber,
       final DateTime? bookIssuedDate,
       final DateTime? bookDueDate,
@@ -567,7 +665,13 @@ abstract class _BookLendedHistory implements BookLendedHistory {
       _$BookLendedHistoryImpl.fromJson;
 
   @override
+  String? get bookLendId;
+  @override
   String? get bookId;
+  @override
+  String? get studentId;
+  @override
+  String? get lenderId;
   @override
   String? get bookNumber;
   @override

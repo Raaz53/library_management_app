@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
+import 'package:book_hive/core/models/user_model/user_model.dart';
+import 'package:book_hive/core/utilities/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BookDatabase {
@@ -125,6 +127,86 @@ class BookDatabase {
       return bookStatus;
     } catch (e) {
       log("Error fetching books status: $e");
+      return null;
+    }
+  }
+
+  Future<BookStatusDetail?> getLendBook(String? bookLendId) async {
+    if (bookLendId == null) return null;
+    try {
+      final collection = _firestore.collection('bookLog');
+      final docSnapshot = await collection.doc(bookLendId).get();
+      if (docSnapshot.exists) {
+        return BookStatusDetail.fromJson(docSnapshot.data()!);
+      } else {
+        log('No book found with ID: $bookLendId');
+        return null;
+      }
+    } catch (e) {
+      log('Error getting bookLendId');
+      return null;
+    }
+  }
+
+  Future<List<BookLendedHistory>?> getLendBookHistory(
+      List<String>? bookLendIds) async {
+    if (bookLendIds == null) return null;
+    try {
+      final collection = _firestore.collection('bookLog');
+      List<BookLendedHistory> lendBookHistory = [];
+
+      for (String bookLendId in bookLendIds) {
+        final docSnapshot = await collection.doc(bookLendId).get();
+
+        if (docSnapshot.exists) {
+          final data = docSnapshot.data();
+          if (data != null) {
+            lendBookHistory.add(BookLendedHistory.fromJson(data));
+          }
+        }
+      }
+      return lendBookHistory;
+    } catch (e) {
+      log('Error fetching lend book history: $e');
+      return null;
+    }
+  }
+
+  Future<FireBookModel?> getSingleFireBook(String? bookId) async {
+    if (bookId == null) return null;
+    try {
+      final collection = _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookId);
+      final docSnap = await collection.get();
+      if (docSnap.exists) {
+        final data = docSnap.data();
+        if (data != null) return FireBookModel.fromJson(data);
+      }
+      return null;
+    } catch (e) {
+      log('Error fetching single book history: $e');
+      return null;
+    }
+  }
+
+  Future<List<BookLendedHistory>?> getPendingBookRequests() async {
+    try {
+      final collection = _firestore.collection('bookLog');
+
+      final querySnapshot = await collection
+          .where('bookIssueStatus', isEqualTo: StudentBookStatus.pending)
+          .get();
+
+      List<BookLendedHistory> pendingBooks = querySnapshot.docs
+          .map((doc) => BookLendedHistory.fromJson(doc.data()))
+          .toList();
+
+      return pendingBooks;
+    } catch (e) {
+      log('Error fetching pending book requests: $e');
       return null;
     }
   }

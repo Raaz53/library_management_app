@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:book_hive/core/models/user_model/user_model.dart';
+import 'package:book_hive/core/utilities/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserRepository {
@@ -34,6 +35,48 @@ class UserRepository {
       return e.toString();
     }
     return null;
+  }
+
+  Future<void> requestBookLendHistory(
+      String? uid, BookLendedHistory? bookLendedHistory) async {
+    try {
+      final collection = _firestore.collection('bookLog');
+
+      final String docId = DateTime.now().millisecondsSinceEpoch.toString();
+
+      final updatedBookLendedHistory =
+          bookLendedHistory?.copyWith(bookLendId: docId, studentId: uid);
+
+      if (updatedBookLendedHistory != null) {
+        await collection
+            .doc(docId)
+            .set(updatedBookLendedHistory.toJson())
+            .whenComplete(() async {
+          final userDocRef = _firestore.collection('users').doc(uid);
+
+          // Update borrowedBookList by adding the new docId
+          await userDocRef.update({
+            'borrowedBookList': FieldValue.arrayUnion([docId])
+          });
+
+          final bookDocRef = _firestore
+              .collection('books')
+              .doc('zEkjsYhBxZMjcmNkQ1ZH')
+              .collection('bookList')
+              .doc(updatedBookLendedHistory.bookId)
+              .collection('bookStatusDetail')
+              .doc(updatedBookLendedHistory.bookNumber);
+
+          await bookDocRef
+              .update({'bookStatus': LibraryBookStatus.unavailable});
+
+          log('Book lended history added and borrowedBookList updated successfully.');
+        });
+      }
+      log('Book lended history added successfully.');
+    } catch (e) {
+      log('Error adding book lended history: $e');
+    }
   }
 
   Future<UserModel?> getUser(String uid) async {

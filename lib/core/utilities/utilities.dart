@@ -14,37 +14,44 @@ class Utilities {
     required String message,
     Duration duration = const Duration(seconds: 3),
   }) {
+    removePopupMenu();
+
+    final overlayState = Overlay.of(context);
+    if (overlayState == null) return;
     // If there's an existing overlay, remove it
     if (_currentOverlay != null) return;
     // Create an OverlayEntry
     _currentOverlay = OverlayEntry(
       builder: (context) => Positioned(
-        bottom: 10.0, // Margin from the bottom
-        left: 10.0, // Margin from the left
-        right: 10.0, // Margin from the right
+        bottom: 10.0,
+        left: 10.0,
+        right: 10.0,
         child: Material(
-          color: Colors.transparent, // Transparent background
+          color: Colors.transparent,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: BackdropFilter(
-              filter:
-                  ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0), // Blur effect
+              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
               child: Container(
                 padding: const EdgeInsets.all(12.0),
                 decoration: BoxDecoration(
-                  color: Colors.black
-                      .withValues(alpha: 0.5), // Semi-transparent black color
+                  color: Colors.white.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Text(message,
                     style: AppTextStyles.bodyExtraSmallMonserat
-                        .copyWith(color: Colors.white.withValues(alpha: 0.5))),
+                        .copyWith(color: Colors.red.withValues(alpha: 0.5))),
               ),
             ),
           ),
         ),
       ),
     );
+    overlayState.insert(_currentOverlay!);
+
+    Future.delayed(duration, () {
+      removePopupMenu();
+    });
   }
 
   static void showCustomDialog({
