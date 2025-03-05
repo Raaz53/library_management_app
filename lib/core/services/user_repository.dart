@@ -126,4 +126,20 @@ class UserRepository {
       log('Error updating favorites: $e');
     }
   }
+
+  Future<UserModel?> getUserById(String? uid) async {
+    try {
+      final docSnapshot = await _firestore.collection('users').doc(uid).get();
+      if (docSnapshot.exists && docSnapshot.data() != null) {
+        final data = UserModel.fromJson(docSnapshot.data()!);
+        log('here the data is $data');
+        return data;
+      }
+
+      return null;
+    } catch (e) {
+      log('Error getting user: $e');
+      return null;
+    }
+  }
 }

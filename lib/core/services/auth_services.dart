@@ -94,4 +94,13 @@ class AuthService {
       log('here the request book is throwing error');
     }
   }
+
+  static getUserById(String? userId) async {
+    try {
+      final user = await _userRepo.getUserById(userId);
+      return user;
+    } catch (e) {
+      log('error fetching user by id');
+    }
+  }
 }

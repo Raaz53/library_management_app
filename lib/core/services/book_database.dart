@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:book_hive/core/models/book_lend_approval_model/book_lend_approval_model.dart';
 import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:book_hive/core/models/user_model/user_model.dart';
 import 'package:book_hive/core/utilities/constants.dart';
@@ -208,6 +209,69 @@ class BookDatabase {
     } catch (e) {
       log('Error fetching pending book requests: $e');
       return null;
+    }
+  }
+
+  Future<void> acceptBookLend(BookLendApprovalModel? bookLendApproval) async {
+    if (bookLendApproval == null) return;
+    try {
+      final DateTime bookIssueDate = DateTime.now();
+      final DateTime bookDueDate = bookIssueDate.add(const Duration(days: 30));
+
+      await _firestore
+          .collection('bookLog')
+          .doc(bookLendApproval.lendId)
+          .update({
+        'bookIssueDate': bookLendApproval.bookIssueDate,
+        'bookDueDate': bookLendApproval.bookDueDate,
+        'bookIssueStatus': bookLendApproval.bookStatus,
+        'lenderId': bookLendApproval.lenderId,
+      });
+
+      await _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookLendApproval.bookId)
+          .collection('bookStatusDetail')
+          .doc(bookLendApproval.bookNumber)
+          .update({
+        'bookIssuedDate': bookLendApproval.bookIssueDate,
+        'bookReceivingDate': bookLendApproval.bookDueDate,
+      });
+
+      log('Book lend accepted successfully.');
+    } catch (e) {
+      log('Error accepting book lend: $e');
+    }
+  }
+
+  Future<void> declineBookLend(BookLendApprovalModel? bookLendApproval) async {
+    if (bookLendApproval == null) return;
+
+    try {
+      await _firestore
+          .collection('bookLog')
+          .doc(bookLendApproval.lendId)
+          .update({
+        'bookIssueStatus': bookLendApproval.bookStatus,
+        'lenderId': bookLendApproval.lenderId,
+      });
+
+      await _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookLendApproval.bookId)
+          .collection('bookStatusDetail')
+          .doc(bookLendApproval.bookNumber)
+          .update({
+        'bookStatus': LibraryBookStatus.available,
+      });
+
+      log('Book lend declined successfully.');
+    } catch (e) {
+      log('Error declining book lend: $e');
     }
   }
 }

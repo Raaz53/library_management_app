@@ -1,57 +1,30 @@
-import 'dart:ui';
-
+import 'package:book_hive/core/app_theme/app_colors.dart';
+import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:flutter/material.dart';
-
-import 'app_text_styles.dart';
 
 class Utilities {
   Utilities._();
 
   static OverlayEntry? _currentOverlay;
 
-  static void showCustomSnackbar({
-    required BuildContext context,
-    required String message,
-    Duration duration = const Duration(seconds: 3),
-  }) {
-    removePopupMenu();
-
-    final overlayState = Overlay.of(context);
-    if (overlayState == null) return;
-    // If there's an existing overlay, remove it
-    if (_currentOverlay != null) return;
-    // Create an OverlayEntry
-    _currentOverlay = OverlayEntry(
-      builder: (context) => Positioned(
-        bottom: 10.0,
-        left: 10.0,
-        right: 10.0,
-        child: Material(
-          color: Colors.transparent,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-              child: Container(
-                padding: const EdgeInsets.all(12.0),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.5),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Text(message,
-                    style: AppTextStyles.bodyExtraSmallMonserat
-                        .copyWith(color: Colors.red.withValues(alpha: 0.5))),
-              ),
-            ),
-          ),
-        ),
+  static void showSnackBar(BuildContext context, String message,
+      {bool isError = false}) {
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: AppTextStyles.bodyExtraSmallInter
+            .copyWith(color: isError ? AppColors.white : AppColors.black),
       ),
+      backgroundColor: isError
+          ? AppColors.red.withValues(alpha: 0.8)
+          : AppColors.lightGray.withValues(alpha: 0.8),
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      duration: const Duration(seconds: 3),
     );
-    overlayState.insert(_currentOverlay!);
 
-    Future.delayed(duration, () {
-      removePopupMenu();
-    });
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   static void showCustomDialog({

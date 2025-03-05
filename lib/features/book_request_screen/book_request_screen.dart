@@ -45,6 +45,9 @@ class _BookRequestScreenState extends State<BookRequestScreen> {
                       return SingleBookLendStatus(
                         isBookRequest: true,
                         bookId: singleBookLend?.bookId,
+                        studentRequestId: singleBookLend?.studentId,
+                        bookNumber: singleBookLend?.bookNumber,
+                        lendId: singleBookLend?.bookLendId,
                       );
                     });
               });
