@@ -27,6 +27,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
   late GetUserProfileCubit _getUserProfileCubit;
+  ValueNotifier<String> globalUserRoleNotifier = ValueNotifier(globalUserRole);
 
   @override
   void initState() {
@@ -34,14 +35,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _getUserProfileCubit = Injector.instance<GetUserProfileCubit>();
     _getUserProfileCubit.getUserProfile();
   }
-
-  final List<String> _tabTitles = [
-    'Book Hive',
-    'Book List',
-    globalUserRole == UserRole.admin ? 'Add New Book' : 'Favorite Books',
-    globalUserRole == UserRole.admin ? 'Book Request' : 'Book Lend',
-    'Settings',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +45,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
         hoverColor: AppColors.transparent,
       ),
       child: Scaffold(
-        appBar: CustomAppBar(
-          title: _tabTitles[_currentIndex],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: ValueListenableBuilder<String>(
+            valueListenable: globalUserRoleNotifier,
+            builder: (context, userRole, _) {
+              final List<String> _tabTitles = [
+                'Book Hive',
+                'Book List',
+                globalUserRole == UserRole.admin
+                    ? 'Add New Book'
+                    : 'Favorite Books',
+                globalUserRole == UserRole.admin ? 'Book Request' : 'Book Lend',
+                'Settings',
+              ];
+
+              return CustomAppBar(
+                title: _tabTitles[_currentIndex],
+              );
+            },
+          ),
         ),
         backgroundColor: AppColors.lightBlack,
         body: BlocConsumer<GetUserProfileCubit, GetUserProfileState>(

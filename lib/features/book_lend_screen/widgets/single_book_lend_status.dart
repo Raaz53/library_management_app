@@ -4,8 +4,10 @@ import 'package:book_hive/core/resources/assets.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
+import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:book_hive/core/widgets/app_button_widget.dart';
 import 'package:book_hive/features/book_lend_screen/cubit/get_single_book_cubit/get_single_book_cubit.dart';
+import 'package:book_hive/features/book_request_screen/widgets/dialog_approval_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,10 +17,16 @@ class SingleBookLendStatus extends StatefulWidget {
       {super.key,
       this.isBookRequest = false,
       this.bookLendStatus,
-      this.bookId});
+      this.bookId,
+      this.studentRequestId,
+      this.bookNumber,
+      this.lendId});
   final bool isBookRequest;
   final String? bookId;
   final String? bookLendStatus;
+  final String? studentRequestId;
+  final String? bookNumber;
+  final String? lendId;
 
   @override
   State<SingleBookLendStatus> createState() => _SingleBookLendStatusState();
@@ -141,18 +149,20 @@ class _SingleBookLendStatusState extends State<SingleBookLendStatus> {
                       child: Row(
                         children: [
                           AppButton(
-                            title: 'Approve',
-                            onClick: () {},
+                            title: 'Check-out',
+                            onClick: () => Utilities.showCustomDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              child: DialogApprovalWidget(
+                                bookName: book?.bookName,
+                                bookAuthors: book?.authors,
+                                bookNumber: widget.bookNumber,
+                                userId: widget.studentRequestId,
+                                lendId: widget.lendId,
+                              ),
+                            ),
                             backgroundColor:
-                                Colors.green.withValues(alpha: 0.5),
-                            width: 50,
-                          ),
-                          10.horizontalBox,
-                          AppButton(
-                            title: 'Decline',
-                            onClick: () {},
-                            backgroundColor:
-                                AppColors.red.withValues(alpha: 0.5),
+                                AppColors.grey.withValues(alpha: 0.5),
                             width: 50,
                           ),
                         ],

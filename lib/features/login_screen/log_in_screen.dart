@@ -94,8 +94,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     error: (message) {
                       Navigator.pop(context);
                       log('Error is being called');
-                      Utilities.showCustomSnackbar(
-                          message: message, context: context);
+                      Utilities.showSnackBar(context, 'Error');
                     },
                     loading: () {
                       Utilities.showCustomDialog(

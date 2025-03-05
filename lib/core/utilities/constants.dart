@@ -65,5 +65,6 @@ class StudentBookStatus {
   static const String borrowed = 'borrowed';
   static const String pending = 'pending';
   static const String overDue = 'over_due';
+  static const String declined = 'declined';
   static const String returned = 'returned';
 }

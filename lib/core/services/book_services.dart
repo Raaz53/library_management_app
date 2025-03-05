@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:book_hive/core/models/book_lend_approval_model/book_lend_approval_model.dart';
 import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:book_hive/core/services/google_book_api_handler.dart';
 
@@ -121,6 +122,24 @@ class BookService {
       return data;
     } catch (e) {
       log('error thrown in getting books log');
+    }
+  }
+
+  static acceptBookLend(BookLendApprovalModel? bookLendApproval) async {
+    try {
+      final data = await _bookDatabase.acceptBookLend(bookLendApproval);
+      return data;
+    } catch (e) {
+      log('error thrown in accepting book request');
+    }
+  }
+
+  static declineBookLend(BookLendApprovalModel? bookLendApprovalModel) async {
+    try {
+      final data = await _bookDatabase.declineBookLend(bookLendApprovalModel);
+      return data;
+    } catch (e) {
+      log('error thrown in declining books request');
     }
   }
 }

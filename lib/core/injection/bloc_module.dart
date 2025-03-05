@@ -5,6 +5,7 @@ import 'package:book_hive/features/book_details_screen/cubit/get_book_status_det
 import 'package:book_hive/features/book_lend_screen/cubit/get_book_lend_history_cubit/get_book_lend_history_cubit.dart';
 import 'package:book_hive/features/book_lend_screen/cubit/get_single_book_cubit/get_single_book_cubit.dart';
 import 'package:book_hive/features/book_request_screen/cubit/get_book_lend_pending_cubit/get_book_lend_pending_cubit.dart';
+import 'package:book_hive/features/book_request_screen/cubit/get_user_by_id_cubit/get_user_by_id_cubit.dart';
 import 'package:book_hive/features/favorite_screen/cubit/get_user_favorite_cubit/get_user_favorite_cubit.dart';
 import 'package:book_hive/features/favorite_screen/cubit/update_favorite_books/update_favorite_books_cubit.dart';
 import 'package:book_hive/features/home_screen/cubit/get_books_cubit/get_books_cubit.dart';
@@ -31,6 +32,7 @@ class BlocModule {
       ..registerLazySingleton<BorrowBookCubit>(() => BorrowBookCubit())
       ..registerLazySingleton<BookLogCubit>(() => BookLogCubit())
       ..registerLazySingleton<GetSingleBookCubit>(() => GetSingleBookCubit())
+      ..registerLazySingleton<GetUserByIdCubit>(() => GetUserByIdCubit())
       ..registerLazySingleton<GetBookLendPendingCubit>(
           () => GetBookLendPendingCubit())
       ..registerLazySingleton<GetBookLendHistoryCubit>(

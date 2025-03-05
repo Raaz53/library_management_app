@@ -181,8 +181,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           context.router.push(Dashboard());
                         },
                         error: (message) {
-                          Utilities.showCustomSnackbar(
-                              context: context, message: message);
+                          Utilities.showSnackBar(context, message);
                         },
                       );
                     },
@@ -193,9 +192,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           if (_formKey.currentState!.value['password'] ==
                                   null ||
                               _formKey.currentState!.value['password'] == '') {
-                            Utilities.showCustomSnackbar(
-                                context: context,
-                                message: 'Password is required');
+                            Utilities.showSnackBar(
+                                context, 'Password is required');
+
                             return;
                           }
                           UserModel userModel = UserModel(

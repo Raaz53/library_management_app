@@ -14,9 +14,9 @@ import 'package:book_hive/core/widgets/app_text_field.dart';
 import 'package:book_hive/features/add_book_screen/cubit/add_book_cubit/add_book_cubit.dart';
 import 'package:book_hive/features/add_book_screen/widgets/add_book_image_widget.dart';
 import 'package:book_hive/features/home_screen/cubit/get_books_cubit/get_books_cubit.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'widgets/category_selection_widget.dart';
@@ -129,8 +129,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               error: (message) {
                 Navigator.pop(context);
 
-                Utilities.showCustomSnackbar(
-                    context: context, message: 'Error');
+                Utilities.showSnackBar(context, 'Error');
               },
               loading: () => Utilities.showCustomDialog(
                 context: context,
