@@ -154,6 +154,7 @@ class _SingleBookLendStatusState extends State<SingleBookLendStatus> {
                               barrierDismissible: true,
                               context: context,
                               child: DialogApprovalWidget(
+                                bookId: book?.bookId,
                                 bookName: book?.bookName,
                                 bookAuthors: book?.authors,
                                 bookNumber: widget.bookNumber,

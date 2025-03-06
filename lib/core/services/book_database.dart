@@ -215,14 +215,11 @@ class BookDatabase {
   Future<void> acceptBookLend(BookLendApprovalModel? bookLendApproval) async {
     if (bookLendApproval == null) return;
     try {
-      final DateTime bookIssueDate = DateTime.now();
-      final DateTime bookDueDate = bookIssueDate.add(const Duration(days: 30));
-
       await _firestore
           .collection('bookLog')
           .doc(bookLendApproval.lendId)
           .update({
-        'bookIssueDate': bookLendApproval.bookIssueDate,
+        'bookIssuedDate': bookLendApproval.bookIssuedDate,
         'bookDueDate': bookLendApproval.bookDueDate,
         'bookIssueStatus': bookLendApproval.bookStatus,
         'lenderId': bookLendApproval.lenderId,
@@ -236,7 +233,7 @@ class BookDatabase {
           .collection('bookStatusDetail')
           .doc(bookLendApproval.bookNumber)
           .update({
-        'bookIssuedDate': bookLendApproval.bookIssueDate,
+        'bookIssuedDate': bookLendApproval.bookIssuedDate,
         'bookReceivingDate': bookLendApproval.bookDueDate,
       });
 

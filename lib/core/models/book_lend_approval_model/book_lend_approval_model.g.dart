@@ -16,7 +16,7 @@ _$BookLendApprovalModelImpl _$$BookLendApprovalModelImplFromJson(
       bookId: json['bookId'] as String?,
       bookNumber: json['bookNumber'] as String?,
       bookDueDate: json['bookDueDate'] as String?,
-      bookIssueDate: json['bookIssueDate'] as String?,
+      bookIssuedDate: json['bookIssuedDate'] as String?,
     );
 
 Map<String, dynamic> _$$BookLendApprovalModelImplToJson(
@@ -29,5 +29,5 @@ Map<String, dynamic> _$$BookLendApprovalModelImplToJson(
       'bookId': instance.bookId,
       'bookNumber': instance.bookNumber,
       'bookDueDate': instance.bookDueDate,
-      'bookIssueDate': instance.bookIssueDate,
+      'bookIssuedDate': instance.bookIssuedDate,
     };

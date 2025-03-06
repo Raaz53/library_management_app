@@ -5,6 +5,7 @@ import 'package:book_hive/features/book_details_screen/cubit/borrow_book_cubit/b
 import 'package:book_hive/features/book_details_screen/cubit/get_book_status_details_cubit/get_book_status_details_cubit.dart';
 import 'package:book_hive/features/book_lend_screen/cubit/get_book_lend_history_cubit/get_book_lend_history_cubit.dart';
 import 'package:book_hive/features/book_lend_screen/cubit/get_single_book_cubit/get_single_book_cubit.dart';
+import 'package:book_hive/features/book_request_screen/cubit/book_lend_approval_cubit/book_lend_approval_cubit.dart';
 import 'package:book_hive/features/book_request_screen/cubit/get_book_lend_pending_cubit/get_book_lend_pending_cubit.dart';
 import 'package:book_hive/features/book_request_screen/cubit/get_user_by_id_cubit/get_user_by_id_cubit.dart';
 import 'package:book_hive/features/favorite_screen/cubit/get_user_favorite_cubit/get_user_favorite_cubit.dart';
@@ -65,6 +66,9 @@ class AppBlocWrapper extends StatelessWidget {
         ),
         BlocProvider<GetUserByIdCubit>.value(
           value: Injector.instance<GetUserByIdCubit>(),
+        ),
+        BlocProvider<BookLendApprovalCubit>.value(
+          value: Injector.instance<BookLendApprovalCubit>(),
         ),
       ],
       child: child,

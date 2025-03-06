@@ -127,10 +127,11 @@ class BookService {
 
   static acceptBookLend(BookLendApprovalModel? bookLendApproval) async {
     try {
-      final data = await _bookDatabase.acceptBookLend(bookLendApproval);
-      return data;
+      await _bookDatabase.acceptBookLend(bookLendApproval);
+      return 'success';
     } catch (e) {
       log('error thrown in accepting book request');
+      return e.toString();
     }
   }
 
