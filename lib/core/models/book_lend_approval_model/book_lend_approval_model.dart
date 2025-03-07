@@ -13,7 +13,7 @@ class BookLendApprovalModel with _$BookLendApprovalModel {
     String? bookId,
     String? bookNumber,
     String? bookDueDate,
-    String? bookIssueDate,
+    String? bookIssuedDate,
   }) = _BookLendApprovalModel;
 
   factory BookLendApprovalModel.fromJson(Map<String, dynamic> json) =>

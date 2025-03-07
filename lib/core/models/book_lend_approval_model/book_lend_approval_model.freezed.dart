@@ -28,7 +28,7 @@ mixin _$BookLendApprovalModel {
   String? get bookId => throw _privateConstructorUsedError;
   String? get bookNumber => throw _privateConstructorUsedError;
   String? get bookDueDate => throw _privateConstructorUsedError;
-  String? get bookIssueDate => throw _privateConstructorUsedError;
+  String? get bookIssuedDate => throw _privateConstructorUsedError;
 
   /// Serializes this BookLendApprovalModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,7 +54,7 @@ abstract class $BookLendApprovalModelCopyWith<$Res> {
       String? bookId,
       String? bookNumber,
       String? bookDueDate,
-      String? bookIssueDate});
+      String? bookIssuedDate});
 }
 
 /// @nodoc
@@ -80,7 +80,7 @@ class _$BookLendApprovalModelCopyWithImpl<$Res,
     Object? bookId = freezed,
     Object? bookNumber = freezed,
     Object? bookDueDate = freezed,
-    Object? bookIssueDate = freezed,
+    Object? bookIssuedDate = freezed,
   }) {
     return _then(_value.copyWith(
       lendId: freezed == lendId
@@ -111,9 +111,9 @@ class _$BookLendApprovalModelCopyWithImpl<$Res,
           ? _value.bookDueDate
           : bookDueDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      bookIssueDate: freezed == bookIssueDate
-          ? _value.bookIssueDate
-          : bookIssueDate // ignore: cast_nullable_to_non_nullable
+      bookIssuedDate: freezed == bookIssuedDate
+          ? _value.bookIssuedDate
+          : bookIssuedDate // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -136,7 +136,7 @@ abstract class _$$BookLendApprovalModelImplCopyWith<$Res>
       String? bookId,
       String? bookNumber,
       String? bookDueDate,
-      String? bookIssueDate});
+      String? bookIssuedDate});
 }
 
 /// @nodoc
@@ -160,7 +160,7 @@ class __$$BookLendApprovalModelImplCopyWithImpl<$Res>
     Object? bookId = freezed,
     Object? bookNumber = freezed,
     Object? bookDueDate = freezed,
-    Object? bookIssueDate = freezed,
+    Object? bookIssuedDate = freezed,
   }) {
     return _then(_$BookLendApprovalModelImpl(
       lendId: freezed == lendId
@@ -191,9 +191,9 @@ class __$$BookLendApprovalModelImplCopyWithImpl<$Res>
           ? _value.bookDueDate
           : bookDueDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      bookIssueDate: freezed == bookIssueDate
-          ? _value.bookIssueDate
-          : bookIssueDate // ignore: cast_nullable_to_non_nullable
+      bookIssuedDate: freezed == bookIssuedDate
+          ? _value.bookIssuedDate
+          : bookIssuedDate // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -210,7 +210,7 @@ class _$BookLendApprovalModelImpl implements _BookLendApprovalModel {
       this.bookId,
       this.bookNumber,
       this.bookDueDate,
-      this.bookIssueDate});
+      this.bookIssuedDate});
 
   factory _$BookLendApprovalModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookLendApprovalModelImplFromJson(json);
@@ -230,11 +230,11 @@ class _$BookLendApprovalModelImpl implements _BookLendApprovalModel {
   @override
   final String? bookDueDate;
   @override
-  final String? bookIssueDate;
+  final String? bookIssuedDate;
 
   @override
   String toString() {
-    return 'BookLendApprovalModel(lendId: $lendId, lenderId: $lenderId, userId: $userId, bookStatus: $bookStatus, bookId: $bookId, bookNumber: $bookNumber, bookDueDate: $bookDueDate, bookIssueDate: $bookIssueDate)';
+    return 'BookLendApprovalModel(lendId: $lendId, lenderId: $lenderId, userId: $userId, bookStatus: $bookStatus, bookId: $bookId, bookNumber: $bookNumber, bookDueDate: $bookDueDate, bookIssuedDate: $bookIssuedDate)';
   }
 
   @override
@@ -253,14 +253,14 @@ class _$BookLendApprovalModelImpl implements _BookLendApprovalModel {
                 other.bookNumber == bookNumber) &&
             (identical(other.bookDueDate, bookDueDate) ||
                 other.bookDueDate == bookDueDate) &&
-            (identical(other.bookIssueDate, bookIssueDate) ||
-                other.bookIssueDate == bookIssueDate));
+            (identical(other.bookIssuedDate, bookIssuedDate) ||
+                other.bookIssuedDate == bookIssuedDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, lendId, lenderId, userId,
-      bookStatus, bookId, bookNumber, bookDueDate, bookIssueDate);
+      bookStatus, bookId, bookNumber, bookDueDate, bookIssuedDate);
 
   /// Create a copy of BookLendApprovalModel
   /// with the given fields replaced by the non-null parameter values.
@@ -288,7 +288,7 @@ abstract class _BookLendApprovalModel implements BookLendApprovalModel {
       final String? bookId,
       final String? bookNumber,
       final String? bookDueDate,
-      final String? bookIssueDate}) = _$BookLendApprovalModelImpl;
+      final String? bookIssuedDate}) = _$BookLendApprovalModelImpl;
 
   factory _BookLendApprovalModel.fromJson(Map<String, dynamic> json) =
       _$BookLendApprovalModelImpl.fromJson;
@@ -308,7 +308,7 @@ abstract class _BookLendApprovalModel implements BookLendApprovalModel {
   @override
   String? get bookDueDate;
   @override
-  String? get bookIssueDate;
+  String? get bookIssuedDate;
 
   /// Create a copy of BookLendApprovalModel
   /// with the given fields replaced by the non-null parameter values.

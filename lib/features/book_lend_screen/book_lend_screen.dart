@@ -43,11 +43,11 @@ class _BookLendScreenState extends State<BookLendScreen> {
                     .getBookLendHistory(widget.bookLendIds),
                 child: ListView.builder(
                   itemCount: booksHistory?.length,
+                  cacheExtent: 999999,
                   itemBuilder: (context, index) {
                     final singleBook = booksHistory?[index];
                     return SingleBookLendStatus(
-                      bookId: singleBook?.bookId,
-                      bookLendStatus: singleBook?.bookIssueStatus,
+                      singleBookLend: singleBook,
                     );
                   },
                 ),

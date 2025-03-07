@@ -14,7 +14,7 @@ class GetBookLendPendingCubit extends Cubit<GetBookLendPendingState> {
   Future<void> getPendingBookLogs() async {
     emit(GetBookLendPendingState.loading());
     try {
-      final data = await BookService.getBookLogPending();
+      final data = await BookService.getBookLog();
       log('data here is ${data.toString()}');
       emit(GetBookLendPendingState.success(data));
     } catch (e) {

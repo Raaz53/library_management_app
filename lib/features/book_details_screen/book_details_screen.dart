@@ -110,25 +110,31 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 GetBookStatusDetailsState>(
               bloc: _getBookStatusDetailsCubit,
               builder: (context, state) {
-                final availableBook = state.maybeWhen(orElse: () {
-                  _isAvailable = false;
-                  return null;
-                }, success: (bookStatusDetails) {
-                  return bookStatusDetails?.firstWhere(
-                    (book) {
-                      if (book.bookStatus == LibraryBookStatus.available) {
-                        _isAvailable = true;
-                        return book.bookStatus == LibraryBookStatus.available;
-                      } else {
+                final availableBook = state.maybeWhen(
+                  orElse: () {
+                    _isAvailable = false;
+                    return null;
+                  },
+                  success: (bookStatusDetails) {
+                    final BookStatusDetail? data =
+                        bookStatusDetails?.firstWhere(
+                      (book) {
+                        if (book.bookStatus == LibraryBookStatus.available) {
+                          _isAvailable = true;
+                          return true;
+                        } else {
+                          _isAvailable = false;
+                          return false;
+                        }
+                      },
+                      orElse: () {
                         _isAvailable = false;
-                        return false;
-                      }
-                    },
-                  );
-                }, error: (_) {
-                  _isAvailable = false;
-                  return null;
-                });
+                        return BookStatusDetail();
+                      },
+                    );
+                    return data?.bookNumber == null ? null : data;
+                  },
+                );
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(
