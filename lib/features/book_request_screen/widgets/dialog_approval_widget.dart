@@ -24,6 +24,7 @@ class DialogApprovalWidget extends StatefulWidget {
     this.userId,
     this.lendId,
     this.bookId,
+    this.bookStatus,
   });
 
   final String? bookId;
@@ -32,6 +33,7 @@ class DialogApprovalWidget extends StatefulWidget {
   final String? bookAuthors;
   final String? bookNumber;
   final String? userId;
+  final String? bookStatus;
 
   @override
   State<DialogApprovalWidget> createState() => _DialogApprovalWidgetState();
@@ -52,6 +54,20 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
     _getUserByIdCubit.getUserById(widget.userId);
     _isSuccess = false;
     uid = currentUser?.uid;
+  }
+
+  String _bookStatus(String? bookStatus) {
+    if (bookStatus == StudentBookStatus.pending) {
+      return 'Pending';
+    } else if (bookStatus == StudentBookStatus.returned) {
+      return 'Returned';
+    } else if (bookStatus == StudentBookStatus.declined) {
+      return 'Declined';
+    } else if (bookStatus == StudentBookStatus.borrowed) {
+      return 'Borrowed';
+    } else {
+      return 'Over Due';
+    }
   }
 
   @override
@@ -84,12 +100,23 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Approval',
-                            style: AppTextStyles.headlineLargePoppins.copyWith(
-                              fontWeight: FontWeight.w900,
-                              color: AppColors.grey.withValues(alpha: 0.8),
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                widget.bookStatus == StudentBookStatus.pending
+                                    ? 'Approval'
+                                    : 'Details',
+                                style:
+                                    AppTextStyles.headlineLargePoppins.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  color: AppColors.grey.withValues(alpha: 0.8),
+                                ),
+                              ),
+                              CloseButton(
+                                color: AppColors.grey.withValues(alpha: 0.8),
+                              ),
+                            ],
                           ),
                           10.verticalBox,
                           _titleSubWidget('Book Name:', widget.bookName),
@@ -97,74 +124,67 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
                           _titleSubWidget('Book Number:', widget.bookNumber),
                           _titleSubWidget('Requested By:', user?.name),
                           _titleSubWidget('Requester Id:', user?.id),
+                          if (widget.bookStatus != StudentBookStatus.pending)
+                            _titleSubWidget(
+                              'Book Status:',
+                              _bookStatus(widget.bookStatus),
+                            ),
                           20.verticalBox,
-                          _isSuccess
-                              ? AppButton(
-                                  title: 'Done',
-                                  onClick: () {
-                                    context.router.maybePop();
-                                  },
-                                  backgroundColor:
-                                      AppColors.green.withValues(alpha: 0.5),
-                                )
-                              : Row(
-                                  children: [
-                                    Expanded(
-                                      child: AppButton(
-                                        title: 'Approve',
-                                        onClick: () {
-                                          final DateTime bookIssueDate =
-                                              DateTime.now();
-                                          final DateTime bookDueDate =
-                                              bookIssueDate.add(
-                                                  const Duration(days: 30));
+                          if (widget.bookStatus == StudentBookStatus.pending)
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: AppButton(
+                                    title: 'Approve',
+                                    onClick: () {
+                                      final DateTime bookIssueDate =
+                                          DateTime.now();
+                                      final DateTime bookDueDate = bookIssueDate
+                                          .add(const Duration(days: 30));
 
-                                          log('here the current user is $uid');
+                                      log('here the current user is $uid');
 
-                                          final bookLendApprovalModel =
-                                              BookLendApprovalModel(
-                                            lendId: widget.lendId,
-                                            lenderId: uid,
-                                            bookStatus:
-                                                StudentBookStatus.borrowed,
-                                            bookId: widget.bookId,
-                                            bookNumber: widget.bookNumber,
-                                            bookIssuedDate:
-                                                bookIssueDate.toIso8601String(),
-                                            bookDueDate:
-                                                bookDueDate.toIso8601String(),
-                                          );
+                                      final bookLendApprovalModel =
+                                          BookLendApprovalModel(
+                                        lendId: widget.lendId,
+                                        lenderId: uid,
+                                        bookStatus: StudentBookStatus.borrowed,
+                                        bookId: widget.bookId,
+                                        bookNumber: widget.bookNumber,
+                                        bookIssuedDate:
+                                            bookIssueDate.toIso8601String(),
+                                        bookDueDate:
+                                            bookDueDate.toIso8601String(),
+                                      );
 
-                                          _bookLendApprovalCubit.acceptBookLend(
-                                              bookLendApprovalModel);
-                                        },
-                                      ),
-                                    ),
-                                    5.horizontalBox,
-                                    Expanded(
-                                      child: AppButton(
-                                        title: 'Decline',
-                                        backgroundColor: AppColors.red
-                                            .withValues(alpha: 0.5),
-                                        onClick: () {
-                                          final bookLendApprovalModel =
-                                              BookLendApprovalModel(
-                                            lendId: widget.lendId,
-                                            lenderId: uid,
-                                            bookId: widget.bookId,
-                                            bookNumber: widget.bookNumber,
-                                            bookStatus:
-                                                StudentBookStatus.declined,
-                                          );
+                                      _bookLendApprovalCubit.acceptBookLend(
+                                          bookLendApprovalModel);
+                                    },
+                                  ),
+                                ),
+                                5.horizontalBox,
+                                Expanded(
+                                  child: AppButton(
+                                    title: 'Decline',
+                                    backgroundColor:
+                                        AppColors.red.withValues(alpha: 0.5),
+                                    onClick: () {
+                                      final bookLendApprovalModel =
+                                          BookLendApprovalModel(
+                                        lendId: widget.lendId,
+                                        lenderId: uid,
+                                        bookId: widget.bookId,
+                                        bookNumber: widget.bookNumber,
+                                        bookStatus: StudentBookStatus.declined,
+                                      );
 
-                                          _bookLendApprovalCubit
-                                              .declineBookLend(
-                                                  bookLendApprovalModel);
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                )
+                                      _bookLendApprovalCubit.declineBookLend(
+                                          bookLendApprovalModel);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
                         ],
                       ),
                     ),
@@ -293,6 +313,7 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
   }
 
   Widget _titleSubWidget(String? title, String? subTitle) {
+    log('here the subtitle is : $subTitle');
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [

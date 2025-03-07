@@ -30,27 +30,29 @@ class _BookRequestScreenState extends State<BookRequestScreen> {
         bloc: _bookLendPendingCubit,
         builder: (context, state) {
           return state.maybeWhen(
-              orElse: () => SizedBox.shrink(),
-              loading: () => Center(
-                    child: CircularProgressIndicator(),
-                  ),
-              error: (message) => Center(
-                    child: Text('Error creating cubit $message'),
-                  ),
-              success: (bookLend) {
-                return ListView.builder(
-                    itemCount: bookLend?.length,
-                    itemBuilder: (context, index) {
-                      final singleBookLend = bookLend?[index];
-                      return SingleBookLendStatus(
-                        isBookRequest: true,
-                        bookId: singleBookLend?.bookId,
-                        studentRequestId: singleBookLend?.studentId,
-                        bookNumber: singleBookLend?.bookNumber,
-                        lendId: singleBookLend?.bookLendId,
-                      );
-                    });
-              });
+            orElse: () => SizedBox.shrink(),
+            loading: () => Center(
+              child: CircularProgressIndicator(),
+            ),
+            error: (message) => Center(
+              child: Text('Error creating cubit $message'),
+            ),
+            success: (bookLend) {
+              return ListView.builder(
+                itemCount: bookLend?.length,
+                cacheExtent: 9999999,
+                itemBuilder: (context, index) {
+                  final singleBookLend = bookLend?[index];
+                  if (singleBookLend?.bookId == null) return SizedBox.shrink();
+
+                  return SingleBookLendStatus(
+                    isBookRequest: true,
+                    singleBookLend: singleBookLend,
+                  );
+                },
+              );
+            },
+          );
         },
       ),
     );

@@ -197,9 +197,7 @@ class BookDatabase {
     try {
       final collection = _firestore.collection('bookLog');
 
-      final querySnapshot = await collection
-          .where('bookIssueStatus', isEqualTo: StudentBookStatus.pending)
-          .get();
+      final querySnapshot = await collection.get();
 
       List<BookLendedHistory> pendingBooks = querySnapshot.docs
           .map((doc) => BookLendedHistory.fromJson(doc.data()))

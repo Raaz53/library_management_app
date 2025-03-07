@@ -116,7 +116,7 @@ class BookService {
     }
   }
 
-  static getBookLogPending() async {
+  static getBookLog() async {
     try {
       final data = await _bookDatabase.getPendingBookRequests();
       return data;
