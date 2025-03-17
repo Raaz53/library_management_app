@@ -22,3 +22,14 @@ class SvgAssets {
   static const librarySelected = '$assets/book_lend_selected.svg';
   static const libraryUnselected = '$assets/book_lend_unselected.svg';
 }
+
+class GifAssets {
+  static const String assets = 'assets/gifs';
+  static const allDone = '$assets/all_done.gif';
+}
+
+class LottieAssets {
+  static const String assets = 'assets/lottie';
+  static const done = '$assets/done.json';
+  static const loading = '$assets/loading.json';
+}

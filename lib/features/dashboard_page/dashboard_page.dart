@@ -83,6 +83,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       child: CircularProgressIndicator(),
                     ),
                 success: (userData) {
+                  userName = userData?.name ?? '';
                   return IndexedStack(
                     index: _currentIndex,
                     children: [

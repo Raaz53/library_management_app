@@ -23,8 +23,6 @@ class DetailInfoWidget extends StatelessWidget {
                 .copyWith(fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8.0),
-          Text('25 years old',
-              style: AppTextStyles.bodyExtraSmallInter.copyWith(fontSize: 10)),
           SizedBox(height: 8.0),
           Text(
             bio ??

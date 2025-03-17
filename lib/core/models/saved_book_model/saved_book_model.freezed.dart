@@ -182,6 +182,7 @@ mixin _$FireBookModel {
   String? get authors => throw _privateConstructorUsedError;
   int? get pageCount => throw _privateConstructorUsedError;
   List<String>? get categories => throw _privateConstructorUsedError;
+  List<String>? get lenders => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
 
   /// Serializes this FireBookModel to a JSON map.
@@ -212,6 +213,7 @@ abstract class $FireBookModelCopyWith<$Res> {
       String? authors,
       int? pageCount,
       List<String>? categories,
+      List<String>? lenders,
       int? quantity});
 }
 
@@ -241,6 +243,7 @@ class _$FireBookModelCopyWithImpl<$Res, $Val extends FireBookModel>
     Object? authors = freezed,
     Object? pageCount = freezed,
     Object? categories = freezed,
+    Object? lenders = freezed,
     Object? quantity = freezed,
   }) {
     return _then(_value.copyWith(
@@ -288,6 +291,10 @@ class _$FireBookModelCopyWithImpl<$Res, $Val extends FireBookModel>
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      lenders: freezed == lenders
+          ? _value.lenders
+          : lenders // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -316,6 +323,7 @@ abstract class _$$FireBookModelImplCopyWith<$Res>
       String? authors,
       int? pageCount,
       List<String>? categories,
+      List<String>? lenders,
       int? quantity});
 }
 
@@ -343,6 +351,7 @@ class __$$FireBookModelImplCopyWithImpl<$Res>
     Object? authors = freezed,
     Object? pageCount = freezed,
     Object? categories = freezed,
+    Object? lenders = freezed,
     Object? quantity = freezed,
   }) {
     return _then(_$FireBookModelImpl(
@@ -390,6 +399,10 @@ class __$$FireBookModelImplCopyWithImpl<$Res>
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      lenders: freezed == lenders
+          ? _value._lenders
+          : lenders // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -413,8 +426,10 @@ class _$FireBookModelImpl implements _FireBookModel {
       this.authors,
       this.pageCount,
       final List<String>? categories,
+      final List<String>? lenders,
       this.quantity})
-      : _categories = categories;
+      : _categories = categories,
+        _lenders = lenders;
 
   factory _$FireBookModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$FireBookModelImplFromJson(json);
@@ -449,12 +464,22 @@ class _$FireBookModelImpl implements _FireBookModel {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<String>? _lenders;
+  @override
+  List<String>? get lenders {
+    final value = _lenders;
+    if (value == null) return null;
+    if (_lenders is EqualUnmodifiableListView) return _lenders;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final int? quantity;
 
   @override
   String toString() {
-    return 'FireBookModel(bookId: $bookId, googleId: $googleId, bookName: $bookName, bookImage: $bookImage, bookDescription: $bookDescription, rating: $rating, ratingCount: $ratingCount, publishedDate: $publishedDate, authors: $authors, pageCount: $pageCount, categories: $categories, quantity: $quantity)';
+    return 'FireBookModel(bookId: $bookId, googleId: $googleId, bookName: $bookName, bookImage: $bookImage, bookDescription: $bookDescription, rating: $rating, ratingCount: $ratingCount, publishedDate: $publishedDate, authors: $authors, pageCount: $pageCount, categories: $categories, lenders: $lenders, quantity: $quantity)';
   }
 
   @override
@@ -481,6 +506,7 @@ class _$FireBookModelImpl implements _FireBookModel {
                 other.pageCount == pageCount) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
+            const DeepCollectionEquality().equals(other._lenders, _lenders) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity));
   }
@@ -500,6 +526,7 @@ class _$FireBookModelImpl implements _FireBookModel {
       authors,
       pageCount,
       const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_lenders),
       quantity);
 
   /// Create a copy of FireBookModel
@@ -531,6 +558,7 @@ abstract class _FireBookModel implements FireBookModel {
       final String? authors,
       final int? pageCount,
       final List<String>? categories,
+      final List<String>? lenders,
       final int? quantity}) = _$FireBookModelImpl;
 
   factory _FireBookModel.fromJson(Map<String, dynamic> json) =
@@ -559,6 +587,8 @@ abstract class _FireBookModel implements FireBookModel {
   @override
   List<String>? get categories;
   @override
+  List<String>? get lenders;
+  @override
   int? get quantity;
 
   /// Create a copy of FireBookModel
@@ -575,7 +605,9 @@ ReviewModel _$ReviewModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ReviewModel {
+  String? get reviewId => throw _privateConstructorUsedError;
   String? get studentId => throw _privateConstructorUsedError;
+  String? get studentName => throw _privateConstructorUsedError;
   String? get reviewString => throw _privateConstructorUsedError;
   double? get rating => throw _privateConstructorUsedError;
 
@@ -595,7 +627,12 @@ abstract class $ReviewModelCopyWith<$Res> {
           ReviewModel value, $Res Function(ReviewModel) then) =
       _$ReviewModelCopyWithImpl<$Res, ReviewModel>;
   @useResult
-  $Res call({String? studentId, String? reviewString, double? rating});
+  $Res call(
+      {String? reviewId,
+      String? studentId,
+      String? studentName,
+      String? reviewString,
+      double? rating});
 }
 
 /// @nodoc
@@ -613,14 +650,24 @@ class _$ReviewModelCopyWithImpl<$Res, $Val extends ReviewModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? reviewId = freezed,
     Object? studentId = freezed,
+    Object? studentName = freezed,
     Object? reviewString = freezed,
     Object? rating = freezed,
   }) {
     return _then(_value.copyWith(
+      reviewId: freezed == reviewId
+          ? _value.reviewId
+          : reviewId // ignore: cast_nullable_to_non_nullable
+              as String?,
       studentId: freezed == studentId
           ? _value.studentId
           : studentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      studentName: freezed == studentName
+          ? _value.studentName
+          : studentName // ignore: cast_nullable_to_non_nullable
               as String?,
       reviewString: freezed == reviewString
           ? _value.reviewString
@@ -642,7 +689,12 @@ abstract class _$$ReviewModelImplCopyWith<$Res>
       __$$ReviewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? studentId, String? reviewString, double? rating});
+  $Res call(
+      {String? reviewId,
+      String? studentId,
+      String? studentName,
+      String? reviewString,
+      double? rating});
 }
 
 /// @nodoc
@@ -658,14 +710,24 @@ class __$$ReviewModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? reviewId = freezed,
     Object? studentId = freezed,
+    Object? studentName = freezed,
     Object? reviewString = freezed,
     Object? rating = freezed,
   }) {
     return _then(_$ReviewModelImpl(
+      reviewId: freezed == reviewId
+          ? _value.reviewId
+          : reviewId // ignore: cast_nullable_to_non_nullable
+              as String?,
       studentId: freezed == studentId
           ? _value.studentId
           : studentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      studentName: freezed == studentName
+          ? _value.studentName
+          : studentName // ignore: cast_nullable_to_non_nullable
               as String?,
       reviewString: freezed == reviewString
           ? _value.reviewString
@@ -682,13 +744,22 @@ class __$$ReviewModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ReviewModelImpl implements _ReviewModel {
-  _$ReviewModelImpl({this.studentId, this.reviewString, this.rating});
+  _$ReviewModelImpl(
+      {this.reviewId,
+      this.studentId,
+      this.studentName,
+      this.reviewString,
+      this.rating});
 
   factory _$ReviewModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ReviewModelImplFromJson(json);
 
   @override
+  final String? reviewId;
+  @override
   final String? studentId;
+  @override
+  final String? studentName;
   @override
   final String? reviewString;
   @override
@@ -696,7 +767,7 @@ class _$ReviewModelImpl implements _ReviewModel {
 
   @override
   String toString() {
-    return 'ReviewModel(studentId: $studentId, reviewString: $reviewString, rating: $rating)';
+    return 'ReviewModel(reviewId: $reviewId, studentId: $studentId, studentName: $studentName, reviewString: $reviewString, rating: $rating)';
   }
 
   @override
@@ -704,8 +775,12 @@ class _$ReviewModelImpl implements _ReviewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ReviewModelImpl &&
+            (identical(other.reviewId, reviewId) ||
+                other.reviewId == reviewId) &&
             (identical(other.studentId, studentId) ||
                 other.studentId == studentId) &&
+            (identical(other.studentName, studentName) ||
+                other.studentName == studentName) &&
             (identical(other.reviewString, reviewString) ||
                 other.reviewString == reviewString) &&
             (identical(other.rating, rating) || other.rating == rating));
@@ -713,7 +788,8 @@ class _$ReviewModelImpl implements _ReviewModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, studentId, reviewString, rating);
+  int get hashCode => Object.hash(
+      runtimeType, reviewId, studentId, studentName, reviewString, rating);
 
   /// Create a copy of ReviewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -733,7 +809,9 @@ class _$ReviewModelImpl implements _ReviewModel {
 
 abstract class _ReviewModel implements ReviewModel {
   factory _ReviewModel(
-      {final String? studentId,
+      {final String? reviewId,
+      final String? studentId,
+      final String? studentName,
       final String? reviewString,
       final double? rating}) = _$ReviewModelImpl;
 
@@ -741,7 +819,11 @@ abstract class _ReviewModel implements ReviewModel {
       _$ReviewModelImpl.fromJson;
 
   @override
+  String? get reviewId;
+  @override
   String? get studentId;
+  @override
+  String? get studentName;
   @override
   String? get reviewString;
   @override
