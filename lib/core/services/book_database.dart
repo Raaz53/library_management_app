@@ -228,6 +228,15 @@ class BookDatabase {
           .doc('zEkjsYhBxZMjcmNkQ1ZH')
           .collection('bookList')
           .doc(bookLendApproval.bookId)
+          .update({
+        'lenders': bookLendApproval.userId,
+      });
+
+      await _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookLendApproval.bookId)
           .collection('bookStatusDetail')
           .doc(bookLendApproval.bookNumber)
           .update({
@@ -267,6 +276,74 @@ class BookDatabase {
       log('Book lend declined successfully.');
     } catch (e) {
       log('Error declining book lend: $e');
+    }
+  }
+
+  Future<void> addBookReview(ReviewModel? review, String? bookId) async {
+    if (review == null || bookId == null) return;
+    try {
+      final docRef = _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookId)
+          .collection('reviews')
+          .doc();
+
+      final updateReview = review.copyWith(reviewId: docRef.id);
+
+      await docRef.set(updateReview.toJson());
+
+      log('Review added successfully.');
+    } catch (e) {
+      log('Error adding review: $e');
+    }
+  }
+
+  Future<List<ReviewModel>?> getBookReviews(String? bookId) async {
+    if (bookId == null) return null;
+    try {
+      final docRef = _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookId);
+
+      final reviewCollection = docRef.collection('reviews');
+
+      final querySnapshot = await reviewCollection.get();
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs
+            .map((doc) => ReviewModel.fromJson(doc.data()))
+            .toList();
+      }
+
+      return [];
+    } catch (e) {
+      log('Error fetching reviews: $e');
+      return null;
+    }
+  }
+
+  Future<void> editBookReview(
+      String? bookId, String? reviewId, String? updatedReview) async {
+    if (bookId == null || reviewId == null) return;
+    try {
+      final docRef = _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookId)
+          .collection('reviews')
+          .doc(reviewId);
+
+      await docRef.update({
+        'reviewString': updatedReview,
+      });
+
+      log('Review edited successfully.');
+    } catch (e) {
+      log('Error editing review: $e');
     }
   }
 }

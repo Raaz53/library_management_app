@@ -60,6 +60,7 @@ class UserRole {
 
 String globalUserRole = UserRole.user;
 List<String>? userFavoriteBooks = [];
+String? userName;
 
 class StudentBookStatus {
   static const String borrowed = 'borrowed';

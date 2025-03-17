@@ -31,7 +31,7 @@ class AppTextField {
       bool disablesEmojis = true,
       bool readOnly = false,
       int? maxLines = 1,
-      int maxLength = 255,
+      int? maxLength,
       double verticalPadding = 5,
       bool isDisabled = false,
       bool isRequired = false,
@@ -97,12 +97,11 @@ class AppTextField {
           textCapitalization: textCapitalization,
           autocorrect: autocorrect ?? false,
           onTap: onTap,
+          maxLength: maxLength,
           readOnly: isDisabled,
           inputFormatters: formatters,
           decoration: InputDecoration(
-            fillColor: isDisabled
-                ? AppColors.lightGray
-                : backgroundColor ?? AppColors.buttonSecondary,
+            fillColor: backgroundColor ?? AppColors.buttonSecondary,
             contentPadding:
                 const EdgeInsets.only(left: 20, top: 16, bottom: 16),
             filled: true,

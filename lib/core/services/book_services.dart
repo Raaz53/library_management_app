@@ -143,4 +143,31 @@ class BookService {
       log('error thrown in declining books request');
     }
   }
+
+  static addReview(ReviewModel? reviewModel, String? bookId) async {
+    try {
+      await _bookDatabase.addBookReview(reviewModel, bookId);
+    } catch (e) {
+      log('error thrown in adding review');
+    }
+  }
+
+  static getReviews(String? bookId) async {
+    try {
+      final data = await _bookDatabase.getBookReviews(bookId);
+
+      return data;
+    } catch (e) {
+      log('error thrown in getting review');
+    }
+  }
+
+  static editReview(
+      String? updatedReview, String? bookId, String? reviewId) async {
+    try {
+      await _bookDatabase.editBookReview(updatedReview, bookId, reviewId);
+    } catch (e) {
+      log('error thrown in editing review');
+    }
+  }
 }

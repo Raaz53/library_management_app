@@ -12,10 +12,14 @@ import 'package:book_hive/core/utilities/ui_extension.dart';
 import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:book_hive/core/widgets/app_button_widget.dart';
 import 'package:book_hive/features/book_details_screen/cubit/borrow_book_cubit/borrow_book_cubit.dart';
+import 'package:book_hive/features/book_details_screen/cubit/get_book_reviews_cubit/get_book_reviews_cubit.dart';
 import 'package:book_hive/features/book_details_screen/cubit/get_book_status_details_cubit/get_book_status_details_cubit.dart';
+import 'package:book_hive/features/book_details_screen/widgets/book_review_widget.dart';
+import 'package:book_hive/features/book_details_screen/widgets/reviews_list_widget.dart';
 import 'package:book_hive/features/dashboard_page/widgets/cutom_app_bar.dart';
 import 'package:book_hive/features/favorite_screen/cubit/update_favorite_books/update_favorite_books_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,8 +37,10 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   late bool _isFavorite;
   late GetBookStatusDetailsCubit _getBookStatusDetailsCubit;
   late UpdateFavoriteBooksCubit _updateFavoriteBooksCubit;
+  late GetBookReviewsCubit _getBookReviewsCubit;
   late BorrowBookCubit _borrowBookCubit;
   late bool _isAvailable;
+  late bool _enableReview;
   String displayText = 'Borrow';
 
   @override
@@ -42,14 +48,28 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     super.initState();
     _updateFavoriteBooksCubit = Injector.instance<UpdateFavoriteBooksCubit>();
     _getBookStatusDetailsCubit = Injector.instance<GetBookStatusDetailsCubit>();
+    _getBookReviewsCubit = Injector.instance<GetBookReviewsCubit>();
     _borrowBookCubit = Injector.instance<BorrowBookCubit>();
     _getBookStatusDetailsCubit
         .getBookStatusDetails(widget.fireBookModel?.bookId);
+    _getBookReviewsCubit.getBookReviews(widget.fireBookModel?.bookId);
 
     // Initialize favorite state correctly
     _isFavorite =
         userFavoriteBooks?.contains(widget.fireBookModel?.bookId) ?? false;
     _isAvailable = true;
+    _enableReview = _reviewValidation(widget.fireBookModel?.lenders);
+    log('here the review is shown $_enableReview');
+  }
+
+  bool _reviewValidation(List<String>? lenders) {
+    log('the lenders are $lenders');
+    if (lenders == null || lenders.isEmpty) return false;
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (lenders.contains(uid)) {
+      return true;
+    }
+    return false;
   }
 
   void _toggleFavorite() {
@@ -137,8 +157,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 );
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -360,6 +379,49 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             ),
                           ),
                         20.verticalBox,
+                        BlocBuilder<GetBookReviewsCubit, GetBookReviewsState>(
+                          bloc: _getBookReviewsCubit,
+                          builder: (context, reviewState) {
+                            return reviewState.maybeWhen(
+                              orElse: () => Container(),
+                              error: (message) => Container(),
+                              loading: () =>
+                                  Center(child: CircularProgressIndicator()),
+                              success: (reviews) {
+                                if (reviews == null) return Container();
+                                ReviewModel? userReview;
+                                try {
+                                  userReview = reviews.firstWhere(
+                                    (review) =>
+                                        review.studentId ==
+                                        FirebaseAuth.instance.currentUser?.uid,
+                                  );
+                                } catch (e) {
+                                  userReview = null;
+                                }
+                                final filteredReviews = reviews
+                                    .where((review) =>
+                                        review.studentId !=
+                                        FirebaseAuth.instance.currentUser?.uid)
+                                    .toList();
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (_enableReview)
+                                      BookReviewWidget(
+                                        bookId: widget.fireBookModel?.bookId,
+                                        initialReview: userReview?.reviewString,
+                                        userReview: userReview,
+                                      ),
+                                    ReviewsListWidget(
+                                      reviews: filteredReviews,
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),

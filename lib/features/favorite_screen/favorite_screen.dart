@@ -1,3 +1,4 @@
+import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:book_hive/features/favorite_screen/cubit/get_user_favorite_cubit/get_user_favorite_cubit.dart';
@@ -31,38 +32,48 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: BlocBuilder<GetUserFavoriteCubit, GetUserFavoriteState>(
         bloc: _favoriteCubit,
         builder: (context, state) {
           return state.maybeWhen(
-              orElse: () => SizedBox.shrink(),
-              loading: () => Center(
-                    child: CircularProgressIndicator(),
-                  ),
-              success: (favoriteBooks) {
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    await Injector.instance<GetUserProfileCubit>()
-                        .getUserProfile();
-                  },
-                  child: ListView.builder(
-                    itemCount: favoriteBooks?.length,
-                    itemBuilder: (context, index) {
-                      final singleFireBook = favoriteBooks?[index];
-                      return SingleFavoriteWidget(
-                        fireBookModel: singleFireBook,
-                      );
-                    },
-                  ),
-                );
-              },
-              error: (message) => Center(
-                    child: Text(
-                      'Error fetching data',
-                      style: AppTextStyles.headlineLargeMonserat,
-                    ),
-                  ));
+            orElse: () => SizedBox.shrink(),
+            loading: () => Center(
+              child: CircularProgressIndicator(),
+            ),
+            success: (favoriteBooks) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  await Injector.instance<GetUserProfileCubit>()
+                      .getUserProfile();
+                },
+                child: favoriteBooks == null || favoriteBooks.isEmpty
+                    ? Center(
+                        child: Text(
+                          'No Favorite Books',
+                          style: AppTextStyles.headlineLargeMonserat.copyWith(
+                              color: AppColors.white.withValues(alpha: 0.2),
+                              fontWeight: FontWeight.w900),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: favoriteBooks.length,
+                        itemBuilder: (context, index) {
+                          final singleFireBook = favoriteBooks[index];
+                          return SingleFavoriteWidget(
+                            fireBookModel: singleFireBook,
+                          );
+                        },
+                      ),
+              );
+            },
+            error: (message) => Center(
+              child: Text(
+                'Error fetching data',
+                style: AppTextStyles.headlineLargeMonserat,
+              ),
+            ),
+          );
         },
       ),
     );

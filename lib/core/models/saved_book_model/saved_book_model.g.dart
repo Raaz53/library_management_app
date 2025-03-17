@@ -32,6 +32,8 @@ _$FireBookModelImpl _$$FireBookModelImplFromJson(Map<String, dynamic> json) =>
       categories: (json['categories'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      lenders:
+          (json['lenders'] as List<dynamic>?)?.map((e) => e as String).toList(),
       quantity: (json['quantity'] as num?)?.toInt(),
     );
 
@@ -48,19 +50,24 @@ Map<String, dynamic> _$$FireBookModelImplToJson(_$FireBookModelImpl instance) =>
       'authors': instance.authors,
       'pageCount': instance.pageCount,
       'categories': instance.categories,
+      'lenders': instance.lenders,
       'quantity': instance.quantity,
     };
 
 _$ReviewModelImpl _$$ReviewModelImplFromJson(Map<String, dynamic> json) =>
     _$ReviewModelImpl(
+      reviewId: json['reviewId'] as String?,
       studentId: json['studentId'] as String?,
+      studentName: json['studentName'] as String?,
       reviewString: json['reviewString'] as String?,
       rating: (json['rating'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$ReviewModelImplToJson(_$ReviewModelImpl instance) =>
     <String, dynamic>{
+      'reviewId': instance.reviewId,
       'studentId': instance.studentId,
+      'studentName': instance.studentName,
       'reviewString': instance.reviewString,
       'rating': instance.rating,
     };

@@ -10,6 +10,7 @@ import 'package:book_hive/core/utilities/constants.dart';
 import 'package:book_hive/core/utilities/ui_extension.dart';
 import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:book_hive/core/widgets/app_button_widget.dart';
+import 'package:book_hive/core/widgets/app_loading_widget.dart';
 import 'package:book_hive/core/widgets/app_text_field.dart';
 import 'package:book_hive/features/add_book_screen/cubit/add_book_cubit/add_book_cubit.dart';
 import 'package:book_hive/features/add_book_screen/widgets/add_book_image_widget.dart';
@@ -133,7 +134,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               },
               loading: () => Utilities.showCustomDialog(
                 context: context,
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: AppLoadingWidget()),
               ),
             );
           },

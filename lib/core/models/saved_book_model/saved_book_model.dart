@@ -27,6 +27,7 @@ class FireBookModel with _$FireBookModel {
     String? authors,
     int? pageCount,
     List<String>? categories,
+    List<String>? lenders,
     int? quantity,
   }) = _FireBookModel;
 
@@ -37,7 +38,9 @@ class FireBookModel with _$FireBookModel {
 @freezed
 class ReviewModel with _$ReviewModel {
   factory ReviewModel({
+    String? reviewId,
     String? studentId,
+    String? studentName,
     String? reviewString,
     double? rating,
   }) = _ReviewModel;
