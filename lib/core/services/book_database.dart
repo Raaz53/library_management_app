@@ -197,7 +197,12 @@ class BookDatabase {
     try {
       final collection = _firestore.collection('bookLog');
 
-      final querySnapshot = await collection.get();
+      final querySnapshot = await collection
+          .orderBy(
+            'bookLendId',
+            descending: true,
+          )
+          .get();
 
       List<BookLendedHistory> pendingBooks = querySnapshot.docs
           .map((doc) => BookLendedHistory.fromJson(doc.data()))
@@ -295,6 +300,8 @@ class BookDatabase {
       await docRef.set(updateReview.toJson());
 
       log('Review added successfully.');
+
+      await _updateBookRating(bookId, review.rating!, false);
     } catch (e) {
       log('Error adding review: $e');
     }
@@ -325,8 +332,8 @@ class BookDatabase {
     }
   }
 
-  Future<void> editBookReview(
-      String? bookId, String? reviewId, String? updatedReview) async {
+  Future<void> editBookReview(String? bookId, String? reviewId,
+      String? updatedReview, double? updatedRating) async {
     if (bookId == null || reviewId == null) return;
     try {
       final docRef = _firestore
@@ -337,13 +344,67 @@ class BookDatabase {
           .collection('reviews')
           .doc(reviewId);
 
-      await docRef.update({
-        'reviewString': updatedReview,
-      });
+      final review = await docRef.get();
+      if (review.exists) {
+        final reviewData = review.data();
+        if (reviewData != null) {
+          final previousRating = ReviewModel.fromJson(reviewData).rating;
+          await _updateBookRating(bookId, updatedRating!, true,
+              previousRating: previousRating);
+
+          await docRef.update({
+            'review': updatedReview,
+            'rating': updatedRating,
+          });
+        }
+      }
 
       log('Review edited successfully.');
     } catch (e) {
       log('Error editing review: $e');
+    }
+  }
+
+  Future<void> _updateBookRating(
+      String bookId, double rating, bool updatedRating,
+      {double? previousRating}) async {
+    try {
+      final docRef = _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookId);
+      final book = await docRef.get();
+      if (book.exists) {
+        final bookData = book.data();
+        if (bookData != null) {
+          final ratingCount = bookData['ratingCount'] as int;
+          final oldRating = FireBookModel.fromJson(bookData).rating;
+          log('here are all the information'
+              '\nratingCount: $ratingCount'
+              '\noldRating: $oldRating'
+              '\nrating: $rating'
+              '\nupdatedRating: $updatedRating'
+              '\npreviousRating: $previousRating'
+              '\nand the logic is: ${((oldRating! * ratingCount) - (previousRating ?? 0)) + rating} / $ratingCount'
+              '\nbreakdown is: ${(oldRating * ratingCount)}'
+              '\nbreakdown is: ${(previousRating ?? 0)}'
+              '\nbreakdown is: ${((oldRating * ratingCount) - (previousRating ?? 0)) + rating}'
+              '\nbreakdown is: ${((oldRating * ratingCount) - (previousRating ?? 0)) + rating} / $ratingCount');
+
+          double newRating = updatedRating
+              ? (((oldRating! * ratingCount) - (previousRating ?? 0)) +
+                      rating) /
+                  ratingCount
+              : (oldRating! * ratingCount + rating) / (ratingCount + 1);
+          await docRef.update({
+            'rating': newRating,
+            'ratingCount': updatedRating ? ratingCount : ratingCount + 1,
+          });
+        }
+      }
+    } catch (e) {
+      log('Error updating book rating: $e');
     }
   }
 }

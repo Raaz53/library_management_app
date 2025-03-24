@@ -8,11 +8,12 @@ part 'edit_review_state.dart';
 class EditReviewCubit extends Cubit<EditReviewState> {
   EditReviewCubit() : super(const EditReviewState.initial());
 
-  Future<void> editUserReview(
-      String? bookId, String? reviewId, String? updatedReview) async {
+  Future<void> editUserReview(String? bookId, String? reviewId,
+      String? updatedReview, double? updatedRating) async {
     emit(const EditReviewState.loading());
     try {
-      await BookService.editReview(updatedReview, bookId, reviewId);
+      await BookService.editReview(
+          updatedReview, bookId, reviewId, updatedRating);
       emit(const EditReviewState.success());
     } catch (e) {
       emit(EditReviewState.error(e.toString()));

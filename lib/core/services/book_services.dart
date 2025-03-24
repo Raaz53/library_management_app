@@ -162,10 +162,11 @@ class BookService {
     }
   }
 
-  static editReview(
-      String? updatedReview, String? bookId, String? reviewId) async {
+  static editReview(String? updatedReview, String? bookId, String? reviewId,
+      double? updatedRating) async {
     try {
-      await _bookDatabase.editBookReview(updatedReview, bookId, reviewId);
+      await _bookDatabase.editBookReview(
+          bookId, reviewId, updatedReview, updatedRating);
     } catch (e) {
       log('error thrown in editing review');
     }

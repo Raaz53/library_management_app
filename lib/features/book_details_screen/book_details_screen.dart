@@ -63,7 +63,6 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   }
 
   bool _reviewValidation(List<String>? lenders) {
-    log('the lenders are $lenders');
     if (lenders == null || lenders.isEmpty) return false;
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (lenders.contains(uid)) {

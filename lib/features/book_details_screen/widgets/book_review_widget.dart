@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
@@ -36,7 +38,8 @@ class _BookReviewWidgetState extends State<BookReviewWidget> {
   late AddBookReviewCubit _addBookReviewCubit;
   late EditReviewCubit _editReviewCubit;
   late double rating;
-  bool isDisabled = true;
+  bool isExistingReview = false;
+  bool isDisabled = false;
   bool isEdited = false;
 
   @override
@@ -45,6 +48,13 @@ class _BookReviewWidgetState extends State<BookReviewWidget> {
     _addBookReviewCubit = Injector.instance<AddBookReviewCubit>();
     _editReviewCubit = Injector.instance<EditReviewCubit>();
     rating = 0;
+    widget.userReview?.studentId != null
+        ? isDisabled = true
+        : isDisabled = false;
+    widget.userReview?.studentId != null
+        ? isExistingReview = true
+        : isExistingReview = false;
+    log('user review ${widget.userReview?.studentId}');
   }
 
   @override
@@ -59,9 +69,11 @@ class _BookReviewWidgetState extends State<BookReviewWidget> {
             Utilities.showSnackBar(isError: true, context, message);
           },
           success: () {
+            Navigator.pop(context);
+
             isDisabled = true;
             isEdited = false;
-            context.router.maybePop();
+
             Utilities.showCustomDialog(
               context: context,
               child: Lottie.asset(
@@ -93,25 +105,65 @@ class _BookReviewWidgetState extends State<BookReviewWidget> {
         bloc: _editReviewCubit,
         listener: (context, state) {
           state.maybeWhen(
-              orElse: () => context.router.maybePop(),
-              success: () {
-                isDisabled = false;
-                isEdited = true;
+            success: () {
+              Navigator.pop(context);
+              setState(() {
+                isDisabled = true;
+                isEdited = false;
               });
+
+              Utilities.showCustomDialog(
+                context: context,
+                child: Lottie.asset(
+                  LottieAssets.done,
+                  repeat: false,
+                  onLoaded: (composition) {
+                    Future.delayed(
+                      composition.duration,
+                      () {
+                        if (context.mounted) {
+                          context.router.popUntil(
+                              (route) => route.settings.name == 'BookDetails');
+                        }
+                      },
+                    );
+                  },
+                ),
+              );
+            },
+            error: (message) {
+              context.router.maybePop();
+              Utilities.showSnackBar(isError: true, context, message);
+            },
+            orElse: () => context.router.maybePop(),
+            loading: () => Utilities.showCustomDialog(
+              context: context,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
         },
         child: FormBuilder(
           key: _formKey,
           child: Column(
             children: [
               RatingBar.builder(
-                  initialRating: 0,
+                  initialRating: widget.userReview?.rating ?? 0,
+                  unratedColor: AppColors.white.withValues(alpha: 0.3),
                   itemCount: 5,
+                  ignoreGestures: isDisabled,
                   itemPadding: EdgeInsets.symmetric(horizontal: 10),
                   itemBuilder: (context, _) => Icon(
                         Icons.star,
-                        color: Colors.amber,
+                        color: isDisabled
+                            ? Colors.amber.withValues(alpha: 0.5)
+                            : Colors.amber,
                       ),
                   onRatingUpdate: (double value) {
+                    setState(() {
+                      isEdited = true;
+                    });
                     rating = value;
                   }),
               10.verticalBox,
@@ -150,23 +202,15 @@ class _BookReviewWidgetState extends State<BookReviewWidget> {
               ),
               widget.userReview?.reviewString != null && !isEdited
                   ? AppButton(
-                      title: 'Edit',
+                      title: isDisabled ? 'Edit' : 'Change',
                       backgroundColor: AppColors.primaryColor,
                       onClick: () {
-                        if (_formKey.currentState!.saveAndValidate()) {
-                          final userReview = ReviewModel(
-                            studentId: FirebaseAuth.instance.currentUser?.uid,
-                            studentName: userName,
-                            reviewString:
-                                _formKey.currentState!.value['feed_back'],
-                            rating: rating,
-                          );
-                          _editReviewCubit.editUserReview(
-                              userReview.reviewString,
-                              widget.bookId,
-                              widget.userReview?.reviewId);
-                        }
-                      })
+                        setState(() {
+                          isDisabled = false;
+                          isEdited = true;
+                        });
+                      },
+                    )
                   : AppButton(
                       backgroundColor: AppColors.primaryColor,
                       onClick: () {
@@ -178,8 +222,19 @@ class _BookReviewWidgetState extends State<BookReviewWidget> {
                                 _formKey.currentState!.value['feed_back'],
                             rating: rating,
                           );
-                          _addBookReviewCubit.addBookReview(
-                              userReview, widget.bookId);
+                          if (isExistingReview) {
+                            _editReviewCubit.editUserReview(
+                              widget.bookId,
+                              widget.userReview?.reviewId,
+                              userReview.reviewString,
+                              rating,
+                            );
+                          } else {
+                            _addBookReviewCubit.addBookReview(
+                              userReview,
+                              widget.bookId,
+                            );
+                          }
                         }
                       },
                       title: 'Submit',
