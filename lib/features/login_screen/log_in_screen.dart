@@ -105,6 +105,8 @@ class _LogInScreenState extends State<LogInScreen> {
                       );
                     },
                     loginSuccess: (_) {
+                      _formKey.currentState?.reset();
+
                       Navigator.pop(context);
                       context.router.push(Dashboard());
                     },

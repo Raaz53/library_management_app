@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -15,6 +17,7 @@ class GetBookReviewsCubit extends Cubit<GetBookReviewsState> {
     try {
       final List<ReviewModel>? bookReviews =
           await BookService.getReviews(bookId);
+      log('length: ${bookReviews?.length}');
       emit(GetBookReviewsState.success(bookReviews));
     } catch (e) {
       emit(GetBookReviewsState.error(e.toString()));

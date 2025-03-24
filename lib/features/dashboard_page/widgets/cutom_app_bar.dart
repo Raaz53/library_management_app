@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/resources/assets.dart';
@@ -43,8 +41,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: () async {
                 await AuthService.signOut();
                 if (context.mounted) {
-                  context.router
-                      .pushAndPopUntil(LogIn(), predicate: (route) => false);
+                  context.router.replaceAll([LogIn()]);
                 }
               },
               child: Text('Log out'),
