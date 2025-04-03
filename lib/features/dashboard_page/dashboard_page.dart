@@ -7,6 +7,7 @@ import 'package:book_hive/features/add_book_screen/add_book_screen.dart';
 import 'package:book_hive/features/book_lend_screen/book_lend_screen.dart';
 import 'package:book_hive/features/book_list_screen/book_list_screen.dart';
 import 'package:book_hive/features/book_request_screen/book_request_screen.dart';
+import 'package:book_hive/features/dashboard_page/widgets/chat_popup_widget.dart';
 import 'package:book_hive/features/dashboard_page/widgets/cutom_app_bar.dart';
 import 'package:book_hive/features/favorite_screen/favorite_screen.dart';
 import 'package:book_hive/features/home_screen/home_screen.dart';
@@ -28,6 +29,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
   late GetUserProfileCubit _getUserProfileCubit;
   ValueNotifier<String> globalUserRoleNotifier = ValueNotifier(globalUserRole);
+  bool _chatOpen = false;
 
   @override
   void initState() {
@@ -45,6 +47,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
         hoverColor: AppColors.transparent,
       ),
       child: Scaffold(
+        floatingActionButton: GestureDetector(
+          onTap: () {
+            setState(() {
+              _chatOpen = !_chatOpen;
+            });
+          },
+          child: Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: AppColors.chatColor,
+            ),
+            child: Icon(
+              _chatOpen ? Icons.close : Icons.chat_bubble_outline,
+              color: AppColors.buttonSecondary,
+              size: 30,
+            ),
+          ),
+        ),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: ValueListenableBuilder<String>(
@@ -67,48 +88,68 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
         backgroundColor: AppColors.lightBlack,
-        body: BlocConsumer<GetUserProfileCubit, GetUserProfileState>(
-          bloc: _getUserProfileCubit,
-          listener: (context, state) {
-            state.maybeWhen(
-                orElse: () {},
-                success: (userData) {
-                  setState(() {});
-                });
-          },
-          builder: (context, state) {
-            return state.maybeWhen(
-                orElse: () => SizedBox.shrink(),
-                loading: () => Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                success: (userData) {
-                  userName = userData?.name ?? '';
-                  return IndexedStack(
-                    index: _currentIndex,
-                    children: [
-                      HomeScreen(),
-                      BookListScreen(),
-                      globalUserRole == UserRole.admin
-                          ? AddBookScreen()
-                          : FavoriteScreen(
-                              favoriteBookId: userData?.favourites,
-                            ),
-                      globalUserRole == UserRole.admin
-                          ? BookRequestScreen()
-                          : BookLendScreen(
-                              bookLendIds: userData?.borrowedBookList,
-                            ),
-                      SettingScreen(
-                        userModel: userData,
-                      ),
-                    ],
-                  );
+        body: Stack(
+          children: [
+            IgnorePointer(
+              ignoring: _chatOpen,
+              child: BlocConsumer<GetUserProfileCubit, GetUserProfileState>(
+                bloc: _getUserProfileCubit,
+                listener: (context, state) {
+                  state.maybeWhen(
+                      orElse: () {},
+                      success: (userData) {
+                        setState(() {});
+                      });
                 },
-                error: (message) => Center(
-                      child: Text('Error fetching data'),
-                    ));
-          },
+                builder: (context, state) {
+                  return state.maybeWhen(
+                      orElse: () => SizedBox.shrink(),
+                      loading: () => Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                      success: (userData) {
+                        userName = userData?.name ?? '';
+                        return IndexedStack(
+                          index: _currentIndex,
+                          children: [
+                            HomeScreen(),
+                            BookListScreen(),
+                            globalUserRole == UserRole.admin
+                                ? AddBookScreen()
+                                : FavoriteScreen(
+                                    favoriteBookId: userData?.favourites,
+                                  ),
+                            globalUserRole == UserRole.admin
+                                ? BookRequestScreen()
+                                : BookLendScreen(
+                                    bookLendIds: userData?.borrowedBookList,
+                                  ),
+                            SettingScreen(
+                              userModel: userData,
+                            ),
+                          ],
+                        );
+                      },
+                      error: (message) => Center(
+                            child: Text('Error fetching data'),
+                          ));
+                },
+              ),
+            ),
+            AnimatedPositioned(
+              duration: Duration(seconds: 1),
+              curve: Curves.fastOutSlowIn,
+              bottom: _chatOpen ? 80 : 20,
+              right: _chatOpen ? 0 : -20,
+              child: AnimatedScale(
+                duration: Duration(milliseconds: 700),
+                scale: _chatOpen ? 1 : 0,
+                curve: Curves.fastOutSlowIn,
+                alignment: Alignment(1.0, 1.0),
+                child: ChatPopupWidget(),
+              ),
+            ),
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
