@@ -4,6 +4,7 @@ class AppColors {
   AppColors._();
 
   static const primaryColor = Color(0xff1A80E5);
+  static const chatColor = Color(0xff55a3f4);
   static const primaryLight = Color(0xffBBDEFB);
   static const textPrimaryColor = Color(0xff000000);
   static const primaryDark = Color(0xff121417);
