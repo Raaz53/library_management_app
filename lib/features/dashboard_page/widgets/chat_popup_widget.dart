@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:book_hive/features/chat_ui/chat_ui.dart';
 import 'package:flutter/material.dart';
 
 class ChatPopupWidget extends StatefulWidget {
@@ -30,14 +31,14 @@ class _ChatPopupWidgetState extends State<ChatPopupWidget> {
           begin: Alignment.centerLeft,
           end: Alignment(0.8, 1),
           colors: [
-            Color(0xff1f005c),
-            Color(0xff5b0060),
-            Color(0xff870160),
-            Color(0xffac255e),
-            Color(0xffca485c),
-            Color(0xffe16b5c),
-            Color(0xfff39060),
-            Color(0xffffb56b), // Dark Teal
+            Color(0xff463e4e),
+            Color(0xff443647),
+            Color(0xff45323f),
+            Color(0xff3c2b33),
+            Color(0xff302122),
+            Color(0xff352423),
+            Color(0xff322622),
+            Color(0xff302923), // Dark Teal
           ],
           tileMode: TileMode.mirror, // Controls how colors are distributed
         ),
@@ -53,10 +54,8 @@ class _ChatPopupWidgetState extends State<ChatPopupWidget> {
           bottomLeft: Radius.circular(40),
         ),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Center(
-            child: Text('Chat UI goes here'),
-          ),
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          child: ChatUI(),
         ),
       ),
     );

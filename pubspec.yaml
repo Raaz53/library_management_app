@@ -55,6 +55,10 @@ dependencies:
   lottie: ^3.3.1
   speech_to_text: ^7.0.0
   firebase_vertexai: ^1.5.0
+  flutter_chat_ui: ^1.6.15
+  flutter_chat_types: ^3.6.2
+  google_generative_ai: ^0.2.0
+  uuid: ^4.5.1
 
 
 dev_dependencies:
