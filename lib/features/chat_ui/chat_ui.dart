@@ -20,6 +20,7 @@ class ChatUI extends StatefulWidget {
 class _ChatUIState extends State<ChatUI> {
   List<types.Message> _messages = [];
   late String initialPrompt = '';
+  final geminiChat = Gemini.instance;
   final types.User _user = types.User(
     id: FirebaseAuth.instance.currentUser!.uid,
     firstName: FirebaseAuth.instance.currentUser!.displayName,
@@ -29,7 +30,6 @@ class _ChatUIState extends State<ChatUI> {
   @override
   void initState() {
     super.initState();
-    _chatSession = gemini.Gemini.instance.streamChat();
     _sendInitialPrompt(widget.books ?? []);
     // _loadInitialMessages();
   }
@@ -42,8 +42,8 @@ Books JSON: ${widget.books.toString()}
 ''';
 
     try {
-      final result = await gemini.Gemini.instance
-          .prompt(parts: [gemini.Part.text(initialPrompt)]);
+      final result =
+          await geminiChat.prompt(parts: [gemini.Part.text(initialPrompt)]);
 
       final responseText = result?.output ?? 'Hi! how you doing';
 
@@ -94,8 +94,8 @@ Books JSON: ${widget.books.toString()}
     });
 
     try {
-      final response = await gemini.Gemini.instance
-          .prompt(parts: [gemini.Part.text(message.text)]);
+      final response =
+          await geminiChat.prompt(parts: [gemini.Part.text(message.text)]);
 
       final responseText =
           response?.output ?? "Sorry, I couldn't understand that.";
