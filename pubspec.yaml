@@ -59,6 +59,7 @@ dependencies:
   flutter_chat_types: ^3.6.2
   google_generative_ai: ^0.2.0
   uuid: ^4.5.1
+  flutter_gemini: ^3.0.0
 
 
 dev_dependencies:
