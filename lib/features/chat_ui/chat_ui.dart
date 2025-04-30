@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_gemini/flutter_gemini.dart' as gemini;
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../core/models/saved_book_model/saved_book_model.dart';
@@ -20,12 +19,11 @@ class ChatUI extends StatefulWidget {
 class _ChatUIState extends State<ChatUI> {
   List<types.Message> _messages = [];
   late String initialPrompt = '';
-  final geminiChat = Gemini.instance;
+  final geminiChat = gemini.Gemini.instance;
   final types.User _user = types.User(
     id: FirebaseAuth.instance.currentUser!.uid,
     firstName: FirebaseAuth.instance.currentUser!.displayName,
   );
-  late final ChatSession _chatSession;
 
   @override
   void initState() {
@@ -38,7 +36,7 @@ class _ChatUIState extends State<ChatUI> {
     final booksJson = books.map((book) => book.toJson()).toList();
     initialPrompt = '''
     You are an AI chatbot for the app called Book Hive, a library management system. The list of books is attached in JSON format. Analyze the JSON and respond accordingly within those boundaries. This is the initial text prompt written by the developer. The queries and prompts after this are written by the user. Start the conversation by greeting: "Hi! I am HiveChat. How may I help you today?"
-Books JSON: ${widget.books.toString()}
+Books JSON: $booksJson
 ''';
 
     try {
