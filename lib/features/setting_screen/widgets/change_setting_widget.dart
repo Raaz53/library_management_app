@@ -1,6 +1,5 @@
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
-import 'package:book_hive/core/utilities/ui_extension.dart';
 import 'package:flutter/material.dart';
 
 class ChangeSettingWidget extends StatelessWidget {
@@ -31,7 +30,7 @@ class ChangeSettingWidget extends StatelessWidget {
   Widget contentWidget(
       {String? title, VoidCallback? onPressed, bool isDelete = false}) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title ?? '',
@@ -39,9 +38,8 @@ class ChangeSettingWidget extends StatelessWidget {
             color: isDelete ? Colors.red : Colors.white,
           ),
         ),
-        8.horizontalBox,
         Icon(Icons.arrow_forward_ios,
-            color: isDelete ? Colors.red : Colors.white),
+            size: 20, color: isDelete ? Colors.red : Colors.white),
       ],
     );
   }

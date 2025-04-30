@@ -73,127 +73,150 @@ class _SingleBookLendStatusState extends State<SingleBookLendStatus> {
                   child: CircularProgressIndicator(),
                 ),
             success: (book) {
-              return Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                height: 200,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      bottom: 0,
-                      child: Container(
-                        height: 170,
-                        padding: EdgeInsets.only(
-                            left: 140, top: 8, right: 8, bottom: 8),
-                        width: MediaQuery.sizeOf(context).width * 0.95,
-                        decoration: BoxDecoration(
-                          color: AppColors.grey.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            8.verticalBox,
-                            Text(
-                              book?.bookName ?? 'Harry Potters',
-                              style: AppTextStyles.headlineMediumPoppins
-                                  .copyWith(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                            Text(
-                              'By ${book?.authors ?? 'Writers Name'}',
-                              style: AppTextStyles.bodySmallMonserat
-                                  .copyWith(color: Colors.amber),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                            Text(
-                              'Published at: ${book?.publishedDate ?? ''}',
-                              style: AppTextStyles.bodyExtraSmallInter,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ],
-                        ),
+              return GestureDetector(
+                onTap: () {
+                  if (widget.singleBookLend?.bookIssueStatus ==
+                      StudentBookStatus.borrowed) {
+                    Utilities.showCustomDialog(
+                      barrierDismissible: true,
+                      context: context,
+                      child: DialogApprovalWidget(
+                        bookId: book?.bookId,
+                        bookName: book?.bookName,
+                        bookAuthors: book?.authors,
+                        bookNumber: widget.singleBookLend?.bookNumber,
+                        userId: widget.singleBookLend?.studentId,
+                        lendId: widget.singleBookLend?.bookLendId,
+                        bookStatus: widget.singleBookLend?.bookIssueStatus,
                       ),
-                    ),
-                    if (!widget.isBookRequest)
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  height: 200,
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
                       Positioned(
-                        bottom: 20,
-                        right: 20,
+                        bottom: 0,
                         child: Container(
-                          padding: EdgeInsets.all(4),
+                          height: 170,
+                          padding: EdgeInsets.only(
+                              left: 140, top: 8, right: 8, bottom: 8),
+                          width: MediaQuery.sizeOf(context).width * 0.95,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              color: _borderColor(
-                                  widget.singleBookLend?.bookIssueStatus),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.grey.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Text(
-                            _bookStatus(widget.singleBookLend?.bookIssueStatus),
-                            style: AppTextStyles.bodyExtraSmallPoppins,
-                          ),
-                        ),
-                      ),
-                    Positioned(
-                      left: 0,
-                      child: SizedBox(
-                        height: 200,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: book?.bookImage != null
-                              ? CachedNetworkImage(
-                                  imageUrl: book?.bookImage ?? '',
-                                  fit: BoxFit.fitHeight,
-                                )
-                              : Image.asset(
-                                  ImageAssets.harryPotter,
-                                  fit: BoxFit.fitHeight,
-                                ),
-                        ),
-                      ),
-                    ),
-                    if (widget.isBookRequest)
-                      Positioned(
-                        right: 10,
-                        bottom: 10,
-                        child: Row(
-                          children: [
-                            AppButton(
-                              title: (widget.singleBookLend?.bookIssueStatus ==
-                                      StudentBookStatus.pending)
-                                  ? 'Check-out'
-                                  : 'Details',
-                              onClick: () => Utilities.showCustomDialog(
-                                barrierDismissible: true,
-                                context: context,
-                                child: DialogApprovalWidget(
-                                  bookId: book?.bookId,
-                                  bookName: book?.bookName,
-                                  bookAuthors: book?.authors,
-                                  bookNumber: widget.singleBookLend?.bookNumber,
-                                  userId: widget.singleBookLend?.studentId,
-                                  lendId: widget.singleBookLend?.bookLendId,
-                                  bookStatus:
-                                      widget.singleBookLend?.bookIssueStatus,
-                                ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              8.verticalBox,
+                              Text(
+                                book?.bookName ?? 'Harry Potters',
+                                style: AppTextStyles.headlineMediumPoppins
+                                    .copyWith(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                               ),
-                              backgroundColor: (widget
-                                          .singleBookLend?.bookIssueStatus ==
-                                      StudentBookStatus.pending)
-                                  ? Colors.yellowAccent.withValues(alpha: 0.5)
-                                  : AppColors.grey.withValues(alpha: 0.25),
-                              width: 50,
-                            ),
-                          ],
+                              Text(
+                                'By ${book?.authors ?? 'Writers Name'}',
+                                style: AppTextStyles.bodySmallMonserat
+                                    .copyWith(color: Colors.amber),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                              Text(
+                                'Published at: ${book?.publishedDate ?? ''}',
+                                style: AppTextStyles.bodyExtraSmallInter,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ],
+                          ),
                         ),
-                      )
-                  ],
+                      ),
+                      if (!widget.isBookRequest)
+                        Positioned(
+                          bottom: 20,
+                          right: 20,
+                          child: Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: _borderColor(
+                                    widget.singleBookLend?.bookIssueStatus),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              _bookStatus(
+                                  widget.singleBookLend?.bookIssueStatus),
+                              style: AppTextStyles.bodyExtraSmallPoppins,
+                            ),
+                          ),
+                        ),
+                      Positioned(
+                        left: 0,
+                        child: SizedBox(
+                          height: 200,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: book?.bookImage != null
+                                ? CachedNetworkImage(
+                                    imageUrl: book?.bookImage ?? '',
+                                    fit: BoxFit.fitHeight,
+                                  )
+                                : Image.asset(
+                                    ImageAssets.harryPotter,
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                          ),
+                        ),
+                      ),
+                      if (widget.isBookRequest)
+                        Positioned(
+                          right: 10,
+                          bottom: 10,
+                          child: Row(
+                            children: [
+                              AppButton(
+                                title:
+                                    (widget.singleBookLend?.bookIssueStatus ==
+                                            StudentBookStatus.pending)
+                                        ? 'Check-out'
+                                        : 'Details',
+                                onClick: () => Utilities.showCustomDialog(
+                                  barrierDismissible: true,
+                                  context: context,
+                                  child: DialogApprovalWidget(
+                                    bookId: book?.bookId,
+                                    bookName: book?.bookName,
+                                    bookAuthors: book?.authors,
+                                    bookNumber:
+                                        widget.singleBookLend?.bookNumber,
+                                    userId: widget.singleBookLend?.studentId,
+                                    lendId: widget.singleBookLend?.bookLendId,
+                                    bookStatus:
+                                        widget.singleBookLend?.bookIssueStatus,
+                                  ),
+                                ),
+                                backgroundColor: (widget
+                                            .singleBookLend?.bookIssueStatus ==
+                                        StudentBookStatus.pending)
+                                    ? Colors.yellowAccent.withValues(alpha: 0.5)
+                                    : AppColors.grey.withValues(alpha: 0.25),
+                                width: 50,
+                              ),
+                            ],
+                          ),
+                        )
+                    ],
+                  ),
                 ),
               );
             },

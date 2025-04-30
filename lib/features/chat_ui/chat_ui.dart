@@ -1,9 +1,10 @@
+import 'package:book_hive/core/utilities/constants.dart';
+import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:flutter_gemini/flutter_gemini.dart' as gemini;
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../core/models/saved_book_model/saved_book_model.dart';
@@ -17,9 +18,14 @@ class ChatUI extends StatefulWidget {
 }
 
 class _ChatUIState extends State<ChatUI> {
+  final _inputController = TextEditingController();
+  late final ChatSession _session;
+  final GenerativeModel _model = GenerativeModel(
+      model: 'gemini-2.0-flash', apiKey: GoogleCredentials.apiKey);
+  bool _loading = false;
+
   List<types.Message> _messages = [];
   late String initialPrompt = '';
-  final geminiChat = gemini.Gemini.instance;
   final types.User _user = types.User(
     id: FirebaseAuth.instance.currentUser!.uid,
     firstName: FirebaseAuth.instance.currentUser!.displayName,
@@ -28,8 +34,15 @@ class _ChatUIState extends State<ChatUI> {
   @override
   void initState() {
     super.initState();
+    _session = _model.startChat();
     _sendInitialPrompt(widget.books ?? []);
     // _loadInitialMessages();
+  }
+
+  _showError(String message) {
+    if (context.mounted) {
+      Utilities.showSnackBar(context, message);
+    }
   }
 
   void _sendInitialPrompt(List<FireBookModel> books) async {
@@ -38,46 +51,34 @@ class _ChatUIState extends State<ChatUI> {
     You are an AI chatbot for the app called Book Hive, a library management system. The list of books is attached in JSON format. Analyze the JSON and respond accordingly within those boundaries. This is the initial text prompt written by the developer. The queries and prompts after this are written by the user. Start the conversation by greeting: "Hi! I am HiveChat. How may I help you today?"
 Books JSON: $booksJson
 ''';
-
     try {
-      final result =
-          await geminiChat.prompt(parts: [gemini.Part.text(initialPrompt)]);
-
-      final responseText = result?.output ?? 'Hi! how you doing';
-
+      final response = await _session.sendMessage(Content.text(initialPrompt));
+      var text = response.text;
+      if (text == null) {
+        text = 'Sorry, I could not understand that.';
+      } else {
+        _loading = true;
+      }
       final aiMessage = types.TextMessage(
-        author: types.User(id: 'ai'),
+        author: const types.User(id: 'ai'),
         createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: Uuid().v4(),
-        text: responseText,
+        id: const Uuid().v4(),
+        text: text,
       );
       setState(() {
         _messages.insert(0, aiMessage);
       });
     } catch (e) {
-      if (kDebugMode) {
-        print('Error sending initial prompt: $e');
-      }
+      _showError(e.toString());
+      setState(() {
+        _loading = false;
+      });
+    } finally {
+      setState(() {
+        _loading = false;
+      });
     }
-
-    // final response = await _chatSession.sendMessage(
-    //  Content.text(initialPrompt)
-    // );
-    //
   }
-
-  // void _loadInitialMessages() {
-  //   final textMessage = types.TextMessage(
-  //     author: _user,
-  //     createdAt: DateTime.now().millisecondsSinceEpoch,
-  //     id: const Uuid().v4(),
-  //     text: '',
-  //   );
-  //
-  //   setState(() {
-  //     _messages.insert(0, textMessage);
-  //   });
-  // }
 
   void _handleSendPressed(types.PartialText message) async {
     final textMessage = types.TextMessage(
@@ -89,39 +90,34 @@ Books JSON: $booksJson
 
     setState(() {
       _messages.insert(0, textMessage);
+      _loading = true;
     });
-
     try {
-      final response =
-          await geminiChat.prompt(parts: [gemini.Part.text(message.text)]);
-
-      final responseText =
-          response?.output ?? "Sorry, I couldn't understand that.";
-
+      final response = await _session.sendMessage(Content.text(message.text));
+      var text = response.text;
+      if (text == null) {
+        text = 'Sorry, I could not understand that.';
+      } else {
+        _loading = true;
+      }
       final aiMessage = types.TextMessage(
         author: const types.User(id: 'ai'),
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: const Uuid().v4(),
-        text: responseText,
+        text: text,
       );
-
       setState(() {
         _messages.insert(0, aiMessage);
       });
     } catch (e) {
-      if (kDebugMode) {
-        print("Gemini API error: $e");
-      }
-
-      final errorMessage = types.TextMessage(
-        author: const types.User(id: 'ai'),
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: const Uuid().v4(),
-        text: "Oops, there was an error processing your message.",
-      );
-
+      _showError(e.toString());
       setState(() {
-        _messages.insert(0, errorMessage);
+        _loading = false;
+      });
+    } finally {
+      _inputController.clear();
+      setState(() {
+        _loading = false;
       });
     }
   }
