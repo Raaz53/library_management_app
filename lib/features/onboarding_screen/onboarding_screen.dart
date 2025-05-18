@@ -68,7 +68,7 @@ class OnboardingScreen extends StatelessWidget {
                 elevation: 2,
                 width: double.infinity,
                 height: 50,
-                radius: 0,
+                radius: 10,
               ),
             ],
           ),

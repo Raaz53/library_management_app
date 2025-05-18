@@ -50,11 +50,17 @@ dependencies:
   firebase_core: ^3.10.1
   form_builder_validators: ^11.1.1
   json_annotation: ^4.9.0
+  flutter_markdown: ^0.7.7
   dio: ^5.8.0+1
   flutter_rating_bar: ^4.0.1
   lottie: ^3.3.1
   speech_to_text: ^7.0.0
   firebase_vertexai: ^1.5.0
+  flutter_chat_ui: ^1.6.15
+  flutter_chat_types: ^3.6.2
+  google_generative_ai: ^0.2.0
+  uuid: ^4.5.1
+  flutter_gemini: ^3.0.0
 
 
 dev_dependencies:

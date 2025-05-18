@@ -1,5 +1,5 @@
-import 'dart:convert';
 import 'package:book_hive/core/models/google_book_model/google_book_model.dart';
+import 'package:book_hive/core/utilities/constants.dart';
 import 'package:dio/dio.dart';
 
 class GoogleBookApiHandler {
@@ -11,7 +11,7 @@ class GoogleBookApiHandler {
     ),
   );
 
-  final String _apiKey = "AIzaSyCx-83Pp_C5Ug5_6MNdeubds4ynP-HjfFQ";
+  final String _apiKey = GoogleCredentials.apiKey;
 
   GoogleBookApiHandler();
 

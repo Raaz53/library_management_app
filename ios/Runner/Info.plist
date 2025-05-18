@@ -29,15 +29,15 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Speech recognition is used to transcribe audio to text.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone access is required for speech recognition.</string>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSSpeechRecognitionUsageDescription</key>
+    	<string>Speech recognition is used to transcribe audio to text.</string>
+    	<key>NSMicrophoneUsageDescription</key>
+    	<string>Microphone access is required for speech recognition.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -108,7 +108,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       _formKey.currentState?.reset();
 
                       Navigator.pop(context);
-                      context.router.push(Dashboard());
+                      context.router.replaceAll([Dashboard()]);
                     },
                     orElse: () {},
                   );

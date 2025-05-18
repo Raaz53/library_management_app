@@ -62,6 +62,10 @@ String globalUserRole = UserRole.user;
 List<String>? userFavoriteBooks = [];
 String? userName;
 
+class GoogleCredentials {
+  static const String apiKey = "AIzaSyCx-83Pp_C5Ug5_6MNdeubds4ynP-HjfFQ";
+}
+
 class StudentBookStatus {
   static const String borrowed = 'borrowed';
   static const String pending = 'pending';
