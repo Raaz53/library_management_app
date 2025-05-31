@@ -20,6 +20,13 @@ import 'package:book_hive/features/setting_screen/cubit/get_user_profile_cubit.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/book_lend_screen/cubit/return_book_cubit/return_book_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/check_claimable_cubit/check_claimable_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/get_reward_claimer_cubit/get_reward_claimer_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/get_rewards_cubit/get_rewards_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/grant_reward_cubit/grant_reward_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/reward_claim_cubit/user_claim_reward_cubit.dart';
+
 class AppBlocWrapper extends StatelessWidget {
   const AppBlocWrapper({super.key, required this.child});
   final Widget child;
@@ -81,6 +88,24 @@ class AppBlocWrapper extends StatelessWidget {
         ),
         BlocProvider<EditReviewCubit>.value(
           value: Injector.instance<EditReviewCubit>(),
+        ),
+        BlocProvider<ReturnBookCubit>.value(
+          value: Injector.instance<ReturnBookCubit>(),
+        ),
+        BlocProvider<GetRewardsCubit>.value(
+          value: Injector.instance<GetRewardsCubit>(),
+        ),
+        BlocProvider<UserClaimRewardCubit>.value(
+          value: Injector.instance<UserClaimRewardCubit>(),
+        ),
+        BlocProvider<CheckClaimableCubit>.value(
+          value: Injector.instance<CheckClaimableCubit>(),
+        ),
+        BlocProvider<GetRewardClaimerCubit>.value(
+          value: Injector.instance<GetRewardClaimerCubit>(),
+        ),
+        BlocProvider<GrantRewardCubit>.value(
+          value: Injector.instance<GrantRewardCubit>(),
         ),
       ],
       child: child,

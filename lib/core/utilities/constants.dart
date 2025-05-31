@@ -73,3 +73,9 @@ class StudentBookStatus {
   static const String declined = 'declined';
   static const String returned = 'returned';
 }
+
+class RewardStatus {
+  static const String pending = 'pending';
+  static const String approved = 'approved';
+  static const String rejected = 'rejected';
+}

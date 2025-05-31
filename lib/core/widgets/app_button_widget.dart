@@ -7,6 +7,7 @@ class AppButton extends StatelessWidget {
     required this.title,
     required this.onClick,
     this.backgroundColor = AppColors.lightBlack,
+    this.disableTitle = false,
     this.textColor = Colors.white,
     this.height = 46.0,
     this.radius = 10.0,
@@ -25,6 +26,7 @@ class AppButton extends StatelessWidget {
   });
 
   final String title;
+  final bool disableTitle;
   final VoidCallback? onClick;
   final Color backgroundColor;
   final Color textColor;

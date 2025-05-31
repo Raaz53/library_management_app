@@ -17,6 +17,12 @@ import 'package:book_hive/features/home_screen/cubit/get_firebase_books_cubit/ge
 import 'package:book_hive/features/login_screen/cubit/user_signin_cubit/user_signin_cubit.dart';
 import 'package:book_hive/features/setting_screen/cubit/get_user_profile_cubit.dart';
 
+import '../../features/book_lend_screen/cubit/return_book_cubit/return_book_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/check_claimable_cubit/check_claimable_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/get_reward_claimer_cubit/get_reward_claimer_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/get_rewards_cubit/get_rewards_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/grant_reward_cubit/grant_reward_cubit.dart';
+import '../../features/reward_add_on_screen/cubit/reward_claim_cubit/user_claim_reward_cubit.dart';
 import 'injection.dart';
 
 class BlocModule {
@@ -40,6 +46,14 @@ class BlocModule {
       ..registerLazySingleton<AddBookReviewCubit>(() => AddBookReviewCubit())
       ..registerLazySingleton<GetBookReviewsCubit>(() => GetBookReviewsCubit())
       ..registerLazySingleton<EditReviewCubit>(() => EditReviewCubit())
+      ..registerLazySingleton<ReturnBookCubit>(() => ReturnBookCubit())
+      ..registerLazySingleton<GetRewardsCubit>(() => GetRewardsCubit())
+      ..registerLazySingleton<CheckClaimableCubit>(() => CheckClaimableCubit())
+      ..registerLazySingleton<GrantRewardCubit>(() => GrantRewardCubit())
+      ..registerLazySingleton<GetRewardClaimerCubit>(
+          () => GetRewardClaimerCubit())
+      ..registerLazySingleton<UserClaimRewardCubit>(
+          () => UserClaimRewardCubit())
       ..registerLazySingleton<BookLendApprovalCubit>(
           () => BookLendApprovalCubit())
       ..registerLazySingleton<GetBookLendPendingCubit>(

@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:book_hive/core/models/book_lend_approval_model/book_lend_approval_model.dart';
+import 'package:book_hive/core/models/book_return_model/book_return_model.dart';
 import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:book_hive/core/services/google_book_api_handler.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'book_database.dart';
 
@@ -169,6 +171,20 @@ class BookService {
           bookId, reviewId, updatedReview, updatedRating);
     } catch (e) {
       log('error thrown in editing review');
+    }
+  }
+
+  static returnBook(BookReturnModel? bookReturnModel) async {
+    if (bookReturnModel == null) return;
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      await _bookDatabase
+          .returnBook(bookReturnModel, user?.uid)
+          .whenComplete(() {
+        return 'success';
+      });
+    } catch (e) {
+      log('Error thrown in returning book: $e');
     }
   }
 }

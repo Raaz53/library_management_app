@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:book_hive/core/models/book_lend_approval_model/book_lend_approval_model.dart';
+import 'package:book_hive/core/models/book_return_model/book_return_model.dart';
 import 'package:book_hive/core/models/saved_book_model/saved_book_model.dart';
 import 'package:book_hive/core/models/user_model/user_model.dart';
 import 'package:book_hive/core/utilities/constants.dart';
@@ -405,6 +406,46 @@ class BookDatabase {
       }
     } catch (e) {
       log('Error updating book rating: $e');
+    }
+  }
+
+  Future<void> returnBook(
+      BookReturnModel bookReturnModel, String? userId) async {
+    try {
+      await _firestore
+          .collection('bookLog')
+          .doc(bookReturnModel.lendId)
+          .update({
+        'bookReturnedDate': bookReturnModel.returnedDate,
+        'bookIssueStatus': StudentBookStatus.returned,
+      });
+      await _firestore
+          .collection('books')
+          .doc('zEkjsYhBxZMjcmNkQ1ZH')
+          .collection('bookList')
+          .doc(bookReturnModel.bookId)
+          .collection('bookStatusDetail')
+          .doc(bookReturnModel.bookNumber)
+          .update({
+        'bookIssuedDate': null,
+        'bookReceivingDate': null,
+        'bookStatus': 'available',
+      });
+      final user = await _firestore.collection('users').doc(userId).get();
+      if (user.exists) {
+        log('user exists');
+        final userData = UserModel.fromJson(user.data()!);
+
+        final reward = userData.rewardPoints ?? 0;
+        log('reward is: $reward');
+        if (reward < 100) {
+          await _firestore.collection('users').doc(userId).update({
+            'rewardPoints': reward + 10,
+          });
+        }
+      }
+    } catch (e) {
+      log('Error accepting book lend: $e');
     }
   }
 }

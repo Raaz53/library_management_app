@@ -126,15 +126,6 @@ class _$InitialImpl implements _Initial {
   }
 
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -247,15 +238,6 @@ class _$LoadingImpl implements _Loading {
   String toString() {
     return 'BookLendApprovalState.loading()';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
@@ -372,15 +354,6 @@ class _$AcceptImpl implements _Accept {
   }
 
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AcceptImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -493,15 +466,6 @@ class _$DeclineImpl implements _Decline {
   String toString() {
     return 'BookLendApprovalState.decline()';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$DeclineImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
@@ -633,17 +597,6 @@ class _$ErrorImpl implements _Error {
   String toString() {
     return 'BookLendApprovalState.error(message: $message)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
 
   /// Create a copy of BookLendApprovalState
   /// with the given fields replaced by the non-null parameter values.

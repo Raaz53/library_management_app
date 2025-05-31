@@ -51,9 +51,17 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
     super.initState();
     _getUserByIdCubit = Injector.instance<GetUserByIdCubit>();
     _bookLendApprovalCubit = Injector.instance<BookLendApprovalCubit>();
+
     _getUserByIdCubit.getUserById(widget.userId);
     _isSuccess = false;
     uid = currentUser?.uid;
+  }
+
+  @override
+  void dispose() {
+    _getUserByIdCubit.close();
+    _bookLendApprovalCubit.close();
+    super.dispose();
   }
 
   String _bookStatus(String? bookStatus) {
@@ -81,13 +89,8 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
                   child: CircularProgressIndicator(),
                 ),
             success: (user) {
-              return BlocConsumer<BookLendApprovalCubit, BookLendApprovalState>(
+              return BlocBuilder<BookLendApprovalCubit, BookLendApprovalState>(
                 bloc: _bookLendApprovalCubit,
-                listener: (context, lendState) {
-                  lendState.maybeWhen(
-                    orElse: () {},
-                  );
-                },
                 builder: (context, lendState) {
                   return lendState.maybeWhen(
                     orElse: () => Container(
@@ -119,13 +122,13 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
                             ],
                           ),
                           10.verticalBox,
-                          _titleSubWidget('Book Name:', widget.bookName),
-                          _titleSubWidget('Book Authors:', widget.bookAuthors),
-                          _titleSubWidget('Book Number:', widget.bookNumber),
-                          _titleSubWidget('Requested By:', user?.name),
-                          _titleSubWidget('Requester Id:', user?.id),
+                          titleSubWidget('Book Name:', widget.bookName),
+                          titleSubWidget('Book Authors:', widget.bookAuthors),
+                          titleSubWidget('Book Number:', widget.bookNumber),
+                          titleSubWidget('Requested By:', user?.name),
+                          titleSubWidget('Requester Id:', user?.id),
                           if (widget.bookStatus != StudentBookStatus.pending)
-                            _titleSubWidget(
+                            titleSubWidget(
                               'Book Status:',
                               _bookStatus(widget.bookStatus),
                             ),
@@ -159,6 +162,9 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
 
                                       _bookLendApprovalCubit.acceptBookLend(
                                           bookLendApprovalModel);
+                                      Injector.instance<
+                                              GetBookLendPendingCubit>()
+                                          .getPendingBookLogs();
                                     },
                                   ),
                                 ),
@@ -180,6 +186,9 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
 
                                       _bookLendApprovalCubit.declineBookLend(
                                           bookLendApprovalModel);
+                                      Injector.instance<
+                                              GetBookLendPendingCubit>()
+                                          .getPendingBookLogs();
                                     },
                                   ),
                                 ),
@@ -209,11 +218,11 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
                             ),
                           ),
                           10.verticalBox,
-                          _titleSubWidget('Book Name:', widget.bookName),
-                          _titleSubWidget('Book Authors:', widget.bookAuthors),
-                          _titleSubWidget('Book Number:', widget.bookNumber),
-                          _titleSubWidget('Granted To:', user?.name),
-                          _titleSubWidget('Requester Id:', user?.id),
+                          titleSubWidget('Book Name:', widget.bookName),
+                          titleSubWidget('Book Authors:', widget.bookAuthors),
+                          titleSubWidget('Book Number:', widget.bookNumber),
+                          titleSubWidget('Granted To:', user?.name),
+                          titleSubWidget('Requester Id:', user?.id),
                           20.verticalBox,
                           AppButton(
                             title: 'Done',
@@ -247,16 +256,17 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
                             ),
                           ),
                           10.verticalBox,
-                          _titleSubWidget('Book Name:', widget.bookName),
-                          _titleSubWidget('Book Authors:', widget.bookAuthors),
-                          _titleSubWidget('Book Number:', widget.bookNumber),
-                          _titleSubWidget('Granted To:', user?.name),
-                          _titleSubWidget('Requester Id:', user?.id),
+                          titleSubWidget('Book Name:', widget.bookName),
+                          titleSubWidget('Book Authors:', widget.bookAuthors),
+                          titleSubWidget('Book Number:', widget.bookNumber),
+                          titleSubWidget('Granted To:', user?.name),
+                          titleSubWidget('Requester Id:', user?.id),
                           20.verticalBox,
                           AppButton(
                             title: 'Done',
                             onClick: () {
                               context.router.maybePop();
+                              _bookLendApprovalCubit.close();
                             },
                             backgroundColor:
                                 AppColors.green.withValues(alpha: 0.5),
@@ -282,17 +292,15 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
                             ),
                           ),
                           10.verticalBox,
-                          _titleSubWidget('Book Name:', widget.bookName),
-                          _titleSubWidget('Book Authors:', widget.bookAuthors),
-                          _titleSubWidget('Book Number:', widget.bookNumber),
-                          _titleSubWidget('Declined To:', user?.name),
-                          _titleSubWidget('Requester Id:', user?.id),
+                          titleSubWidget('Book Name:', widget.bookName),
+                          titleSubWidget('Book Authors:', widget.bookAuthors),
+                          titleSubWidget('Book Number:', widget.bookNumber),
+                          titleSubWidget('Declined To:', user?.name),
+                          titleSubWidget('Requester Id:', user?.id),
                           20.verticalBox,
                           AppButton(
                             title: 'Done',
                             onClick: () {
-                              Injector.instance<GetBookLendPendingCubit>()
-                                  .getPendingBookLogs();
                               context.router.maybePop();
                             },
                             backgroundColor:
@@ -312,7 +320,7 @@ class _DialogApprovalWidgetState extends State<DialogApprovalWidget> {
     );
   }
 
-  Widget _titleSubWidget(String? title, String? subTitle) {
+  Widget titleSubWidget(String? title, String? subTitle) {
     log('here the subtitle is : $subTitle');
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,

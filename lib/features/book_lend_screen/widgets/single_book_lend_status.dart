@@ -1,4 +1,5 @@
 import 'package:book_hive/core/app_theme/app_colors.dart';
+import 'package:book_hive/core/models/book_return_model/book_return_model.dart';
 import 'package:book_hive/core/models/user_model/user_model.dart';
 import 'package:book_hive/core/resources/assets.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
@@ -11,6 +12,8 @@ import 'package:book_hive/features/book_request_screen/widgets/dialog_approval_w
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'dialog_return_book_widget.dart';
 
 class SingleBookLendStatus extends StatefulWidget {
   const SingleBookLendStatus({
@@ -27,6 +30,7 @@ class SingleBookLendStatus extends StatefulWidget {
 
 class _SingleBookLendStatusState extends State<SingleBookLendStatus> {
   late GetSingleBookCubit _cubit;
+
   @override
   void initState() {
     super.initState();
@@ -76,20 +80,18 @@ class _SingleBookLendStatusState extends State<SingleBookLendStatus> {
               return GestureDetector(
                 onTap: () {
                   if (widget.singleBookLend?.bookIssueStatus ==
-                      StudentBookStatus.borrowed) {
+                          StudentBookStatus.borrowed &&
+                      globalUserRole == UserRole.user) {
                     Utilities.showCustomDialog(
-                      barrierDismissible: true,
-                      context: context,
-                      child: DialogApprovalWidget(
-                        bookId: book?.bookId,
-                        bookName: book?.bookName,
-                        bookAuthors: book?.authors,
-                        bookNumber: widget.singleBookLend?.bookNumber,
-                        userId: widget.singleBookLend?.studentId,
-                        lendId: widget.singleBookLend?.bookLendId,
-                        bookStatus: widget.singleBookLend?.bookIssueStatus,
-                      ),
-                    );
+                        barrierDismissible: true,
+                        context: context,
+                        child: DialogReturnBookWidget(
+                          bookReturnModel: BookReturnModel(
+                            lendId: widget.singleBookLend?.bookLendId,
+                            bookId: widget.singleBookLend?.bookId,
+                            bookNumber: widget.singleBookLend?.bookNumber,
+                          ),
+                        ));
                   }
                 },
                 child: Container(

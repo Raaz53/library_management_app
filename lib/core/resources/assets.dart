@@ -4,6 +4,14 @@ class ImageAssets {
   static const stephanKing = '$assets/stephen_king.jpg';
   static const harryPotter = '$assets/harry_potter.jpg';
   static const profileImg = '$assets/profile_pic.jpg';
+  static const bagImg = '$assets/bag.jpg';
+  static const bookmarkImg = '$assets/bookmark.jpg';
+  static const moneyImg = '$assets/money.jpg';
+  static const mugImg = '$assets/mug.jpg';
+  static const pencilsImg = '$assets/pencils.jpg';
+  static const pensImg = '$assets/pens.jpg';
+  static const printOutImg = '$assets/print_out.jpg';
+  static const ticketsImg = '$assets/tickets.jpg';
 }
 
 class SvgAssets {
@@ -29,7 +37,7 @@ class GifAssets {
 }
 
 class LottieAssets {
-  static const String assets = 'assets/lottie';
+  static const assets = 'assets/lottie';
   static const done = '$assets/done.json';
   static const loading = '$assets/loading.json';
 }

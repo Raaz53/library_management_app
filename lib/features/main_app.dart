@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:book_hive/core/widgets/app_bloc_wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,8 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return AppBlocWrapper(
       child: MaterialApp.router(
-        routerConfig: _router.config(),
+        routerConfig:
+            _router.config(navigatorObservers: () => [AutoRouteObserver()]),
         debugShowCheckedModeBanner: false,
       ),
     );
