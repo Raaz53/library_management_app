@@ -125,6 +125,72 @@ class Onboarding extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [RewardAddOnScreen]
+class RewardAddOn extends PageRouteInfo<RewardAddOnArgs> {
+  RewardAddOn({
+    Key? key,
+    double? currentPoints,
+    String? userName,
+    List<PageRouteInfo>? children,
+  }) : super(
+         RewardAddOn.name,
+         args: RewardAddOnArgs(
+           key: key,
+           currentPoints: currentPoints,
+           userName: userName,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'RewardAddOn';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<RewardAddOnArgs>(
+        orElse: () => const RewardAddOnArgs(),
+      );
+      return RewardAddOnScreen(
+        key: args.key,
+        currentPoints: args.currentPoints,
+        userName: args.userName,
+      );
+    },
+  );
+}
+
+class RewardAddOnArgs {
+  const RewardAddOnArgs({this.key, this.currentPoints, this.userName});
+
+  final Key? key;
+
+  final double? currentPoints;
+
+  final String? userName;
+
+  @override
+  String toString() {
+    return 'RewardAddOnArgs{key: $key, currentPoints: $currentPoints, userName: $userName}';
+  }
+}
+
+/// generated route for
+/// [RewardScreen]
+class Reward extends PageRouteInfo<void> {
+  const Reward({List<PageRouteInfo>? children})
+    : super(Reward.name, initialChildren: children);
+
+  static const String name = 'Reward';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RewardScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [SignInScreen]
 class SignIn extends PageRouteInfo<void> {
   const SignIn({List<PageRouteInfo>? children})

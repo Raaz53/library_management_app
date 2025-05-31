@@ -1,6 +1,6 @@
 part of 'book_lend_approval_cubit.dart';
 
-@freezed
+@Freezed(equal: false)
 class BookLendApprovalState with _$BookLendApprovalState {
   const factory BookLendApprovalState.initial() = _Initial;
   const factory BookLendApprovalState.loading() = _Loading;

@@ -28,7 +28,7 @@ class _BookListScreenState extends State<BookListScreen>
 
   final List<String> _categories = ['All'];
   bool _speechEnabled = false;
-  String? _wordSpoken = null;
+  String? _searchedText = null;
 
   @override
   void initState() {
@@ -92,7 +92,15 @@ class _BookListScreenState extends State<BookListScreen>
                 child: Icon(
                     _speechToText.isNotListening ? Icons.mic : Icons.mic_off),
               ),
-              suffixIcon: Icon(Icons.send_rounded),
+              onTextChanged: (search) {
+                _searchedText = search;
+              },
+              suffixIcon: IconButton(
+                  onPressed: () async {
+                    log('here clicked');
+                    await _getFirebaseBooksCubit.getFirebaseBooks();
+                  },
+                  icon: Icon(Icons.send_rounded)),
               name: 'search',
               style: AppTextStyles.bodyMediumMonserat,
               hint: 'What would you like to read?',
@@ -108,9 +116,11 @@ class _BookListScreenState extends State<BookListScreen>
                 dividerColor: AppColors.transparent,
                 unselectedLabelColor: Colors.white60,
                 tabs: _categories
-                    .map((category) => Tab(
-                          text: category,
-                        ))
+                    .map(
+                      (category) => Tab(
+                        text: category,
+                      ),
+                    )
                     .toList()),
             Expanded(
               child: BlocBuilder<GetFirebaseBooksCubit, GetFirebaseBooksState>(
@@ -119,6 +129,15 @@ class _BookListScreenState extends State<BookListScreen>
                   return state.maybeWhen(
                     orElse: () => SizedBox.shrink(),
                     success: (books) {
+                      if (_searchedText != null) {
+                        books = books
+                            ?.where((book) =>
+                                book.bookName
+                                    ?.toLowerCase()
+                                    .contains(_searchedText!.toLowerCase()) ??
+                                false)
+                            .toList();
+                      }
                       return TabBarView(
                         controller: _tabController,
                         children: _categories

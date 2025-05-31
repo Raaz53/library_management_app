@@ -1,6 +1,8 @@
 import 'package:book_hive/core/app_theme/app_colors.dart';
+import 'package:book_hive/core/resources/assets.dart';
 import 'package:book_hive/core/utilities/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Utilities {
   Utilities._();
@@ -39,7 +41,26 @@ class Utilities {
         return Dialog(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          child: child, // Custom widget passed here
+          child: child,
+        );
+      },
+    );
+  }
+
+  static void showCustomLoading({
+    required BuildContext context,
+    bool barrierDismissible = false, // Default: Prevent dismissing
+  }) {
+    showDialog(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Center(
+            child: Lottie.asset(LottieAssets.loading, height: 25, width: 25),
+          ),
         );
       },
     );

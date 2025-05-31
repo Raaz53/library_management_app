@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:book_hive/core/models/rewards_model/reward_model.dart';
 import 'package:book_hive/core/models/user_model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -101,6 +102,88 @@ class AuthService {
       return user;
     } catch (e) {
       log('error fetching user by id');
+    }
+  }
+
+  static addReward(List<RewardModel>? models) async {
+    try {
+      await _userRepo.addRewards(models);
+      return 'success';
+    } catch (e) {
+      log('Error adding rewards: ${e.toString()}');
+      return e.toString();
+    }
+  }
+
+  static getRewards() async {
+    try {
+      final data = await _userRepo.getRewards();
+      return data;
+    } catch (e) {
+      log('Error fetching rewards: ${e.toString()}');
+      return e.toString();
+    }
+  }
+
+  static claimReward(String? rewardId, RewardClaim? rewardClaim) async {
+    try {
+      final uid = _auth.currentUser?.uid;
+      await _userRepo.claimReward(uid, rewardId, rewardClaim);
+      return 'success';
+    } catch (e) {
+      log('Error claiming reward: ${e.toString()}');
+      return e.toString();
+    }
+  }
+
+  static checkClaimable(String? rewardId) async {
+    try {
+      final uid = _auth.currentUser?.uid;
+      final claimable = await _userRepo.checkClaimable(uid, rewardId);
+      return claimable;
+    } catch (e) {
+      log('Error checking claimable: ${e.toString()}');
+      return e.toString();
+    }
+  }
+
+  static getRewardClaimById(String? rewardId) async {
+    try {
+      final claim = await _userRepo.getRewardClaimById(rewardId);
+      return claim;
+    } catch (e) {
+      log('Error fetching reward claim by ID: ${e.toString()}');
+      return e.toString();
+    }
+  }
+
+  static grantRewardClaim(
+    String? rewardId,
+    String? claimerId,
+  ) async {
+    try {
+      await _userRepo.grantRewardClaim(
+        rewardId,
+        claimerId,
+      );
+      log('Reward claim granted successfully');
+      return 'success';
+    } catch (e) {
+      log('Error granting reward claim: ${e.toString()}');
+      return e.toString();
+    }
+  }
+
+  static rejectRewardClaim(String? rewardId, String? claimerId, String? uid,
+      double? rewardPoint) async {
+    try {
+      await _userRepo.rejectRewardClaim(rewardId, claimerId, uid, rewardPoint);
+
+      log('Reward claim rejected successfully');
+      return 'success';
+    } catch (e) {
+      log('Error rejecting reward claim: ${e.toString()}');
+      return e.toString();
     }
   }
 }

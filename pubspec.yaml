@@ -41,7 +41,7 @@ dependencies:
   auto_route: ^9.3.0+1
   injectable: ^2.5.0
   flutter_svg: ^2.0.17
-  flutter_form_builder: ^9.7.0
+  flutter_form_builder: ^10.0.1
   dotted_border: ^2.1.0
   firebase_auth: ^5.4.1
   firebase_analytics: ^11.4.1
@@ -61,6 +61,7 @@ dependencies:
   google_generative_ai: ^0.2.0
   uuid: ^4.5.1
   flutter_gemini: ^3.0.0
+  skeletonizer: ^2.0.1
 
 
 dev_dependencies:

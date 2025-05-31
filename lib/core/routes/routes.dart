@@ -9,6 +9,8 @@ import '../../features/home_screen/home_screen.dart';
 import '../../features/login_screen/log_in_screen.dart';
 import '../../features/login_screen/sign_in_screen.dart';
 import '../../features/onboarding_screen/onboarding_screen.dart';
+import '../../features/reward/reward_screen.dart';
+import '../../features/reward_add_on_screen/reward_add_on_screen.dart';
 
 part 'routes.gr.dart';
 
@@ -25,5 +27,7 @@ class AppRoute extends RootStackRouter {
         AutoRoute(
           page: BookDetails.page,
         ),
+        AutoRoute(page: RewardAddOn.page),
+        AutoRoute(page: Reward.page)
       ];
 }

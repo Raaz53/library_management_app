@@ -1,4 +1,4 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:book_hive/core/app_theme/app_colors.dart';
 import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/resources/assets.dart';
@@ -25,7 +25,7 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardScreenState extends State<DashboardScreen> with AutoRouteAware {
   int _currentIndex = 0;
   late GetUserProfileCubit _getUserProfileCubit;
   ValueNotifier<String> globalUserRoleNotifier = ValueNotifier(globalUserRole);
@@ -39,6 +39,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    AutoRouteObserver().subscribe(this, context.routeData);
+  }
+
+  @override
+  void dispose() {
+    AutoRouteObserver().unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
@@ -49,6 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Scaffold(
         floatingActionButton: GestureDetector(
           onTap: () {
+            FocusScope.of(context).unfocus();
             setState(() {
               _chatOpen = !_chatOpen;
             });

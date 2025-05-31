@@ -129,7 +129,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
               },
               error: (message) {
                 Navigator.pop(context);
-
                 Utilities.showSnackBar(context, 'Error');
               },
               loading: () => Utilities.showCustomDialog(
