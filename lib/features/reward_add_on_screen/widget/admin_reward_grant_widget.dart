@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:book_hive/core/injection/injection.dart';
 import 'package:book_hive/core/models/rewards_model/reward_model.dart';
+import 'package:book_hive/core/routes/routes.dart';
 import 'package:book_hive/core/utilities/utilities.dart';
 import 'package:book_hive/features/reward_add_on_screen/cubit/grant_reward_cubit/grant_reward_cubit.dart';
 import 'package:flutter/material.dart';
@@ -44,10 +46,12 @@ class _AdminRewardGrantWidgetState extends State<AdminRewardGrantWidget> {
           Utilities.showCustomLoading(context: context);
         }, grant: () {
           log('granted reward');
-          Navigator.of(context, rootNavigator: true).pop();
+          Navigator.popUntil(
+              context, (route) => route.settings.name == Reward.name);
         }, reject: () {
           log('rejected reward');
-          Navigator.of(context, rootNavigator: true).pop();
+          Navigator.popUntil(
+              context, (route) => route.settings.name == Reward.name);
         }, orElse: () {
           log('went to or else');
         });
@@ -145,7 +149,9 @@ class _AdminRewardGrantWidgetState extends State<AdminRewardGrantWidget> {
                         titleStyle: AppTextStyles.bodyMediumMonserat.copyWith(
                             color: AppColors.primaryDark,
                             fontWeight: FontWeight.w600),
-                        onClick: () {},
+                        onClick: () {
+                          context.router.maybePop();
+                        },
                       )
                     ],
                   ),
